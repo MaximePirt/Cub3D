@@ -34,9 +34,9 @@ typedef struct t_textures
 
 typedef struct s_map
 {
-	t_block				**map;
+	t_block				**blocks;
 	t_player 			player;
-	t_textures			textures;
+	t_textures			*textures;
 	int					size_x;
 	int					size_y;
 }						t_map;

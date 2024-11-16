@@ -18,7 +18,10 @@ NAME					= cube3d
 #									SOURCES									#
 #############################################################################
 
-SRCS					= main.c keymap.c memory_alloc.c memory_free.c
+SRCS					= main.c \
+						game$(DIRSEP)keymap.c game$(DIRSEP)player.c \
+						memory$(DIRSEP)memory_alloc.c memory$(DIRSEP)memory_free.c memory$(DIRSEP)window_alloc.c \
+						rendering$(DIRSEP)
 
 #############################################################################
 #									FOLDERS									#

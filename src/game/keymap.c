@@ -7,6 +7,14 @@ static int	action_key(int keycode, t_key_params *params)
 		ft_free_program(params);
 		return (1);
 	}
+	if (keycode == KEY_W)
+		player_move_forward(params->map);
+	else if (keycode == KEY_S)
+		player_move_backward(params->map);
+	else if (keycode == KEY_A)
+		player_look_left(params->map);
+	else if (keycode == KEY_D)
+		player_look_right(params->map);
 	return (0);
 }
 
