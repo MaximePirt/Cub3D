@@ -40,6 +40,8 @@ HEAD			= include
 
 LIBFT_DIR		= libft
 
+MINILIBX_DIR	= minilibx
+
 CFLAGS			= -I $(HEAD) -MMD -MP
 
 CFLAGS += -Wall -Wextra -Werror -g
@@ -53,7 +55,7 @@ YELLOW   = \033[0;93m
 PURPLE   = \033[0;95m
 RED		 = \033[0;91m
 
-$(NAME): $(OBJS) libft
+$(NAME): $(OBJS) libft minilibx
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L $(LIBFT_DIR) -lft -lncurses
 	@echo "$(GREEN)$(NAME) has been created successfully.$(DEFCOLOR)"
 
@@ -65,6 +67,15 @@ libft_clean:
 
 libft_fclean:
 	@make -C $(LIBFT_DIR) fclean
+
+minilibx:
+	@make -C $(MINILIBX_DIR)
+
+minilibx_clean:
+	@make -C $(MINILIBX_DIR) clean
+
+minilibx_fclean:
+	@make -C $(MINILIBX_DIR) fclean
 
 all: $(NAME)
 
@@ -84,4 +95,4 @@ fclean: libft_fclean
 
 re: fclean all
 
-.PHONY: libft libft_clean libft_fclean all clean fclean re
+.PHONY: libft libft_clean libft_fclean all clean fclean re minilibx minilibx_clean minilibx_fclean
