@@ -1,0 +1,15 @@
+# MacOS
+*.DS_Store
+
+# compilation
+cub3D
+obj/
+
+# IDE
+
+.idea/
+.vscode/
+
+# Libft
+
+libft.a
