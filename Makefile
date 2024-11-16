@@ -22,11 +22,11 @@ SRCS					= main.c
 
 #SRCS_PARSING            = floodfill.c floodfill_utils.c parsing.c parsing_utils.c
 
-SRC_MEMORY				= memory_alloc.c memory_free.c window_alloc.c
+SRC_MEMORY				= memory_alloc.c memory_free.c window_alloc.c textures_alloc.c
 
 SRC_GAME				= keymap.c player.c
 
-SRC_RENDERING			= rendering.c
+SRC_RENDERING			= rendering.c textures.c
 
 #############################################################################
 #									FOLDERS									#
@@ -62,7 +62,7 @@ MINILIBX_DIR	= minilibx
 
 CFLAGS			= -O2 -I $(HEAD) -MMD -MP
 
-CFLAGS += -Wall -Wextra -Werror -g
+CFLAGS += -g #-Wall -Wextra -Werror
 
 #VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes --trace-children=yes # --suppressions=vsupp
 

@@ -16,8 +16,9 @@ typedef struct s_win
 	void				*win_ptr;
 	void				*img_ptr;
 	char				*img_data;
-	int					img_size;
 	int					bpp;
+	int					size_line;
+	int					endian;
 }						t_win;
 
 typedef struct s_key_params
