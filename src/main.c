@@ -12,5 +12,7 @@ int	main(int argc, char **argv)
 	//TODO: parse map file
 	//TODO: render map
 
+
+
 	return (0);
 }

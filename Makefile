@@ -12,7 +12,7 @@ else
 	RM		= rm -f
 endif
 
-NAME					= cub3D
+NAME					= cube3d
 
 #############################################################################
 #									SOURCES									#
@@ -84,11 +84,11 @@ $(OBJ_PATH)%.o : %.c
 	@echo "$(YELLOW)Compiling $< $(DEFCOLOR)"
 	@$(CC) $(CFLAGS) -o $@ -c $<
 
-clean: libft_clean
+clean: libft_clean minilibx_clean
 	@$(RM) -r $(OBJ_PATH) 2> $(DIRSEP)dev$(DIRSEP)null || true
 	@echo "$(PURPLE)Object files have been removed.$(DEFCOLOR)"
 
-fclean: libft_fclean
+fclean: libft_fclean minilibx_fclean
 	@$(RM) -r $(OBJ_PATH) 2> $(DIRSEP)dev$(DIRSEP)null || true
 	@$(RM) $(NAME)
 	@echo "$(RED)$(NAME) has been removed.$(DEFCOLOR)"
