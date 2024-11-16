@@ -18,7 +18,7 @@ NAME					= cube3d
 #									SOURCES									#
 #############################################################################
 
-SRCS					= main.c
+SRCS					= main.c keymap.c memory_alloc.c memory_free.c
 
 #############################################################################
 #									FOLDERS									#
@@ -42,7 +42,7 @@ LIBFT_DIR		= libft
 
 MINILIBX_DIR	= minilibx
 
-CFLAGS			= -I $(HEAD) -MMD -MP
+CFLAGS			= -O2 -I $(HEAD) -MMD -MP
 
 CFLAGS += -Wall -Wextra -Werror -g
 
@@ -56,7 +56,7 @@ PURPLE   = \033[0;95m
 RED		 = \033[0;91m
 
 $(NAME): $(OBJS) libft minilibx
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L $(LIBFT_DIR) -lft -lncurses
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L $(LIBFT_DIR) -lft -L $(MINILIBX_DIR) -lft -lmlx -lXext -lX11 -lm
 	@echo "$(GREEN)$(NAME) has been created successfully.$(DEFCOLOR)"
 
 libft:
@@ -74,9 +74,6 @@ minilibx:
 minilibx_clean:
 	@make -C $(MINILIBX_DIR) clean
 
-minilibx_fclean:
-	@make -C $(MINILIBX_DIR) fclean
-
 all: $(NAME)
 
 $(OBJ_PATH)%.o : %.c
@@ -88,11 +85,11 @@ clean: libft_clean minilibx_clean
 	@$(RM) -r $(OBJ_PATH) 2> $(DIRSEP)dev$(DIRSEP)null || true
 	@echo "$(PURPLE)Object files have been removed.$(DEFCOLOR)"
 
-fclean: libft_fclean minilibx_fclean
+fclean: libft_fclean minilibx_clean
 	@$(RM) -r $(OBJ_PATH) 2> $(DIRSEP)dev$(DIRSEP)null || true
 	@$(RM) $(NAME)
 	@echo "$(RED)$(NAME) has been removed.$(DEFCOLOR)"
 
 re: fclean all
 
-.PHONY: libft libft_clean libft_fclean all clean fclean re minilibx minilibx_clean minilibx_fclean
+.PHONY: libft libft_clean libft_fclean all clean fclean re minilibx minilibx_clean
