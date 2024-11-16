@@ -1,7 +1,14 @@
 #include "cube.h"
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	ft_fprintf(STDOUT_FILENO, "Hello, World!\n");
+	if (argc != 2)
+	{
+		printf("Error: please provide a map file\n");
+		return (1);
+	}
+
+	//TODO: parse map file
+	//TODO: render map
 	return (0);
 }
