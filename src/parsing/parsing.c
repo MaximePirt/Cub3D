@@ -2,7 +2,7 @@
 
 int parsing_map(char *filename)
 {
-  if (check_name(filename) == -1)
+  if (check_name(filename))
   {
     ft_fprintf(2, "Error\n");
     return (1);

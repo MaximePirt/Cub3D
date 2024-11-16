@@ -20,7 +20,7 @@ NAME					= cube3d
 
 SRCS					= main.c
 
-#SRCS_PARSING            = floodfill.c floodfill_utils.c parsing.c parsing_utils.c
+SRCS_PARSING            = parsing.c parsing_utils.c
 
 SRC_MEMORY				= memory_alloc.c memory_free.c window_alloc.c
 
@@ -32,7 +32,7 @@ SRC_RENDERING			= rendering.c
 #									FOLDERS									#
 #############################################################################
 
-#SRCS_PARSING			:= $(addprefix parsing$(DIRSEP), $(SRCS_PARSING))
+SRCS_PARSING			:= $(addprefix parsing$(DIRSEP), $(SRCS_PARSING))
 
 SRC_MEMORY				:= $(addprefix memory$(DIRSEP), $(SRC_MEMORY))
 
@@ -40,7 +40,7 @@ SRC_GAME				:= $(addprefix game$(DIRSEP), $(SRC_GAME))
 
 SRC_RENDERING			:= $(addprefix rendering$(DIRSEP), $(SRC_RENDERING))
 
-SRCS					+= $(SRC_MEMORY) $(SRC_GAME) $(SRC_RENDERING)
+SRCS					+= $(SRC_MEMORY) $(SRC_GAME) $(SRC_RENDERING) $(SRCS_PARSING)
 
 SRCS					:= $(addprefix src$(DIRSEP), $(SRCS))
 

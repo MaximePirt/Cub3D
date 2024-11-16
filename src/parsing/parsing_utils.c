@@ -4,23 +4,24 @@ int	check_name(char *file)
 {
     int		i;
     int    filename_len;
-    char	str[4];
+    char	str[5];
 
     if (!file)
-        return (-1);
+        return (1);
     str[0] = '.';
     str[1] = 'c';
     str[2] = 'u';
     str[3] = 'b';
+    str[4] = '\0';
     i = 0;
     while (file[i])
         i++;
     if (i <= 4)
-        return (-1);
+        return (1);
     filename_len = ft_strlen(file);
     i = ft_strcmp(file + (filename_len - 4), str);
     if (i != 0)
-        return (-1);
+        return (1);
     return (0);
 }
 //
