@@ -3,7 +3,7 @@
 
 #include "../libft/include/libft.h"
 #include "../minilibx/mlx.h"
-
+#include "structs.h"
 #include "stdio.h"
 #include "stdlib.h"
 # include <fcntl.h>

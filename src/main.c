@@ -1,10 +1,5 @@
 #include "cube.h"
 
-void	map_maker(t_map *map)
-{
-
-}
-
 int	main(int argc, char **argv)
 {
 	(void)argv;
@@ -16,11 +11,6 @@ int	main(int argc, char **argv)
 
 	//TODO: parse map file
 	//TODO: render map
-
-	t_map map;
-	map.rows = 5;
-	map.cols = 5;
-	map.map = (char **)malloc(sizeof(char *) * map.rows);
 
 	return (0);
 }
