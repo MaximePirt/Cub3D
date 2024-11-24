@@ -21,7 +21,7 @@ int parsing_map(char *filename)
 {
   if (check_name(filename))
   {
-    ft_fprintf(2, "Error\n");
+    ft_fprintf(2, "Error : filename doesn't respect the subject\n");
     return (1);
   }
   return (0);
@@ -60,37 +60,37 @@ t_parse_map *fill_map(char *filename)
    return (tmp);
 }
 
-void tabprint(char **tab)
-{
-    int i;
+//void tabprint(char **tab)
+//{
+//    int i;
+//
+//    i = 0;
+//    while (tab[i])
+//    {
+//        ft_printf("%s", tab[i]);
+//        i++;
+//    }
+//}
 
-    i = 0;
-    while (tab[i])
-    {
-        ft_printf("%s", tab[i]);
-        i++;
-    }
-}
-
-char **convert_lst_to_tab(t_parse_map *parse_map)
-{
-	char **tab;
-    int i;
-
-    i = 0;
-    tab = malloc(sizeof(char *) * (parse_map_size(parse_map) + 1));
-    if (tab == NULL)
-        return (NULL);
-    while (parse_map)
-    {
-        tab[i] = ft_strdup(parse_map->blocks);
-        i++;
-        parse_map = parse_map->next;
-    }
-    tab[i] = NULL;
-//    tabprint(tab);
-    return (tab);
-}
+//char **convert_lst_to_tab(t_parse_map *parse_map)
+//{
+//	char **tab;
+//    int i;
+//
+//    i = 0;
+//    tab = malloc(sizeof(char *) * (parse_map_size(parse_map) + 1));
+//    if (tab == NULL)
+//        return (NULL);
+//    while (parse_map)
+//    {
+//        tab[i] = ft_strdup(parse_map->blocks);
+//        i++;
+//        parse_map = parse_map->next;
+//    }
+//    tab[i] = NULL;
+////    tabprint(tab);
+//    return (tab);
+//}
 
 void free_parse_map(t_parse_map *map)
 {
@@ -112,31 +112,34 @@ void free_parse_map(t_parse_map *map)
 *	TODO: When i will send the data map (ex NO data), check if data is already set, if so, return error
 *		it will prevent parsing error like 6 args but twice NO
 *	TODO: Check w Julien how to send the args data to his code's part
+*	TODO: This version is for bonus, to mandatory need to change args to 7 and remove DOOR
 * @return int
 */
-int	checking_firsts_map_lines(t_parse_map *to_copy, t_map *map)
+int	checking_firsts_map_lines(t_parse_map **to_copy, t_map *map)
 {
   int	args;
   (void)map;
 
-  args = 6;
+  args = 7;
   while (to_copy && args > 0)
   {
-    if (ft_strncmp(to_copy->blocks, "NO", 2) == 0)
+    if (ft_strncmp((*to_copy)->blocks, "NO", 2) == 0)
       args--;
-    else if (ft_strncmp(to_copy->blocks, "SO", 2) == 0)
+    else if (ft_strncmp((*to_copy)->blocks, "SO", 2) == 0)
       args--;
-    else if (ft_strncmp(to_copy->blocks, "WE", 2) == 0)
+    else if (ft_strncmp((*to_copy)->blocks, "WE", 2) == 0)
       args--;
-    else if (ft_strncmp(to_copy->blocks, "EA", 2) == 0)
+    else if (ft_strncmp((*to_copy)->blocks, "EA", 2) == 0)
       args--;
-    else if (ft_strncmp(to_copy->blocks, "F", 1) == 0)
+    else if (ft_strncmp((*to_copy)->blocks, "F", 1) == 0)
       args--;
-    else if (ft_strncmp(to_copy->blocks, "C", 1) == 0)
+    else if (ft_strncmp((*to_copy)->blocks, "C", 1) == 0)
       args--;
-    else if (!ft_strncmp(to_copy->blocks, "\n", 1) == 0)
-      break;
-    to_copy = to_copy->next;
+    else if (ft_strncmp((*to_copy)->blocks, "DOOR", 4) == 0)
+      args--;
+    else if (ft_strncmp((*to_copy)->blocks, "\n", 1) != 0)
+    	break;
+    (*to_copy) = (*to_copy)->next;
   }
   if (args > 0)
   {
@@ -153,15 +156,15 @@ int copy_tab_to_map(t_parse_map *to_copy, t_map *map)
     int max_size;
 
     i = 0;
-    max_size = parse_map_max_size(to_copy);
-    if (checking_firsts_map_lines(to_copy, map))
+    if (checking_firsts_map_lines(&to_copy, map))
         return (1);
-    ft_printf("Firsts lines are ok\n");
-    ft_printf("Here is to copy blocks [%c]\n", to_copy->blocks[0]);
+    max_size = parse_map_max_size(to_copy);
+    while (ft_strncmp(to_copy->blocks, "\n", 1) == 0)
+        to_copy = to_copy->next;
     while (to_copy)
     {
         j = 0;
-        while (to_copy->blocks)
+        while (to_copy->blocks[j])
         {
 			if (to_copy->blocks[j] == '1')
 				map->blocks[i][j].type = WALL;
@@ -188,15 +191,16 @@ int copy_tab_to_map(t_parse_map *to_copy, t_map *map)
             }
             else if (to_copy->blocks[j] == '\n')
                 break;
-            else
+            else if (to_copy->blocks[j])
 			{
-                ft_printf("Error: invalid character in map\n");
-                exit(1);
+                ft_printf("Error: invalid character in map : [%c]\n", to_copy->blocks[j]);
+                return (1);
 			}
             j++;
         }
         while (j < max_size)
         {
+        	fprintf(stderr, "j [%d] max_size [%d]\n", j, max_size);
             map->blocks[i][j].type = VOID;
             j++;
         }
@@ -232,15 +236,29 @@ void print_enum_map(t_map *map)
     }
 }
 
+void	find_map_start(t_parse_map **parse_map)
+{
+    while (*parse_map)
+    {
+        if (ft_strncmp((*parse_map)->blocks, "111", 3) == 0)
+            break;
+        *parse_map = (*parse_map)->next;
+    }
+}
 
 int check_map(t_map *map, char *filename)
 {
 	t_parse_map *parse_map;
+    t_parse_map *tmp;
 
     parse_map = fill_map(filename);
     if (parse_map == NULL)
 		return (1);
-    map = ft_init_map(parse_map_max_size(parse_map), parse_map_size(parse_map));
+    tmp = parse_map;
+    find_map_start(&tmp);
+    printf("parse_map_size : %d\n", parse_map_size(tmp));
+    printf("parse_map_max_size : %d\n", parse_map_max_size(tmp));
+    map = ft_init_map(parse_map_max_size(tmp), parse_map_size(tmp));
 	if (map == NULL)
         return (1);
     if (copy_tab_to_map(parse_map, map))
