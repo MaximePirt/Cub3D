@@ -26,6 +26,6 @@ int	parse_map_size(t_parse_map *lst);
 t_parse_map *fill_map(char *filename);
 void	print_parse_map(t_parse_map *lst);
 t_parse_map	*parse_map_new(char *line);
-
+int	parse_map_max_size(t_parse_map *lst);
 
 #endif

@@ -44,7 +44,6 @@ typedef struct s_map
 typedef struct s_parse_map
 {
   	int					blocks_len;
-    int					max_len;
     char				*blocks;
     struct s_parse_map	*next;
 }						t_parse_map;

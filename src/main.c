@@ -13,9 +13,10 @@ int	main(int argc, char **argv)
 	}
 	if (parsing_map(argv[1]))
           return (1);
-    map = ft_init_map(10, 10);
-    if (!map)
-      return (1);
+//    map = ft_init_map(10, 10);
+//    if (!map)
+//      return (1);
+    map = NULL;
     if (check_map(map, argv[1]))
 	{
       ft_printf("Error: invalid map\n");

@@ -32,7 +32,6 @@ t_parse_map	*parse_map_new(char *block)
 		return (NULL);
 	}
 	new->blocks_len = ft_strlen(new->blocks);
-	new->max_len = 0;
 	new->next = NULL;
 	return (new);
 }
@@ -70,8 +69,6 @@ void	parse_map_addback(t_parse_map **lst, t_parse_map *new)
 	{
 		tmp = parsemaplast(*lst);
 		tmp->next = new;
-		if (new->blocks_len > tmp->max_len)
-			tmp->max_len = new->blocks_len;
 	}
 	else
 		*lst = new;
@@ -97,6 +94,21 @@ int	parse_map_size(t_parse_map *lst)
 	return (i);
 }
 
+int	parse_map_max_size(t_parse_map *lst)
+{
+  t_parse_map	*tmp;
+  int			i;
+
+  i = 0;
+  tmp = lst;
+  while (tmp)
+  {
+	if (tmp->blocks_len > i)
+		i = tmp->blocks_len;
+	tmp = tmp->next;
+  }
+  return (i);
+}
 
 /**
 * @brief Print the parsed map
@@ -107,10 +119,18 @@ void	print_parse_map(t_parse_map *map)
 	t_parse_map *tmp;
 
 	tmp = map;
+	ft_printf("\n\n////////////DEBUG MAP/////////////\n");
 	while (tmp)
 	{
 		ft_printf("%s", tmp->blocks);
 		tmp = tmp->next;
 	}
+    tmp = map;
+	ft_printf("\n\n////////////DEBUG  LEN/////////////\n");
+    while (tmp)
+     {
+		 ft_printf("len [%d]\n", tmp->blocks_len);
+		 tmp = tmp->next;
+	 }
 	return ;
 }
