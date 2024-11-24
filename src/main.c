@@ -3,16 +3,24 @@
 int	main(int argc, char **argv)
 {
 //	t_win	*win;
-//	t_map	*map;
+	t_map	*map;
 
 	(void)argv;
 	if (argc != 2)
 	{
-		printf("Error: please provide a map file\n");
+		ft_printf("Error: please provide a map file\n");
 		return (1);
 	}
 	if (parsing_map(argv[1]))
           return (1);
+    map = ft_init_map(10, 10);
+    if (!map)
+      return (1);
+    if (check_map(map, argv[1]))
+	{
+      ft_printf("Error: invalid map\n");
+      return (1);
+	}
 
 //	//TODO: parse map file
 //	map = ft_init_map(10, 10);
