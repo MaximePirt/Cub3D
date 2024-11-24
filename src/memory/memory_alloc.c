@@ -33,21 +33,6 @@ static t_player	ft_init_player(void)
 	return (player);
 }
 
-static t_textures	*ft_init_textures(void)
-{
-	t_textures	*textures;
-
-	textures = (t_textures *)malloc(sizeof(t_textures));
-	if (textures == NULL)
-		return (NULL);
-	textures->wall_north = NULL;
-	textures->wall_south = NULL;
-	textures->wall_east = NULL;
-	textures->wall_west = NULL;
-	textures->door = NULL;
-	return (textures);
-}
-
 t_block	*ft_init_block(void)
 {
 	t_block	*block;

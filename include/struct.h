@@ -23,13 +23,26 @@ typedef struct s_block
 	int					status;
 }						t_block;
 
+typedef struct t_image
+{
+	char 				*path;
+	void				*img_ptr;
+	char				*img_data;
+	int					bpp;
+	int					size_line;
+	int					endian;
+	int 				width;
+	int 				height;
+}						t_image;
+
+
 typedef struct s_textures
 {
-	void				*wall_north;
-	void				*wall_south;
-	void				*wall_east;
-	void				*wall_west;
-	void				*door;
+	t_image				*wall_north;
+	t_image				*wall_south;
+	t_image				*wall_east;
+	t_image				*wall_west;
+	t_image				*door;
 }						t_textures;
 
 typedef struct s_map
