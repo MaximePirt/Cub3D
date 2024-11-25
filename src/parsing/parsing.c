@@ -105,6 +105,17 @@ void free_parse_map(t_parse_map *map)
     }
 }
 
+int check_doublons(t_parse_map **args, char ***images, int index)
+{
+
+	if (index < 8 && (*images)[index] != NULL)
+    {
+        ft_fprintf(2, "Error: %s already set\n", (*args)->blocks);
+        return (1);
+    }
+    (*images)[index] = ft_strdup((*args)->blocks);
+}
+
 /**
 * @brief Get the firsts files lines and compare it to maps options
 * @param to_copy the parse map
@@ -115,27 +126,21 @@ void free_parse_map(t_parse_map *map)
 *	TODO: This version is for bonus, to mandatory need to change args to 7 and remove DOOR
 * @return int
 */
-int	checking_firsts_map_lines(t_parse_map **to_copy, t_map *map)
+int	checking_firsts_map_lines(t_parse_map **to_copy, char ***images)
 {
   int	args;
-  (void)map;
 
   args = 7;
   while (to_copy && args > 0)
   {
-    if (ft_strncmp((*to_copy)->blocks, "NO", 2) == 0)
-      args--;
-    else if (ft_strncmp((*to_copy)->blocks, "SO", 2) == 0)
-      args--;
-    else if (ft_strncmp((*to_copy)->blocks, "WE", 2) == 0)
-      args--;
-    else if (ft_strncmp((*to_copy)->blocks, "EA", 2) == 0)
-      args--;
-    else if (ft_strncmp((*to_copy)->blocks, "F", 1) == 0)
-      args--;
-    else if (ft_strncmp((*to_copy)->blocks, "C", 1) == 0)
-      args--;
-    else if (ft_strncmp((*to_copy)->blocks, "DOOR", 4) == 0)
+//    ft_printf("to_copy->blocks : [%s]\n", (*to_copy)->blocks);
+    if (ft_strncmp((*to_copy)->blocks, "NO", 2) == 0 && check_doublons(to_copy, images, 0)
+        || ft_strncmp((*to_copy)->blocks, "SO", 2) == 0 && check_doublons(to_copy, images, 1)
+        || ft_strncmp((*to_copy)->blocks, "WE", 2) == 0 && check_doublons(to_copy, images, 2)
+        || ft_strncmp((*to_copy)->blocks, "EA", 2) == 0 && check_doublons(to_copy, images, 3)
+        || ft_strncmp((*to_copy)->blocks, "F", 1) == 0 && check_doublons(to_copy, images, 4)
+        || ft_strncmp((*to_copy)->blocks, "C", 1) == 0 && check_doublons(to_copy, images, 5)
+        || ft_strncmp((*to_copy)->blocks, "DOOR", 4) == 0 && check_doublons(to_copy, images, 6))
       args--;
     else if (ft_strncmp((*to_copy)->blocks, "\n", 1) != 0)
     	break;
@@ -143,20 +148,20 @@ int	checking_firsts_map_lines(t_parse_map **to_copy, t_map *map)
   }
   if (args > 0)
   {
-    ft_printf("Error: Firsts lines can only contains NO, SO, WE, EA, F, C or \\n\n");
+    ft_printf("Error: Firsts lines can only contains NO, SO, WE, EA, F, C or \\n, one of each only\n");
     return (1);
   }
   return (0);
 }
 
-int copy_tab_to_map(t_parse_map *to_copy, t_map *map)
+int copy_tab_to_map(t_parse_map *to_copy, t_map *map, char ***images)
 {
     int i;
     int j;
     int max_size;
 
     i = 0;
-    if (checking_firsts_map_lines(&to_copy, map))
+    if (checking_firsts_map_lines(&to_copy, images))
         return (1);
     max_size = parse_map_max_size(to_copy);
     while (ft_strncmp(to_copy->blocks, "\n", 1) == 0)
@@ -173,7 +178,10 @@ int copy_tab_to_map(t_parse_map *to_copy, t_map *map)
 			else if (to_copy->blocks[j] == ' ')
 				map->blocks[i][j].type = VOID;
 			else if (to_copy->blocks[j] == 'D')
+            {
                 map->blocks[i][j].type = DOOR;
+                map->blocks[i][j].status = 1;
+            }
             else if (to_copy->blocks[j] == 'N'|| to_copy->blocks[j] == 'S'
 				|| to_copy->blocks[j] == 'E'|| to_copy->blocks[j] == 'W')
             {
@@ -200,7 +208,6 @@ int copy_tab_to_map(t_parse_map *to_copy, t_map *map)
         }
         while (j < max_size)
         {
-        	fprintf(stderr, "j [%d] max_size [%d]\n", j, max_size);
             map->blocks[i][j].type = VOID;
             j++;
         }
@@ -246,7 +253,7 @@ void	find_map_start(t_parse_map **parse_map)
     }
 }
 
-int check_map(t_map *map, char *filename)
+int check_map(t_map *map, char *filename, char ***images)
 {
 	t_parse_map *parse_map;
     t_parse_map *tmp;
@@ -261,9 +268,10 @@ int check_map(t_map *map, char *filename)
     map = ft_init_map(parse_map_max_size(tmp), parse_map_size(tmp));
 	if (map == NULL)
         return (1);
-    if (copy_tab_to_map(parse_map, map))
+    if (copy_tab_to_map(parse_map, map, images))
 		return (1);
 	print_enum_map(map);
+
 
     free_parse_map(parse_map);
 

@@ -16,7 +16,7 @@ int     check_name(char *file);
 //void	clean_flood(t_map *map);
 //void	copy_map_to_mapfill(t_map *map);
 int		parsing_map(char *filename);
-int		check_map(t_map *map, char *filename);
+int		check_map(t_map *map, char *filename, char ***images);
 
 
 /////////////////////////lst_parsing/////////////////////////

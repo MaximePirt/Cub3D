@@ -1,34 +1,5 @@
-//#include "cube.h"
-//
-//void	filltab(t_map *map)
-//{
-//	int		fd;
-//	int		i;
-//	char	*line;
-//
-//	fd = open(map->file_name, O_RDONLY);
-//	if (fd == -1)
-//		exit_func(0, map, NULL, 2);
-//	line = get_next_line(fd);
-//	map->size_x = ft_strlen(line);
-//	i = 0;
-//	while (line)
-//	{
-//		map->map[i] = ft_strdup(line);
-//		map->map[i][map->size_x - 1] = '\0';
-//		free(line);
-//		line = NULL;
-//		line = get_next_line(fd);
-//		if (!line)
-//			break ;
-//		i++;
-//	}
-//	free(line);
-//	line = NULL;
-//	close(fd);
-//	return ;
-//}
-//
+#include "cube.h"
+
 //void	fill_struc_compo(t_map *map, char c, int x, int y)
 //{
 //	if (c == 'C')
@@ -75,20 +46,13 @@
 //
 //void	where_start_fill(t_map *map)
 //{
-//	while (map->col < map->size_y && map->col < map->size_x
-//		&& (map->map[map->col][map->line]
-//			&& map->map[map->col][map->line] != 'P'))
-//	{
-//		while (map->col < map->size_y && map->col < map->size_x
-//			&& (map->map[map->col][map->line]
-//				&& map->map[map->col][map->line] != 'P'))
-//			map->line++;
-//		if (map->map[map->col][map->line]
-//			&& map->map[map->col][map->line] == 'P')
-//			return ;
-//		map->line = 0;
-//		map->col++;
-//	}
+//	int	i;
+//	int	j;
+//
+//    i = 0;
+//    j = 0;
+//	while (m)
+//
 //}
 //
 //void	check_min_inputs(t_map *map)
@@ -106,28 +70,17 @@
 //		exit_func(0, map, NULL, 5);
 //}
 //
-//t_map	*preptoflood(char *str)
-//{
-//	int		component;
-//	t_map	*map;
-//	int		i;
-//
-//	i = 0;
-//	map = init_t_map(str);
-//	check_size(map);
-//	map->map = ft_calloc(sizeof(char *), (map->size_y + 1));
-//	if (!map->map)
-//		exit_func(0, map, NULL, 3);
-//	filltab(map);
-//	check_min_inputs(map);
-//	copy_map_to_mapfill(map);
-//	component = hm_compo(map->map);
-//	where_start_fill(map);
-//	flood_fill(map, map->col, map->line);
+int	*preptoflood(t_map *map)
+{
+	int		component;
+	int		i;
+
+	i = 0;
+	where_start_fill(map);
+	flood_fill(map, map->col, map->line);
 //	if (component != map->component_data->hm_component + map->player_data.player
 //		+ map->exit_data.exit + map->gun_data.hm_gun
 //		|| map->component_data->hm_component < 1)
 //		exit_func(0, map, NULL, 5);
-//	clean_flood(map);
-//	return (map);
-//}
+	return (map);
+}

@@ -1,5 +1,11 @@
 #include "cube.h"
 
+/**
+* @brief Load the texture
+* @param image the image
+* @param path the path
+* @param mlx_ptr the mlx ptr
+*/
 void	load_texture(t_image *image, char *path, void *mlx_ptr)
 {
 	image->path = ft_strdup(path);
