@@ -1,86 +1,95 @@
 #include "cube.h"
 
-//void	fill_struc_compo(t_map *map, char c, int x, int y)
-//{
-//	if (c == 'C')
-//	{
-//		map->component_data->hm_component++;
-//		ft_lstadd_back_cmpnt(&map->component_data->lst_component,
-//			ft_lstnew_cmpnt(map->component_data->lst_component, x, y));
-//	}
-//	else if (c == 'P')
-//	{
-//		map->player_data.player++;
-//		map->player_data.x = y;
-//		map->player_data.y = x;
-//	}
-//	else if (c == 'E')
-//	{
-//		map->exit_data.exit++;
-//		map->exit_data.x = x;
-//		map->exit_data.y = y;
-//	}
-//	else
-//		fill_enemy_and_gun(map, c, x, y);
-//	return ;
-//}
-//
-//void	flood_fill(t_map *map, int x, int y)
-//{
-//	if (!map->map_fill[x][y] || x < 0 || x >= map->size_y || y < 0
-//		|| y >= map->size_x || map->map_fill[x][y] == '1'
-//		|| map->map_fill[x][y] == 'F' || map->map_fill[x][y] == 'K'
-//		|| map->map_fill[x][y] == 'N')
-//		return ;
-//	fill_struc_compo(map, map->map_fill[x][y], x, y);
-//	map->map_fill[x][y] = 'F';
-//	flood_fill(map, x - 1, y);
-//	flood_fill(map, x + 1, y);
-//	flood_fill(map, x, y - 1);
-//	flood_fill(map, x, y + 1);
-//	if (map->player_data.player > 1 || map->exit_data.exit > 1
-//		|| map->gun_data.hm_gun > 1)
-//		exit_func(0, map, NULL, 5);
-//	return ;
-//}
-//
-//void	where_start_fill(t_map *map)
-//{
-//	int	i;
-//	int	j;
-//
-//    i = 0;
-//    j = 0;
-//	while (m)
-//
-//}
-//
-//void	check_min_inputs(t_map *map)
-//{
-//	int	i;
-//	int	j;
-//	int	k;
-//	int	l;
-//
-//	i = ft_check_in_tab(map->map, 'E');
-//	j = ft_check_in_tab(map->map, 'C');
-//	k = ft_check_in_tab(map->map, 'P');
-//	l = ft_check_in_tab(map->map, 'G');
-//	if (i == -1 || j == -1 || k == -1 || l == -1)
-//		exit_func(0, map, NULL, 5);
-//}
-//
-int	*preptoflood(t_map *map)
+/**
+ * @brief Flood fill algorithm to fill the map
+ * @param map the map
+ * @return t_map*
+ */
+int	flood_fill(t_map *map, int x, int y)
 {
-	int		component;
-	int		i;
+	if (!map->blocks[x][y].type || x < 0 || x >= map->size_y || y < 0
+		|| y >= map->size_x || map->blocks[x][y].type == WALL
+		|| map->blocks[x][y].type == FILL)
+		return (0);
+	if (map->blocks[x++][y].type == VOID || map->blocks[x--][y].type == VOID
+		|| map->blocks[x][y++].type == VOID || map->blocks[x][y--].type == VOID)
+		return (1);
+	map->blocks[x][y].type = FILL;
+	if (flood_fill(map, x - 1, y))
+		return (1);
+	if (flood_fill(map, x + 1, y))
+		return (1);
+	if (flood_fill(map, x, y - 1))
+		return (1);
+	if (flood_fill(map, x, y + 1))
+		return (1);
+	return (0);
+}
+
+int	check_floodfill_end(t_map *map, int *start_y, int *start_x)
+{
+	int	i;
+	int	j;
 
 	i = 0;
-	where_start_fill(map);
-	flood_fill(map, map->col, map->line);
+	j = 0;
+	while (i < map->size_y)
+	{
+		j = 0;
+		while (j <= map->size_x)
+		{
+			if (map->blocks[i][j].type == FLOOR)
+			{
+				*start_y = i;
+				*start_x = j;
+				ft_printf("\n\nFind a pb, here is the map \n\n------\n\n");
+				print_enum_map(map);
+				ft_printf("\n\n");
+				return (1);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+/**
+ * @brief Flood fill algorithm to fill the map
+ * @param map the map
+ * @return t_map*
+ */
+int	preptoflood(t_map *map)
+{
+	int		component;
+	int		start_y;
+	int		start_x;
+
+	start_y = map->player.y;
+	start_x = map->player.x;
+
+	ft_printf("Here is the map at the beginning\n");
+	print_enum_map(map);
+	if (flood_fill(map, start_y, start_x))
+		{
+			ft_printf("Flood fill failed\n");
+			return (1);
+		}	while (check_floodfill_end(map, &start_y, &start_x))
+	{
+		ft_printf("Flood fill GOOOOO\n");
+		if (flood_fill(map, start_y, start_x))
+		{
+			ft_printf("Flood fill failed\n");
+			return (1);
+		}
+		
+	}
+	ft_printf("Flood fill done\n");
+	ft_printf("After\n");
+	print_enum_map(map);
 //	if (component != map->component_data->hm_component + map->player_data.player
 //		+ map->exit_data.exit + map->gun_data.hm_gun
 //		|| map->component_data->hm_component < 1)
 //		exit_func(0, map, NULL, 5);
-	return (map);
+	return (0);
 }

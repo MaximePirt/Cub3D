@@ -7,7 +7,8 @@ typedef enum s_block_type
 	VOID,
 	FLOOR,
 	WALL,
-	DOOR
+	DOOR,
+	FILL
 }	t_block_type;
 
 typedef struct s_player
