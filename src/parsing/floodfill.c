@@ -3,6 +3,8 @@
 /**
  * @brief Flood fill algorithm to fill the map
  * @param map the map
+ * @param x the x position
+ * @param y the y position
  * @return t_map*
  */
 int	flood_fill(t_map *map, int x, int y)
@@ -26,6 +28,13 @@ int	flood_fill(t_map *map, int x, int y)
 	return (0);
 }
 
+/**
+ * @brief Check if the flood fill is done
+ * @param map the map
+ * @param start_y the start y
+ * @param start_x the start x
+ * @return int
+ */
 int	check_floodfill_end(t_map *map, int *start_y, int *start_x)
 {
 	int	i;
@@ -52,6 +61,27 @@ int	check_floodfill_end(t_map *map, int *start_y, int *start_x)
 		i++;
 	}
 	return (0);
+}
+
+void	restore_map(t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < map->size_y)
+	{
+		j = 0;
+		while (j < map->size_x)
+		{
+			if (map->blocks[i][j].type == FILL && map->blocks[i][j].status == 0)
+				map->blocks[i][j].type = FLOOR;
+			else if (map->blocks[i][j].type == FILL && map->blocks[i][j].status == 1)
+				map->blocks[i][j].type = DOOR;
+			j++;
+		}
+		i++;
+	}
 }
 
 /**
@@ -87,6 +117,11 @@ int	preptoflood(t_map *map)
 	ft_printf("Flood fill done\n");
 	ft_printf("After\n");
 	print_enum_map(map);
+	restore_map(map);
+	ft_printf("After restore\n");
+	print_enum_map(map);
+
+
 //	if (component != map->component_data->hm_component + map->player_data.player
 //		+ map->exit_data.exit + map->gun_data.hm_gun
 //		|| map->component_data->hm_component < 1)
