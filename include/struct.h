@@ -62,4 +62,10 @@ typedef struct s_parse_map
     struct s_parse_map	*next;
 }						t_parse_map;
 
+typedef	struct s_stack
+{
+	int					x;
+	int					y;
+}						t_stack;
+
 #endif

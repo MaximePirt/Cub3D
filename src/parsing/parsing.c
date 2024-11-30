@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:01:13 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/11/25 08:38:20 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/11/30 22:42:39 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ t_parse_map	*fill_map(char *filename)
 			break ;
 		parse_map_addback(&parse_map, parse_map_new(line));
 	}
-	free(line);
+	parse_map_addback(&parse_map, parse_map_new("\n"));				//Line added to avoid segfault, easier to parse map
+	free(line);														// due to possibilities to eof just after map or not
 	close(fd);
 	return (tmp);
 }
@@ -81,6 +82,7 @@ int	check_doublons(t_parse_map **args, char ***images, int index)
 		return (1);
 	}
 	(*images)[index] = ft_strdup((*args)->blocks);
+	return (0);
 }
 
 /**
@@ -104,19 +106,19 @@ int	checking_firsts_map_lines(t_parse_map **to_copy, char ***images)
 	{
 		//    ft_printf("to_copy->blocks : [%s]\n", (*to_copy)->blocks);
 		if (ft_strncmp((*to_copy)->blocks, "NO", 2) == 0
-			&& check_doublons(to_copy, images, 0)
+			&& !check_doublons(to_copy, images, 0)
 			|| ft_strncmp((*to_copy)->blocks, "SO", 2) == 0
-			&& check_doublons(to_copy, images, 1)
+			&& !check_doublons(to_copy, images, 1)
 			|| ft_strncmp((*to_copy)->blocks, "WE", 2) == 0
-			&& check_doublons(to_copy, images, 2)
+			&& !check_doublons(to_copy, images, 2)
 			|| ft_strncmp((*to_copy)->blocks, "EA", 2) == 0
-			&& check_doublons(to_copy, images, 3)
+			&& !check_doublons(to_copy, images, 3)
 			|| ft_strncmp((*to_copy)->blocks, "F", 1) == 0
-			&& check_doublons(to_copy, images, 4)
+			&& !check_doublons(to_copy, images, 4)
 			|| ft_strncmp((*to_copy)->blocks, "C", 1) == 0
-			&& check_doublons(to_copy, images, 5)
+			&& !check_doublons(to_copy, images, 5)
 			|| ft_strncmp((*to_copy)->blocks, "DOOR", 4) == 0
-			&& check_doublons(to_copy, images, 6))
+			&& !check_doublons(to_copy, images, 6))
 			args--;
 		else if (ft_strncmp((*to_copy)->blocks, "\n", 1) != 0)
 			break ;
