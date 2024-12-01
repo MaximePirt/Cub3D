@@ -11,49 +11,88 @@ int	load_texture(t_image *image, char *path, void *mlx_ptr)
 	char	**tmp;
 	int		fd;
 
-	tmp = ft_split(path, "");
+	tmp = ft_split(path, " \n");
+    if (!tmp || !tmp[1])
+		return (1);
 	image->path = ft_strdup(tmp[1]);
+    ft_printf("[%s] image path: [%s]\n",tmp[0], image->path);
 	fd = open(image->path, O_RDONLY);
 	if (fd == -1)
 	{
+        perror("Error: ca me saoule\n");
 		ft_printf("Error: invalid texture path\n");
 		return (1);
 	}
 	close(fd);
-	image->img_ptr = mlx_xpm_file_to_image(mlx_ptr, path, &image->width, &image->height);
+	image->img_ptr = mlx_xpm_file_to_image(mlx_ptr, image->path, &image->width, &image->height);
+    if (!image->img_ptr)
+    {
+        ft_fprintf(2, "Error: loading texture failed\n");
+		return (1);
+    }
 	image->img_data = mlx_get_data_addr(image->img_ptr, &image->bpp, &image->size_line, &image->endian);
+    if (!image->img_data)
+	{
+		ft_fprintf(2, "Error: getting texture data failed\n");
+                		return (1);
+    }
+    ft_tabfree(tmp);
 	return (0);
 }
+
+int str_is_charset(char *str, char *charset)
+{
+	int	i;
+    int	j;
+    int	valide;
+
+    i = 0;
+    while (str[i])
+    {
+		j = 0;
+        valide = 0;
+		while (charset[j])
+		{
+			if (str[i] == charset[j])
+				valide = 1;
+			j++;
+		}
+        if (!valide)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	fill_rgb_texture(t_rgb *items, char *value)
 {
 	char **tmp;
 	int i;
-	int	converted;
+	int	converted[4];
 
 	i = 1;
-	tmp = ft_split_quote(value, " ,", "\"");
-	if (!tmp)
+	tmp = ft_split(value, " ,\n");
+	if (!tmp || !tmp[1] || !tmp[2] || !tmp[3])
 		return (1);
 	while (tmp[i])
 	{
-		if (!ft_str_is_digit(tmp[i]))
+		if (str_is_charset(tmp[i], "0123456789,") || ft_str_count_char(value, ',') != 2
+			|| ft_count_words(value, "\n") != 1)
+		{
+			ft_printf("Error: Check your RGB settings\n");
+			return (1);
+		}
+		converted[i] = ft_atoi(tmp[i]);
+		if (converted[i] < 0 || converted[i] > 255)
 		{
 			ft_printf("Error: invalid color value\n");
 			return (1);
 		}
-		converted = ft_atoi(tmp[i]);
-		if (converted < 0 || converted > 255)
-		{
-			ft_printf("Error: invalid color value\n");
-			return (1);
-		}
-		if (i == 1)
-			items->r = converted;
-		else if (i == 2)
-		items->g = converted;
-		else if (i == 3)
-		items->b = converted;
 		i++;
 	}
+	items->r = converted[1];
+	items->g = converted[2];
+	items->b = converted[3];
+    ft_tabfree(tmp);
 	return (0);
 }

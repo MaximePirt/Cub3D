@@ -58,6 +58,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	win = ft_init_window();
+    //TODO: RETURN (1) IS TEMPORARY, NEED TO WORK ON THE EXIT WAY
 	if (load_texture(map->textures->wall_north, images[0], win->mlx_ptr) == 1)
 		return (1);
 	if (load_texture(map->textures->wall_south, images[1], win->mlx_ptr) == 1)
@@ -66,19 +67,19 @@ int	main(int argc, char **argv)
 		return (1);
 	if (load_texture(map->textures->wall_west, images[3], win->mlx_ptr) == 1)
 		return (1);
-	if (load_texture(map->textures->door, images[4], win->mlx_ptr) == 1)	
+	if (fill_rgb_texture(&map->textures->floor, images[4]) == 1)
 		return (1);
-	if (fill_rgb_texture(&map->textures->floor, images[5]) == 1)
+	if (fill_rgb_texture(&map->textures->ceiling, images[5]) == 1)
 		return (1);
-	if (fill_rgb_texture(&map->textures->ceiling, images[6]) == 1)
-		return (1);
+	if (load_texture(map->textures->door, images[6], win->mlx_ptr) == 1)
+		return (1); //TODO: Remove, it's the door
 	//	//TODO: render map
-	//	refresh(win, map);
-	//	ft_init_keymap(win, map);
-	//	mlx_loop(win->mlx_ptr);
+		refresh(win, map);
+		ft_init_keymap(win, map);
+		mlx_loop(win->mlx_ptr);
 	ft_tabfree(images);
 	ft_free_map(map->blocks, map->size_y);
-    ft_free_textures(NULL, map->textures);
+    ft_free_textures(win, map->textures);
     free(map);
 	return (0);
 }
