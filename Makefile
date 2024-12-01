@@ -20,7 +20,9 @@ NAME					= cube3d
 
 SRCS					= main.c
 
-SRCS_PARSING            = parsing.c parsing_utils.c lst_parsing/lst_pars_lib.c floodfill.c
+SRCS_PARSING            = parsing.c copy_tab_to_map.c lst_parsing/lst_pars_lib.c \
+							floodfill.c floodfill_utils.c debug_print.c check_first_lines.c
+							
 
 SRC_MEMORY				= memory_alloc.c memory_free.c window_alloc.c textures_alloc.c
 

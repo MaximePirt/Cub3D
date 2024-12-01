@@ -25,6 +25,7 @@ t_textures	*ft_init_textures(void);
 
 void		ft_free_textures(t_win *win, t_textures *textures);
 int			ft_free_program(t_key_params *params);
+void		free_parse_map(t_parse_map *map);
 
 // Player actions
 
