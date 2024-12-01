@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:48:23 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/12/01 00:48:44 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/12/01 06:13:47 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print_enum_map(t_map *map)
 	if (!map || !map->blocks)
 	{
 		fprintf(stderr, "Error: map or map->blocks is not initialized\n");
-		return;
+		return ;
 	}
 	i = 0;
 	while (i < map->size_y)

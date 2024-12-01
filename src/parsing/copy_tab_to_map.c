@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:37:19 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/12/01 02:45:31 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/12/01 06:13:37 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	fill_with_void(t_map *map, int i, int j, int max_size)
 	while (j < max_size)
 	{
 		map->blocks[i][j].type = VOID;
-        map->blocks[i][j].status = 0;
+		map->blocks[i][j].status = 0;
 		j++;
 	}
 }
@@ -126,7 +126,7 @@ int	blocks_loop(t_parse_map *to_copy, t_map **map, int i, int *player_nb)
 				to_copy->blocks[j]);
 			return (1);
 		}
-    }
+	}
 	max_size = parse_map_max_size(to_copy);
 	fill_with_void((*map), i, j, max_size);
 	return (0);
