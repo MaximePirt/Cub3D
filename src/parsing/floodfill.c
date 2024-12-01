@@ -86,7 +86,7 @@ int	flood_fill(t_map *map, int x, int y)
 	stack[pos].x = x;
 	stack[pos].y = y;
 	pos++;
-	while (pos-- >= 0)
+	while (pos-- > 0)
 	{
 		x = stack[pos].x;
 		y = stack[pos].y;

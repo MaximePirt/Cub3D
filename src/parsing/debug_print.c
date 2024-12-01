@@ -17,6 +17,11 @@ void	print_enum_map(t_map *map)
 	int	i;
 	int	j;
 
+	if (!map || !map->blocks)
+	{
+		fprintf(stderr, "Error: map or map->blocks is not initialized\n");
+		return;
+	}
 	i = 0;
 	while (i < map->size_y)
 	{

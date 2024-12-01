@@ -30,7 +30,7 @@ int	check_floodfill_end(t_map *map, int *start_y, int *start_x)
 	while (i < map->size_y)
 	{
 		j = 0;
-		while (j <= map->size_x)
+		while (j < map->size_x)
 		{
 			if (map->blocks[i][j].type == FLOOR)
 			{

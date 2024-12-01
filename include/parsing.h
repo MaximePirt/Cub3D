@@ -5,7 +5,7 @@
 
 int     	check_name(char *file);
 int			parsing_map(char *filename);
-int			check_map(t_map *map, char *filename, char ***images);
+int			check_map(t_map **map, char *filename, char ***images);
 void		find_map_start(t_parse_map **parse_map);
 
 /////////////////////////floodfill///////////////////////////
@@ -32,5 +32,6 @@ int			parse_map_max_size(t_parse_map *lst);
 //////////DEBUG////////////
 void		print_enum_map(t_map *map);
 void		print_enum_map(t_map *map);
+void		*ft_free_map(t_block **blocks, int size_y);
 
 #endif

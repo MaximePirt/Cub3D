@@ -40,7 +40,6 @@ int	main(int argc, char **argv)
 	t_map	*map;
 	char	**images;
 
-	(void)argv;
 	if (argc != 2)
 	{
 		ft_printf("Error: please provide a map file\n");
@@ -51,10 +50,9 @@ int	main(int argc, char **argv)
 		ft_fprintf(2, "Error : filename doesn't respect the subject\n");
 		return (1);	
 	}
-	
 	map = NULL;
 	images = ft_calloc(sizeof(char *), 8);
-	if (check_map(map, argv[1], &images) == 1)
+	if (check_map(&map, argv[1], &images) == 1)
 	{
 		ft_printf("Error: invalid map\n");
 		return (1);
@@ -75,6 +73,10 @@ int	main(int argc, char **argv)
 	//        ft_putstr_fd(images[i], 1);
 	//    }
 	ft_tabfree(images);
+	ft_free_map(map->blocks, map->size_y);
+    ft_free_textures(NULL, map->textures);
+    free(map);
+
 	//	win = ft_init_window();
 	//
 	//	load_texture(map->textures->wall_north, "./maps/wall.xpm",

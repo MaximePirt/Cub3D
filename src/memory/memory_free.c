@@ -1,5 +1,6 @@
 #include "cube.h"
 
+//TODO: remettre en static
 void	free_parse_map(t_parse_map *map)
 {
 	t_parse_map	*tmp;
@@ -13,7 +14,8 @@ void	free_parse_map(t_parse_map *map)
 	}
 }
 
-static void	*ft_free_map(t_block **blocks, int size_y)
+//TODO: remettre en static
+void	*ft_free_map(t_block **blocks, int size_y)
 {
 	int	i;
 

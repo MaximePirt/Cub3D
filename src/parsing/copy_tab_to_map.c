@@ -22,6 +22,14 @@
  */
 int	is_wall_floor_door(t_parse_map *to_copy, t_map *map, int i, int j)
 {
+	if (to_copy->blocks[j] == 'D')
+	{
+		map->blocks[i][j].type = DOOR;
+		map->blocks[i][j].status = 1;
+		return (1);
+	}
+	else
+		map->blocks[i][j].status = 0;
 	if (to_copy->blocks[j] == '1')
 	{
 		map->blocks[i][j].type = WALL;
@@ -35,12 +43,6 @@ int	is_wall_floor_door(t_parse_map *to_copy, t_map *map, int i, int j)
 	else if (to_copy->blocks[j] == ' ')
 	{
 		map->blocks[i][j].type = VOID;
-		return (1);
-	}
-	else if (to_copy->blocks[j] == 'D')
-	{
-		map->blocks[i][j].type = DOOR;
-		map->blocks[i][j].status = 1;
 		return (1);
 	}
 	return (0);
@@ -88,6 +90,7 @@ void	fill_with_void(t_map *map, int i, int j, int max_size)
 	while (j < max_size)
 	{
 		map->blocks[i][j].type = VOID;
+        map->blocks[i][j].status = 0;
 		j++;
 	}
 }
@@ -100,7 +103,7 @@ void	fill_with_void(t_map *map, int i, int j, int max_size)
  * @param player_nb the player number
  * @return int 1 if error, 0 if success
  */
-int	blocks_loop(t_parse_map *to_copy, t_map *map, int i, int *player_nb)
+int	blocks_loop(t_parse_map *to_copy, t_map **map, int i, int *player_nb)
 {
 	int	j;
 	int	max_size;
@@ -108,9 +111,9 @@ int	blocks_loop(t_parse_map *to_copy, t_map *map, int i, int *player_nb)
 	j = -1;
 	while (to_copy->blocks[++j])
 	{
-		if (is_wall_floor_door(to_copy, map, i, j))
+		if (is_wall_floor_door(to_copy, (*map), i, j))
 			continue ;
-		else if (is_a_player(to_copy, map, i, j))
+		else if (is_a_player(to_copy, (*map), i, j))
 		{
 			(*player_nb)++;
 			continue ;
@@ -123,9 +126,9 @@ int	blocks_loop(t_parse_map *to_copy, t_map *map, int i, int *player_nb)
 				to_copy->blocks[j]);
 			return (1);
 		}
-	}
+    }
 	max_size = parse_map_max_size(to_copy);
-	fill_with_void(map, i, j, max_size);
+	fill_with_void((*map), i, j, max_size);
 	return (0);
 }
 
@@ -152,7 +155,7 @@ int	copy_tab_to_map(t_parse_map *to_copy, t_map *map, char ***images)
 		to_copy = to_copy->next;
 	while (to_copy)
 	{
-		if (blocks_loop(to_copy, map, i, &player_nb) == 1)
+		if (blocks_loop(to_copy, &map, i, &player_nb) == 1)
 			return (1);
 		i++;
 		to_copy = to_copy->next;
