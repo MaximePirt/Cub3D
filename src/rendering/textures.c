@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   textures.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpierrot <mpierrot@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/01 04:12:29 by mpierrot          #+#    #+#             */
+/*   Updated: 2024/12/01 05:01:14 by mpierrot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cube.h"
 
 /**
@@ -64,35 +76,55 @@ int str_is_charset(char *str, char *charset)
 	return (0);
 }
 
+int	error_in_rgb(char **tmp, int i, int **converted, char *value)
+{
+	if (str_is_charset(tmp[i], "0123456789,") || ft_str_count_char(value, ',') != 2
+	  || ft_count_words(value, "\n") != 1)
+	{
+		ft_printf("Error: Check your RGB settings\n");
+		return (1);
+	}
+	(*converted)[i] = ft_atoi(tmp[i]);
+	if ((*converted)[i] < 0 || (*converted)[i] > 255)
+	{
+		ft_printf("Error: invalid color value\n");
+		return (1);
+	}
+	return (0);
+}
+
 int	fill_rgb_texture(t_rgb *items, char *value)
 {
-	char **tmp;
-	int i;
-	int	converted[4];
+	char	**tmp;
+	int		i;
+	int		*converted;
 
 	i = 1;
 	tmp = ft_split(value, " ,\n");
 	if (!tmp || !tmp[1] || !tmp[2] || !tmp[3])
 		return (1);
+    converted = malloc(5 * sizeof(int));
 	while (tmp[i])
 	{
-		if (str_is_charset(tmp[i], "0123456789,") || ft_str_count_char(value, ',') != 2
-			|| ft_count_words(value, "\n") != 1)
-		{
-			ft_printf("Error: Check your RGB settings\n");
-			return (1);
-		}
-		converted[i] = ft_atoi(tmp[i]);
-		if (converted[i] < 0 || converted[i] > 255)
-		{
-			ft_printf("Error: invalid color value\n");
-			return (1);
-		}
+        if (error_in_rgb(tmp, i, &converted, value))
+          			return (1);
+//		if (str_is_charset(tmp[i], "0123456789,") || ft_str_count_char(value, ',') != 2
+//			|| ft_count_words(value, "\n") != 1)
+//		{
+//			ft_printf("Error: Check your RGB settings\n");
+//			return (1);
+//		}
+//		converted[i] = ft_atoi(tmp[i]);
+//		if (converted[i] < 0 || converted[i] > 255)
+//		{
+//			ft_printf("Error: invalid color value\n");
+//			return (1);
+//		}
 		i++;
 	}
 	items->r = converted[1];
 	items->g = converted[2];
 	items->b = converted[3];
-    ft_tabfree(tmp);
+	ft_tabfree(tmp);
 	return (0);
 }
