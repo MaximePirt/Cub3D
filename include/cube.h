@@ -37,6 +37,7 @@ int			player_look_right(t_map *map);
 // Rendering
 
 void		refresh(t_win *win, t_map *map);
-void		load_texture(t_image *image, char *path, void *mlx_ptr);
+int			load_texture(t_image *image, char *path, void *mlx_ptr);
+int			fill_rgb_texture(t_rgb *items, char *value);
 
 #endif

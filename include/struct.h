@@ -36,7 +36,12 @@ typedef struct t_image
 	int 				height;
 }						t_image;
 
-
+typedef	struct	s_rgb
+{
+	int				r;
+	int				g;
+	int				b;
+}				t_rgb;
 typedef struct s_textures
 {
 	t_image				*wall_north;
@@ -44,6 +49,8 @@ typedef struct s_textures
 	t_image				*wall_east;
 	t_image				*wall_west;
 	t_image				*door;
+	t_rgb				floor;
+	t_rgb				ceiling;
 }						t_textures;
 
 typedef struct s_map

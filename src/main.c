@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:40:32 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/12/01 00:51:22 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/12/01 05:01:47 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,40 +57,28 @@ int	main(int argc, char **argv)
 		ft_printf("Error: invalid map\n");
 		return (1);
 	}
-	// Need that lines to parse the textures tab
-	//    for (int i = 0; images[i]; i++)
-	//    {
-	//        if (images[i] == NULL)
-	//        {
-	//            ft_printf("Error: missing texture at index [%d]\n Here is the tab\n",
-		// i);
-	//            for (int j = 0; j < 8; j++)
-	//            {
-	//                ft_putstr_fd(images[j], 1);
-	//            }
-	//            return (1);
-	//        }
-	//        ft_putstr_fd(images[i], 1);
-	//    }
-	ft_tabfree(images);
-	ft_free_map(map->blocks, map->size_y);
-    ft_free_textures(NULL, map->textures);
-    free(map);
-
-	//	win = ft_init_window();
-	//
-	//	load_texture(map->textures->wall_north, "./maps/wall.xpm",
-			// win->mlx_ptr);
-	//	load_texture(map->textures->wall_south, "./maps/wall.xpm",
-			// win->mlx_ptr);
-	//	load_texture(map->textures->wall_east, "./maps/wall.xpm", win->mlx_ptr);
-	//	load_texture(map->textures->wall_west, "./maps/wall.xpm", win->mlx_ptr);
-	//	load_texture(map->textures->door, "./maps/wall.xpm", win->mlx_ptr);
-	//
+	win = ft_init_window();
+	if (load_texture(map->textures->wall_north, images[0], win->mlx_ptr) == 1)
+		return (1);
+	if (load_texture(map->textures->wall_south, images[1], win->mlx_ptr) == 1)
+		return (1);
+	if (load_texture(map->textures->wall_east, images[2], win->mlx_ptr) == 1)
+		return (1);
+	if (load_texture(map->textures->wall_west, images[3], win->mlx_ptr) == 1)
+		return (1);
+	if (load_texture(map->textures->door, images[4], win->mlx_ptr) == 1)	
+		return (1);
+	if (fill_rgb_texture(&map->textures->floor, images[5]) == 1)
+		return (1);
+	if (fill_rgb_texture(&map->textures->ceiling, images[6]) == 1)
+		return (1);
 	//	//TODO: render map
 	//	refresh(win, map);
 	//	ft_init_keymap(win, map);
 	//	mlx_loop(win->mlx_ptr);
-
+	ft_tabfree(images);
+	ft_free_map(map->blocks, map->size_y);
+    ft_free_textures(NULL, map->textures);
+    free(map);
 	return (0);
 }
