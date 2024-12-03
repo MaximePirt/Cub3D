@@ -19,6 +19,7 @@ static t_block	**ft_alloc_map(int size_x, int size_y)
 			free(map);
 			return (NULL);
 		}
+		map[i] = ft_memset(map[i], 0, sizeof(t_block) * size_x);
 	}
 	return (map);
 }

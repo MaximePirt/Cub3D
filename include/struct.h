@@ -7,7 +7,8 @@ typedef enum s_block_type
 	VOID,
 	FLOOR,
 	WALL,
-	DOOR
+	DOOR,
+	FILL
 }	t_block_type;
 
 typedef struct s_vector2
@@ -41,7 +42,12 @@ typedef struct t_image
 	int 				height;
 }						t_image;
 
-
+typedef	struct	s_rgb
+{
+	int				r;
+	int				g;
+	int				b;
+}				t_rgb;
 typedef struct s_textures
 {
 	t_image				*wall_north;
@@ -49,6 +55,8 @@ typedef struct s_textures
 	t_image				*wall_east;
 	t_image				*wall_west;
 	t_image				*door;
+	t_rgb				floor;
+	t_rgb				ceiling;
 }						t_textures;
 
 typedef struct s_map
@@ -66,5 +74,11 @@ typedef struct s_parse_map
     char				*blocks;
     struct s_parse_map	*next;
 }						t_parse_map;
+
+typedef	struct s_stack
+{
+	int					x;
+	int					y;
+}						t_stack;
 
 #endif

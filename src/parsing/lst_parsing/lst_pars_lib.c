@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   lst_pars_lib.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpierrot <mpierrot@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 00:39:38 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/11/24 00:39:38 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/12/01 00:52:02 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
 /**
-* @brief Create a new parse map
-* @param block the block to add to the parse map
-* @return t_parse_map*
-*/
+ * @brief Create a new parse map
+ * @param block the block to add to the parse map
+ * @return t_parse_map*
+ */
 t_parse_map	*parse_map_new(char *block)
 {
 	t_parse_map	*new;
@@ -37,10 +37,10 @@ t_parse_map	*parse_map_new(char *block)
 }
 
 /**
-* @brief Get the last parse map
-* @param lst the parse map
-* @return t_parse_map*
-*/
+ * @brief Get the last parse map
+ * @param lst the parse map
+ * @return t_parse_map*
+ */
 t_parse_map	*parsemaplast(t_parse_map *lst)
 {
 	if (!lst)
@@ -55,10 +55,10 @@ t_parse_map	*parsemaplast(t_parse_map *lst)
 }
 
 /**
-* @brief Add a new parse map to the end of the list
-* @param lst the parse map
-* @param new the new parse map to add
-*/
+ * @brief Add a new parse map to the end of the list
+ * @param lst the parse map
+ * @param new the new parse map to add
+ */
 void	parse_map_addback(t_parse_map **lst, t_parse_map *new)
 {
 	t_parse_map	*tmp;
@@ -75,13 +75,13 @@ void	parse_map_addback(t_parse_map **lst, t_parse_map *new)
 }
 
 /**
-* @brief Parse map size
-* @param lst the parse map
-* @return int
-*/
+ * @brief Parse map size
+ * @param lst the parse map
+ * @return int
+ */
 int	parse_map_size(t_parse_map *lst)
 {
-	int		i;
+	int			i;
 	t_parse_map	*tmp;
 
 	tmp = lst;
@@ -96,41 +96,16 @@ int	parse_map_size(t_parse_map *lst)
 
 int	parse_map_max_size(t_parse_map *lst)
 {
-  t_parse_map	*tmp;
-  int			i;
+	t_parse_map	*tmp;
+	int			i;
 
-  i = 0;
-  tmp = lst;
-  while (tmp)
-  {
-	if (tmp->blocks_len > i)
-		i = tmp->blocks_len;
-	tmp = tmp->next;
-  }
-  return (i);
-}
-
-/**
-* @brief Print the parsed map
-*	TODO: Delet, this function is only for debug
-*/
-void	print_parse_map(t_parse_map *map)
-{
-	t_parse_map *tmp;
-
-	tmp = map;
-	ft_printf("\n\n////////////DEBUG MAP/////////////\n");
+	i = 0;
+	tmp = lst;
 	while (tmp)
 	{
-		ft_printf("%s", tmp->blocks);
+		if (tmp->blocks_len > i)
+			i = tmp->blocks_len;
 		tmp = tmp->next;
 	}
-    tmp = map;
-	ft_printf("\n\n////////////DEBUG  LEN/////////////\n");
-    while (tmp)
-     {
-		 ft_printf("len [%d]\n", tmp->blocks_len);
-		 tmp = tmp->next;
-	 }
-	return ;
+	return (i);
 }

@@ -1,85 +1,107 @@
-//#include "cube.h"
-//
-//void	copy_map_to_mapfill(t_map *map)
-//{
-//    size_t	i;
-//
-//    map->map_fill = ft_calloc(sizeof(char *), (map->size_y + 1));
-//    if (!map->map_fill)
-//        exit_func(0, map, NULL, 3);
-//    i = 0;
-//    while (map->map[i])
-//    {
-//        map->map_fill[i] = ft_strdup(map->map[i]);
-//        map->map_fill[i][map->size_x - 1] = '\0';
-//        i++;
-//    }
-//    return ;
-//}
-//
-//void	clean_flood(t_map *map)
-//{
-//    t_componentlst	*tmp;
-//
-//    free_tab(map->map_fill);
-//    tmp = map->component_data->lst_component;
-//    map->component_data->lst_component = map->component_data->lst_component->next;
-//    free(tmp);
-//    map->map_fill = NULL;
-//    tmp = NULL;
-//}
-//
-//int	hm_compo(char **tab)
-//{
-//    int	i;
-//    int	a;
-//    int	compo;
-//
-//    i = 0;
-//    a = 0;
-//    compo = 0;
-//    while (tab[a])
-//    {
-//        while (tab[a][i])
-//        {
-//            if (tab[a][i] != '1' && tab[a][i] != '0' && tab[a][i] != 'C'
-//                && tab[a][i] != 'E' && tab[a][i] != 'P' && tab[a][i] != 'G'
-//                && tab[a][i] != 'K' && tab[a][i] != 'N' && tab[a][i] != '\n')
-//                exit_func(0, NULL, tab, 4);
-//            if (tab[a][i] == 'C' || tab[a][i] == 'E' || tab[a][i] == 'P'
-//                || tab[a][i] == 'G')
-//                compo++;
-//            i++;
-//        }
-//        i = 0;
-//        a++;
-//    }
-//    return (compo);
-//}
-//
-//void	exit_func(int fd, t_map *lst, char **tab, int error_code)
-//{
-//    ft_putstr_fd("Error\n", 2);
-//    send_error(error_code);
-//    if (fd)
-//        close(fd);
-//    if (lst)
-//    {
-//        if (lst->component_data->lst_component)
-//            ft_t_compolstclear(lst->component_data->lst_component);
-//        if (lst->component_data)
-//            free(lst->component_data);
-//        if (lst->map)
-//            free_tab(lst->map);
-//        if (lst->map_fill)
-//            free_tab(lst->map_fill);
-//        free(lst);
-//        lst = NULL;
-//    }
-//    if (tab)
-//    {
-//        free_tab(tab);
-//        tab = NULL;
-//    }
-//    exit(EXIT_FAILURE);
-//}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   floodfill_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/01 00:35:39 by mpierrot          #+#    #+#             */
+/*   Updated: 2024/12/01 02:44:59 by mpierrot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cube.h"
+
+/**
+ * @brief Check if the flood fill is done
+ * @param map the map
+ * @param start_y the start y
+ * @param start_x the start x
+ * @return int
+ */
+int	check_floodfill_end(t_map *map, int *start_y, int *start_x)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	ft_printf("Checking...\n");
+	while (i < map->size_y)
+	{
+		j = 0;
+		while (j < map->size_x)
+		{
+			if (map->blocks[i][j].type == FLOOR)
+			{
+				*start_y = i;
+				*start_x = j;
+				ft_printf("\n\nFind a pb, here is the map \n\n------\n\n");
+				print_enum_map(map);
+				ft_printf("\n\n");
+				return (1);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+void	restore_map(t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < map->size_y)
+	{
+		j = 0;
+		while (j < map->size_x)
+		{
+			if (map->blocks[i][j].type == FILL && map->blocks[i][j].status == 0)
+				map->blocks[i][j].type = FLOOR;
+			else if (map->blocks[i][j].type == FILL
+				&& map->blocks[i][j].status == 1)
+				map->blocks[i][j].type = DOOR;
+			j++;
+		}
+		i++;
+	}
+	return ;
+}
+
+/**
+ * @brief Flood fill algorithm to fill the map
+ * @param map the map
+ * @return t_map*
+ * TODO: remove debug print
+ */
+int	preptoflood(t_map *map)
+{
+	int	component;
+	int	start_y;
+	int	start_x;
+
+	start_y = map->player.y;
+	start_x = map->player.x;
+	if (flood_fill(map, start_y, start_x))
+	{
+		ft_fprintf(2, "Flood fill failed\n");
+		return (1);
+	}
+	while (check_floodfill_end(map, &start_y, &start_x))
+	{
+		if (flood_fill(map, start_y, start_x))
+		{
+			ft_fprintf(2, "Flood fill failed\n");
+			return (1);
+		}
+	}
+	ft_printf("After floodfill\n");
+	print_enum_map(map);
+	restore_map(map);
+	ft_printf("After restore\n");
+	print_enum_map(map);
+	return (0);
+}

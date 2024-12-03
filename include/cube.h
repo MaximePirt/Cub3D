@@ -25,6 +25,7 @@ t_textures	*ft_init_textures(void);
 
 void		ft_free_textures(t_win *win, t_textures *textures);
 int			ft_free_program(t_key_params *params);
+void		free_parse_map(t_parse_map *map);
 
 // Player actions
 
@@ -36,6 +37,7 @@ int			player_look_right(t_map *map);
 // Rendering
 
 void		refresh(t_win *win, t_map *map);
+int			fill_rgb_texture(t_rgb *items, char *value);
 void		load_texture(t_image *image, char *path, void *mlx_ptr);
 void		ft_draw_pixel(t_win *win, int x, int y, int color);
 void		draw_square(t_win *win, t_vector2 pos, int size, int color);
