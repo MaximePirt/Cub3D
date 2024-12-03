@@ -26,7 +26,7 @@ SRC_MEMORY				= memory_alloc.c memory_free.c window_alloc.c textures_alloc.c
 
 SRC_GAME				= keymap.c player.c
 
-SRC_RENDERING			= rendering.c textures.c
+SRC_RENDERING			= rendering.c textures.c drawer.c vectors.c
 
 #############################################################################
 #									FOLDERS									#

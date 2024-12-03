@@ -19,6 +19,9 @@ static void	fill_map_test(t_map *map)
 		}
 		i++;
 	}
+	map->player.x = map->size_x / 2;
+	map->player.y = map->size_y / 2;
+	map->player.dir = 0;
 }
 
 int	main(int argc, char **argv)
@@ -34,8 +37,8 @@ int	main(int argc, char **argv)
 	}
 
 	//TODO: parse map file
-	map = ft_init_map(5, 5);
-	//fill_map_test(map);
+	map = ft_init_map(10, 10);
+	fill_map_test(map);
 	win = ft_init_window();
 
 	load_texture(map->textures->wall_north, "./maps/wall.xpm", win->mlx_ptr);

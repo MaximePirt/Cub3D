@@ -10,6 +10,12 @@ typedef enum s_block_type
 	DOOR
 }	t_block_type;
 
+typedef struct s_vector2
+{
+	double				x;
+	double				y;
+}						t_vector2;
+
 typedef struct s_player
 {
 	double				x;
