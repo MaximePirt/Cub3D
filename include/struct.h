@@ -41,7 +41,8 @@ typedef struct t_image
 	int 				height;
 }						t_image;
 
-typedef struct t_textures
+
+typedef struct s_textures
 {
 	t_image				*wall_north;
 	t_image				*wall_south;
@@ -58,5 +59,12 @@ typedef struct s_map
 	int					size_x;
 	int					size_y;
 }						t_map;
+
+typedef struct s_parse_map
+{
+  	int					blocks_len;
+    char				*blocks;
+    struct s_parse_map	*next;
+}						t_parse_map;
 
 #endif

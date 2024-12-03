@@ -32,13 +32,25 @@ int	main(int argc, char **argv)
 	(void)argv;
 	if (argc != 2)
 	{
-		printf("Error: please provide a map file\n");
+		ft_printf("Error: please provide a map file\n");
 		return (1);
 	}
+	if (parsing_map(argv[1]))
+          return (1);
+  map = NULL;
+  if (check_map(map, argv[1]))
+	{
+      ft_printf("Error: invalid map\n");
+      return (1);
+	}
 
+<<<<<<< HEAD
 	//TODO: parse map file
 	map = ft_init_map(10, 10);
 	fill_map_test(map);
+=======
+	map = ft_init_map(5, 5);
+>>>>>>> cd5ddde025bf88651100b2b20c2f0eedc2aa94e0
 	win = ft_init_window();
 
 	load_texture(map->textures->wall_north, "./maps/wall.xpm", win->mlx_ptr);
@@ -51,5 +63,6 @@ int	main(int argc, char **argv)
 	refresh(win, map);
 	ft_init_keymap(win, map);
 	mlx_loop(win->mlx_ptr);
+
 	return (0);
 }
