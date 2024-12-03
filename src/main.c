@@ -44,13 +44,7 @@ int	main(int argc, char **argv)
       return (1);
 	}
 
-<<<<<<< HEAD
-	//TODO: parse map file
-	map = ft_init_map(10, 10);
-	fill_map_test(map);
-=======
 	map = ft_init_map(5, 5);
->>>>>>> cd5ddde025bf88651100b2b20c2f0eedc2aa94e0
 	win = ft_init_window();
 
 	load_texture(map->textures->wall_north, "./maps/wall.xpm", win->mlx_ptr);
