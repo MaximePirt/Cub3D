@@ -37,7 +37,12 @@ int			player_look_right(t_map *map);
 // Rendering
 
 void		refresh(t_win *win, t_map *map);
-int			load_texture(t_image *image, char *path, void *mlx_ptr);
 int			fill_rgb_texture(t_rgb *items, char *value);
+void		load_texture(t_image *image, char *path, void *mlx_ptr);
+void		ft_draw_pixel(t_win *win, int x, int y, int color);
+void		draw_square(t_win *win, t_vector2 pos, int size, int color);
+void		draw_circle(t_win *win, t_vector2 pos, int radius, int color);
+void		draw_hollow_circle(t_win *win, t_vector2 pos, int radius, int line_width, int color);
+t_vector2	ft_vector2(double x, double y);
 
 #endif
