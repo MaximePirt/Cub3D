@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:35:55 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/12/01 00:47:44 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:57:18 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,19 @@ static void	manage_stack(t_stack *stack, int x, int y, int *pos)
  * @return int : 0 if the block is valid, 1 if the block is next to a void,
  *	2 if the block is invalid
  */
-static int	floodfill_blocks_management(int x, int y,
-	t_map *map, t_stack *stack)
+static int	floodfill_blocks_management(int x, int y, t_map *map,
+		t_stack *stack)
 {
-	if (x < 0 || x >= map->size_y || y < 0 || y >= map->size_x
-		|| !map->blocks[x][y].type || map->blocks[x][y].type == WALL
-		|| map->blocks[x][y].type == FILL)
+	if (x >= map->size_y || y >= map->size_x || !map->blocks[x][y].type
+		|| map->blocks[x][y].type == WALL || map->blocks[x][y].type == FILL)
 		return (2);
 	if (map->blocks[x + 1][y].type == VOID || map->blocks[x - 1][y].type == VOID
 		|| map->blocks[x][y + 1].type == VOID || map->blocks[x][y
-		- 1].type == VOID)
+		- 1].type == VOID || !map->blocks[x - 1][y].type || !map->blocks[x][y
+		- 1].type)
 	{
+		ft_printf("Error: map is not closed here %d %d\n", x, y);
+		print_enum_map(map);
 		free(stack);
 		return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:35:39 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/12/01 02:44:59 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:47:37 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,18 @@ int	check_floodfill_end(t_map *map, int *start_y, int *start_x)
 		j = 0;
 		while (j < map->size_x)
 		{
-			if (map->blocks[i][j].type == FLOOR)
+			if (map->blocks[i][j].type == FLOOR
+				|| map->blocks[i][j].type == DOOR)
 			{
 				*start_y = i;
 				*start_x = j;
-				ft_printf("\n\nFind a pb, here is the map \n\n------\n\n");
+				printf("\n\nFind a pb,"
+					"here [%d][%d] | type [%d]\n the map \n\n------\n\n", i, j, map->blocks[i][j].type);
 				print_enum_map(map);
 				ft_printf("\n\n");
 				return (1);
 			}
-			j++;
+			j+=1;
 		}
 		i++;
 	}
