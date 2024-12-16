@@ -54,10 +54,11 @@ static int	floodfill_blocks_management(int x, int y, t_map *map,
 	if (x >= map->size_y || y >= map->size_x || !map->blocks[x][y].type
 		|| map->blocks[x][y].type == WALL || map->blocks[x][y].type == FILL)
 		return (2);
-	if (map->blocks[x + 1][y].type == VOID || map->blocks[x - 1][y].type == VOID
+	if (!map->blocks[x - 1] || !map->blocks[x][y
+		- 1].type || (map->blocks[x+1] && map->blocks[x + 1][y].type == VOID)
+		||  map->blocks[x - 1][y].type == VOID
 		|| map->blocks[x][y + 1].type == VOID || map->blocks[x][y
-		- 1].type == VOID || !map->blocks[x - 1][y].type || !map->blocks[x][y
-		- 1].type)
+		- 1].type == VOID)
 	{
 		ft_printf("Error: map is not closed here %d %d\n", x, y);
 		print_enum_map(map);
@@ -81,6 +82,8 @@ int	flood_fill(t_map *map, int x, int y)
 	int		pos;
 	int		block_management;
 
+	if (x <= 0 || y <= 0 || x >= map->size_y || y >= map->size_x)
+	    return (1);
 	stack = malloc(sizeof(t_stack) * map->size_x * map->size_y);
 	if (!stack)
 		return (1);

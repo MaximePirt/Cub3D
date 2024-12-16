@@ -8,7 +8,8 @@ typedef enum s_block_type
 	FLOOR,
 	WALL,
 	DOOR,
-	FILL
+	FILL,
+	NOTHING
 }	t_block_type;
 
 typedef struct s_vector2
