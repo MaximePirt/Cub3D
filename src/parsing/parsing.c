@@ -29,15 +29,23 @@ int	check_map(t_map **map, char *filename, char ***images)
 		return (1);
 	tmp = parse_map;
 	find_map_start(&tmp);
-	printf("parse_map_size : %d\n", parse_map_size(tmp));
-	printf("parse_map_max_size : %d\n", parse_map_max_size(tmp));
 	(*map) = ft_init_map(parse_map_max_size(tmp), parse_map_size(tmp));
-	if (map == NULL)
+	if ((*map) == NULL)
+	{
+		free_parse_map(parse_map);
 		return (1);
+	}
 	if (copy_tab_to_map(parse_map, (*map), images))
+	{
+
+		free_parse_map(parse_map);
 		return (1);
+	}
 	if (preptoflood((*map)))
+	{
+		free_parse_map(parse_map);
 		return (1);
+	}
 	free_parse_map(parse_map);
 	return (0);
 }

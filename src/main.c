@@ -56,10 +56,11 @@ int	main(int argc, char **argv)
 	images = ft_calloc(sizeof(char *), 8);
 	if (check_map(&map, argv[1], &images) == 1)
 	{
+		ft_tabfree(images);
 		ft_printf("Error: invalid map\n");
 		return (1);
 	}
-	// win = ft_init_window();
+	win = ft_init_window();
     //TODO: RETURN (1) IS TEMPORARY, NEED TO WORK ON THE EXIT WAY
 	// if (load_texture(map->textures->wall_north, images[0], win->mlx_ptr) == 1)
 	// 	return (1);
