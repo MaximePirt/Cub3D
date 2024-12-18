@@ -41,7 +41,7 @@ void	draw_minimap_player(t_image *image, int zoom)
 	);
 }
 
-t_image	*draw_minimap(t_map *map, void *mlx_ptr, int zoom)
+t_image	*draw_minimap(t_map *map, void *mlx_ptr)
 {
 	t_image	*image;
 	int		i;
@@ -50,7 +50,7 @@ t_image	*draw_minimap(t_map *map, void *mlx_ptr, int zoom)
 	double		end_x, end_y;
 	double		offset_x, offset_y;
 
-	image = ft_init_image(mlx_ptr, MINIMAP_RENDER_DISTANCE * zoom, MINIMAP_RENDER_DISTANCE * zoom);
+	image = ft_init_image(mlx_ptr, MINIMAP_RENDER_DISTANCE * map->minimap_zoom, MINIMAP_RENDER_DISTANCE * map->minimap_zoom);
 	if (!image)
 		return (NULL);
 
@@ -65,22 +65,22 @@ t_image	*draw_minimap(t_map *map, void *mlx_ptr, int zoom)
 		i = start_x;
 		while (i < end_x)
 		{
-			offset_x = (i - start_x) * zoom;
-			offset_y = (j - start_y) * zoom;
+			offset_x = (i - start_x) * map->minimap_zoom;
+			offset_y = (j - start_y) * map->minimap_zoom;
 			if (i >= 0 && i < map->size_x && j >= 0 && j < map->size_y)
 			{
 				if (map->blocks[j][i].type == WALL)
-					draw_square(image, ft_vector2(offset_x, offset_y), zoom, HEX_BLACK);
+					draw_square(image, ft_vector2(offset_x, offset_y), map->minimap_zoom, HEX_BLACK);
 				else
-					draw_square(image, ft_vector2(offset_x, offset_y), zoom, HEX_WHITE);
+					draw_square(image, ft_vector2(offset_x, offset_y), map->minimap_zoom, HEX_WHITE);
 			}
 			else
-				draw_square(image, ft_vector2(offset_x, offset_y), zoom, HEX_BLACK);
+				draw_square(image, ft_vector2(offset_x, offset_y), map->minimap_zoom, HEX_BLACK);
 			i++;
 		}
 		j++;
 	}
-	draw_minimap_player(image, zoom);
-	draw_minimap_rays(map, image, zoom);
+	draw_minimap_player(image, map->minimap_zoom);
+	draw_minimap_rays(map, image, map->minimap_zoom);
 	return (image);
 }

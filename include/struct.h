@@ -77,6 +77,7 @@ typedef struct s_map
 	int					size_x;
 	int					size_y;
 	t_ray				*rays;
+	int 				minimap_zoom;
 }						t_map;
 
 typedef struct s_parse_map
