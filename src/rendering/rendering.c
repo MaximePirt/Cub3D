@@ -1,6 +1,6 @@
 #include "cube.h"
 
-void	paste_image_on_image(t_win *win, t_image *image, int x, int y)
+void	paste_image_on_screen(t_win *win, t_image *image, t_vector2 pos)
 {
 	int i;
 	int j;
@@ -13,60 +13,83 @@ void	paste_image_on_image(t_win *win, t_image *image, int x, int y)
 		while (j < image->height)
 		{
 			color = *(int *)(image->img_data + (i * image->bpp / 8) + (j * image->size_line));
-			ft_draw_pixel(win, x + i, y + j, color);
+
+			if (pos.x < 0 || pos.x >= SCREEN_WIDTH || pos.y < 0 || pos.y >= SCREEN_HEIGHT)
+				return ;
+			*(int *)(win->img_data + ((int)pos.x + i) * win->bpp / 8 + ((int)pos.y + j) * win->size_line) = color;
 			j++;
 		}
 		i++;
 	}
 }
 
-/**
- * @brief Generate a mini map to show what's around the player.
- * 			The distance limit is 15 blocks.
- * 			The mini map is 30x30 blocks.
- * 				- 10 pixels per block
- * 			The mini map is centered on the player.
- * 			The mini map will be drawn in the top left corner of the screen.
- *
- * @param win
- * @param map
- */
-void	draw_mini_map(t_win *win, t_map *map, int distance)
+t_image	*draw_mini_map(t_map *map, void *mlx_ptr, int zoom, int size)
 {
-	int i;
-	int j;
-	int x;
-	int y;
+	t_image	*image;
+	int		i;
+	int		j;
+	double		start_x, start_y;
+	double		end_x, end_y;
+	double		offset_x, offset_y;
 
-	i = map->player.x - distance;
-	while (i < map->player.x + distance)
+	image = ft_init_image(mlx_ptr, size * zoom, size * zoom);
+	if (!image)
+		return (NULL);
+
+	start_x = map->player.x - (size / 2);
+	start_y = map->player.y - (size / 2);
+	end_x = start_x + size;
+	end_y = start_y + size;
+
+	j = start_y;
+	while (j < end_y)
 	{
-		j = map->player.y - distance;
-		while (j < map->player.y + distance)
+		i = start_x;
+		while (i < end_x)
 		{
-			x = (i - map->player.x + distance) * 10;
-			y = (j - map->player.y + distance) * 10;
+			offset_x = (i - start_x) * zoom;
+			offset_y = (j - start_y) * zoom;
 			if (i >= 0 && i < map->size_x && j >= 0 && j < map->size_y)
 			{
 				if (map->blocks[j][i].type == WALL)
-					draw_square(win, ft_vector2(x, y), 10, HEX_BLACK);
+					draw_square(image, ft_vector2(offset_x, offset_y), zoom, HEX_BLACK);
 				else
-					draw_square(win, ft_vector2(x, y), 10, HEX_WHITE);
+					draw_square(image, ft_vector2(offset_x, offset_y), zoom, HEX_WHITE);
 			}
 			else
-				draw_square(win, ft_vector2(x, y), 10, HEX_BLACK);
-			j++;
+				draw_square(image, ft_vector2(offset_x, offset_y), zoom, HEX_BLACK);
+			i++;
 		}
-		i++;
+		j++;
 	}
-	draw_circle(win, ft_vector2(150, 150), 5, HEX_RED);
-	// set transparency to 0x00 for a hollow circle
-	draw_hollow_circle(win, ft_vector2(50, 50), 100, 10, 0xff0000f2);
+	draw_circle(image,
+				ft_vector2((size / 2) * zoom, (size / 2) * zoom),
+				zoom / 3,
+				HEX_RED
+	);
+	return (image);
 }
 
+
+/**
+ * @brief Refresh the screen with the new image.
+ *
+ * @param t_win *win The window to refresh.
+ * @param t_map *map The map to render.
+ */
 void	refresh(t_win *win, t_map *map)
 {
-	paste_image_on_image(win, map->textures->wall_north, 0, 0);
-	draw_mini_map(win, map, 15);
+	int		zoom;
+	int		size;
+	t_image	*minimap;
+
+	zoom = 20;
+	size = 15;
+	minimap = draw_mini_map(map, win->mlx_ptr, zoom, size);
+	if (!minimap)
+		return;
+	paste_image_on_screen(win, minimap, ft_vector2(0, 0));
 	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img_ptr, 0, 0);
+	mlx_destroy_image(win->mlx_ptr, minimap->img_ptr);
+	free(minimap);
 }

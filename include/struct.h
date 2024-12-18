@@ -17,19 +17,6 @@ typedef struct s_vector2
 	double				y;
 }						t_vector2;
 
-typedef struct s_player
-{
-	double				x;
-	double				y;
-	double				dir;
-}						t_player;
-
-typedef struct s_block
-{
-	t_block_type 		type;
-	int					status;
-}						t_block;
-
 typedef struct t_image
 {
 	char 				*path;
@@ -41,6 +28,20 @@ typedef struct t_image
 	int 				width;
 	int 				height;
 }						t_image;
+
+typedef struct s_player
+{
+	double				x;
+	double				y;
+	double				dir;
+	t_image				*texture;
+}						t_player;
+
+typedef struct s_block
+{
+	t_block_type 		type;
+	int					status;
+}						t_block;
 
 typedef	struct	s_rgb
 {

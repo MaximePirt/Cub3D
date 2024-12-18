@@ -31,6 +31,7 @@ static t_player	ft_init_player(void)
 	player.x = 0;
 	player.y = 0;
 	player.dir = 0;
+	player.texture = NULL;
 	return (player);
 }
 

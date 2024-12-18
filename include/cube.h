@@ -20,6 +20,7 @@ t_map		*ft_init_map(int size_x, int size_y);
 t_block		*ft_init_block(void);
 t_win		*ft_init_window(void);
 t_textures	*ft_init_textures(void);
+t_image 	*ft_init_image(void *mlx_ptr, int width, int height);
 
 // Memory free
 
@@ -38,11 +39,12 @@ int			player_look_right(t_map *map);
 
 void		refresh(t_win *win, t_map *map);
 int			fill_rgb_texture(t_rgb *items, char *value);
-void		load_texture(t_image *image, char *path, void *mlx_ptr);
-void		ft_draw_pixel(t_win *win, int x, int y, int color);
-void		draw_square(t_win *win, t_vector2 pos, int size, int color);
-void		draw_circle(t_win *win, t_vector2 pos, int radius, int color);
-void		draw_hollow_circle(t_win *win, t_vector2 pos, int radius, int line_width, int color);
+int			load_texture(t_image *image, char *path, void *mlx_ptr);
+void		ft_draw_pixel_on_image(t_image *image, int x, int y, int color);
+void		ft_draw_pixel_on_screen(t_win *win, int x, int y, int color);
+void		draw_square(t_image *image, t_vector2 pos, int size, int color);
+void		draw_circle(t_image *image, t_vector2 pos, int radius, int color);
+void		draw_hollow_circle(t_image *image, t_vector2 pos, int radius, int line_width, int color);
 t_vector2	ft_vector2(double x, double y);
 
 #endif
