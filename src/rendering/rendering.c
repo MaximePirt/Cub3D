@@ -101,6 +101,8 @@ void	refresh(t_win *win, t_map *map)
 	t_image	*minimap;
 
 	zoom = 20;
+	/////////
+
 	minimap = draw_minimap(map, win->mlx_ptr, zoom);
 	if (!minimap)
 		return;
