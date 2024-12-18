@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:40:32 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/12/01 05:01:47 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/12/10 21:47:47 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	main(int argc, char **argv)
 	images = ft_calloc(sizeof(char *), 8);
 	if (check_map(&map, argv[1], &images) == 1)
 	{
+		ft_tabfree(images);
 		ft_printf("Error: invalid map\n");
 		return (1);
 	}

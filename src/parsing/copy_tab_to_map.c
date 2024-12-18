@@ -28,7 +28,7 @@ int	is_wall_floor_door(t_parse_map *to_copy, t_map *map, int i, int j)
 		map->blocks[i][j].status = 1;
 		return (1);
 	}
-	else
+	if (!map->blocks[i][j].status)
 		map->blocks[i][j].status = 0;
 	if (to_copy->blocks[j] == '1')
 	{

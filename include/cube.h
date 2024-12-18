@@ -45,6 +45,7 @@ void		ft_draw_pixel_on_screen(t_win *win, int x, int y, int color);
 void		draw_square(t_image *image, t_vector2 pos, int size, int color);
 void		draw_circle(t_image *image, t_vector2 pos, int radius, int color);
 void		draw_hollow_circle(t_image *image, t_vector2 pos, int radius, int line_width, int color);
+
 t_vector2	ft_vector2(double x, double y);
 
 #endif
