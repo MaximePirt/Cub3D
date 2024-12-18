@@ -52,13 +52,10 @@ int	main(int argc, char **argv)
 		return (1);
 	if (load_texture(map->textures->door, images[6], win->mlx_ptr) == 1)
 		return (1); //TODO: Remove, it's the door
-	//	//TODO: render map
-		refresh(win, map);
-		ft_init_keymap(win, map);
-		mlx_loop(win->mlx_ptr);
 	ft_tabfree(images);
-	ft_free_map(map->blocks, map->size_y);
-    ft_free_textures(win, map->textures);
-    free(map);
+	//	//TODO: render map
+	refresh(win, map);
+	ft_init_keymap(win, map);
+	mlx_loop(win->mlx_ptr);
 	return (0);
 }

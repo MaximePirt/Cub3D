@@ -37,10 +37,6 @@ int	check_floodfill_end(t_map *map, int *start_y, int *start_x)
 			{
 				*start_y = i;
 				*start_x = j;
-				printf("\n\nFind a pb,"
-					"here [%d][%d] | type [%d]\n the map \n\n------\n\n", i, j, map->blocks[i][j].type);
-				print_enum_map(map);
-				ft_printf("\n\n");
 				return (1);
 			}
 			j+=1;

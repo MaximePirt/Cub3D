@@ -23,11 +23,11 @@ SRCS					= main.c
 SRCS_PARSING            = parsing.c copy_tab_to_map.c lst_parsing$(DIRSEP)lst_pars_lib.c \
 							floodfill.c floodfill_utils.c debug_print.c check_first_lines.c 
 
-SRC_MEMORY				= memory_alloc.c memory_free.c window_alloc.c textures_alloc.c image_alloc.c
+SRC_MEMORY				= memory_alloc.c memory_free.c window_alloc.c textures_alloc.c image_alloc.c ray_alloc.c ray_free.c
 
 SRC_GAME				= keymap.c player.c
 
-SRC_RENDERING			= rendering.c textures.c vectors.c drawer$(DIRSEP)brushs.c \
+SRC_RENDERING			= rendering.c textures.c vectors.c minimap.c drawer$(DIRSEP)brushs.c \
 							drawer$(DIRSEP)shapes$(DIRSEP)circle.c drawer$(DIRSEP)shapes$(DIRSEP)hollow_circle.c \
 							drawer$(DIRSEP)shapes$(DIRSEP)square.c
 

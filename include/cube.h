@@ -21,12 +21,14 @@ t_block		*ft_init_block(void);
 t_win		*ft_init_window(void);
 t_textures	*ft_init_textures(void);
 t_image 	*ft_init_image(void *mlx_ptr, int width, int height);
+t_ray		*ft_init_rays(void);
 
 // Memory free
 
 void		ft_free_textures(t_win *win, t_textures *textures);
 int			ft_free_program(t_key_params *params);
 void		free_parse_map(t_parse_map *map);
+void		*ft_free_rays(t_ray *rays);
 
 // Player actions
 
@@ -46,6 +48,10 @@ void		ft_draw_line(t_image *image, t_line line);
 void		draw_square(t_image *image, t_vector2 pos, int size, int color);
 void		draw_circle(t_image *image, t_vector2 pos, int radius, int color);
 void		draw_hollow_circle(t_image *image, t_vector2 pos, int radius, int line_width, int color);
+
+// Minimap
+
+t_image		*draw_minimap(t_map *map, void *mlx_ptr, int zoom);
 
 // Vectors
 t_vector2	ft_vector2(double x, double y);

@@ -121,5 +121,6 @@ int	fill_rgb_texture(t_rgb *items, char *value)
 	items->g = converted[2];
 	items->b = converted[3];
 	ft_tabfree(tmp);
+	free(converted);
 	return (0);
 }

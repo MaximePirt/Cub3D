@@ -35,18 +35,6 @@ static t_player	ft_init_player(void)
 	return (player);
 }
 
-t_block	*ft_init_block(void)
-{
-	t_block	*block;
-
-	block = (t_block *)malloc(sizeof(t_block));
-	if (block == NULL)
-		return (NULL);
-	block->type = VOID;
-	block->status = 0;
-	return (block);
-}
-
 t_map	*ft_init_map(int size_x, int size_y)
 {
 	t_map	*map;
@@ -70,5 +58,6 @@ t_map	*ft_init_map(int size_x, int size_y)
 	}
 	map->size_x = size_x;
 	map->size_y = size_y;
+	map->rays = ft_init_rays();
 	return (map);
 }
