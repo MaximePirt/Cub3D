@@ -36,6 +36,7 @@ int	main(int argc, char **argv)
 		ft_fprintf(STDERR_FILENO, "Error: invalid map\n");
 		return (1);
 	}
+  
 	win = ft_init_window();
     //TODO: RETURN (1) IS TEMPORARY, NEED TO WORK ON THE EXIT WAY
 	if (load_texture(map->textures->wall_north, images[0], win->mlx_ptr) == 1)
@@ -52,6 +53,7 @@ int	main(int argc, char **argv)
 		return (1);
 	if (load_texture(map->textures->door, images[6], win->mlx_ptr) == 1)
 		return (1); //TODO: Remove, it's the door
+
 	ft_tabfree(images);
 	//	//TODO: render map
 	refresh(win, map);
