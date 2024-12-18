@@ -21,7 +21,7 @@ NAME					= cube3d
 SRCS					= main.c
 
 SRCS_PARSING            = parsing.c copy_tab_to_map.c lst_parsing$(DIRSEP)lst_pars_lib.c \
-							floodfill.c floodfill_utils.c debug_print.c check_first_lines.c 
+							floodfill.c floodfill_utils.c check_first_lines.c
 
 SRC_MEMORY				= memory_alloc.c memory_free.c window_alloc.c textures_alloc.c image_alloc.c ray_alloc.c ray_free.c
 
@@ -65,7 +65,7 @@ MINILIBX_DIR	= minilibx
 
 CFLAGS			= -O2 -I $(HEAD) -MMD -MP
 
-CFLAGS += -g -pg #-Wall -Wextra -Werror
+CFLAGS += -g -Wall -Wextra -Werror
 
 #VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes --trace-children=yes # --suppressions=vsupp
 
@@ -113,4 +113,10 @@ fclean: libft_fclean minilibx_clean
 
 re: fclean all
 
-.PHONY: libft libft_clean libft_fclean all clean fclean re minilibx minilibx_clean
+gprof: CFLAGS += -pg
+gprof: re
+	./$(NAME) maps/ps.cub
+	gprof $(NAME) gmon.out > stats.txt
+	@echo "Profiling complete. Results saved in stats.txt."
+
+.PHONY: libft libft_clean libft_fclean all clean fclean re minilibx minilibx_clean gprof

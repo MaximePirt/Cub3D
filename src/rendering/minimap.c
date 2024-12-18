@@ -1,5 +1,6 @@
 #include "cube.h"
 
+
 void	draw_minimap_rays(t_map *map, t_image *image, int zoom)
 {
 	t_vector2	start;
@@ -9,21 +10,19 @@ void	draw_minimap_rays(t_map *map, t_image *image, int zoom)
 	double		angle;
 	t_ray		*ray;
 
-	xy = (MINIMAP_RENDER_DISTANCE / 2) * zoom;
-	start = ft_vector2(xy, xy);
-	draw_circle(image, start, zoom / 4, HEX_BLUE);
 	if (!map->rays)
 		return;
+	xy = (MINIMAP_RENDER_DISTANCE / 2) * zoom;
+	start = ft_vector2(xy, xy);
 	ray = map->rays;
 	i = 0;
 	while (i < RAYS_COUNT && ray)
 	{
-		angle = (map->player.dir - (FOV / 2) + (i * (FOV / RAYS_COUNT))) * M_PI / 180;
+		angle = (map->player.dir + (i * (FOV / (double)RAYS_COUNT)) - (FOV / 2)) * M_PI / 180.0;
 		end = ft_vector2(
 				start.x + cos(angle) * ray->distance * zoom,
 				start.y + sin(angle) * ray->distance * zoom
 		);
-
 		ft_draw_line(image, ft_line(start, end, HEX_RED, 1));
 		ray = ray->next;
 		i++;

@@ -20,12 +20,12 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		ft_printf("Error: please provide a map file\n");
+		ft_fprintf(STDERR_FILENO, "Error: please provide a map file\n");
 		return (1);
 	}
 	if (check_name(argv[1]))
 	{
-		ft_fprintf(2, "Error : filename doesn't respect the subject\n");
+		ft_fprintf(STDERR_FILENO, "Error : filename doesn't respect the subject\n");
 		return (1);	
 	}
 	map = NULL;
@@ -33,7 +33,7 @@ int	main(int argc, char **argv)
 	if (check_map(&map, argv[1], &images) == 1)
 	{
 		ft_tabfree(images);
-		ft_printf("Error: invalid map\n");
+		ft_fprintf(STDERR_FILENO, "Error: invalid map\n");
 		return (1);
 	}
 	win = ft_init_window();

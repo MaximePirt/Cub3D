@@ -122,7 +122,7 @@ int	blocks_loop(t_parse_map *to_copy, t_map **map, int i, int *player_nb)
 			break ;
 		else if (to_copy->blocks[j])
 		{
-			ft_fprintf(2, "Error: invalid character in map : [%c]\n",
+			ft_fprintf(STDERR_FILENO, "Error: invalid character in map : [%c]\n",
 				to_copy->blocks[j]);
 			return (1);
 		}
@@ -142,15 +142,12 @@ int	blocks_loop(t_parse_map *to_copy, t_map **map, int i, int *player_nb)
 int	copy_tab_to_map(t_parse_map *to_copy, t_map *map, char ***images)
 {
 	int	i;
-	int	j;
-	int	max_size;
 	int	player_nb;
 
 	i = 0;
 	player_nb = 0;
 	if (checking_firsts_map_lines(&to_copy, images))
 		return (1);
-	max_size = parse_map_max_size(to_copy);
 	while (ft_strncmp(to_copy->blocks, "\n", 1) == 0)
 		to_copy = to_copy->next;
 	while (to_copy)
@@ -162,7 +159,7 @@ int	copy_tab_to_map(t_parse_map *to_copy, t_map *map, char ***images)
 	}
 	if (player_nb != 1)
 	{
-		ft_printf("Error: no player or too many players\n");
+		ft_fprintf(STDERR_FILENO, "Error: no player or too many players\n");
 		return (1);
 	}
 	return (0);

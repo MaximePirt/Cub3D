@@ -7,7 +7,7 @@ t_win	*ft_init_window(void)
 	win = (t_win *)malloc(sizeof(t_win));
 	if (win == NULL)
 	{
-		ft_printf("malloc error in ft_init_window\n");
+		ft_fprintf(STDERR_FILENO, "malloc error in ft_init_window\n");
 		exit(0);
 	}
 	win->mlx_ptr = mlx_init();

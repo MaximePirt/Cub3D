@@ -26,7 +26,7 @@ void	ft_init_keymap(t_win *win, t_map *map)
 	params = (t_key_params *)malloc(sizeof(t_key_params));
 	if (params == NULL)
 	{
-		ft_printf("malloc error in ft_init_keymap\n");
+		ft_fprintf(STDERR_FILENO, "malloc error in ft_init_keymap\n");
 		exit(0);
 	}
 	params->win = win;

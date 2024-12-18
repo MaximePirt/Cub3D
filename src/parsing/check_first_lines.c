@@ -23,7 +23,7 @@ int	check_doublons(t_parse_map **args, char ***images, int index)
 {
 	if (index < 8 && (*images)[index] != NULL)
 	{
-		ft_fprintf(2, "Error: %s already set\n", (*args)->blocks);
+		ft_fprintf(STDERR_FILENO, "Error: %s already set\n", (*args)->blocks);
 		return (1);
 	}
 	(*images)[index] = ft_strdup((*args)->blocks);
@@ -40,20 +40,20 @@ int	check_doublons(t_parse_map **args, char ***images, int index)
  */
 int	is_param_key(t_parse_map **to_copy, char ***images)
 {
-	if (ft_strncmp((*to_copy)->blocks, "NO", 2) == 0
-		&& !check_doublons(to_copy, images, 0)
-		|| ft_strncmp((*to_copy)->blocks, "SO", 2) == 0
-		&& !check_doublons(to_copy, images, 1)
-		|| ft_strncmp((*to_copy)->blocks, "WE", 2) == 0
-		&& !check_doublons(to_copy, images, 2)
-		|| ft_strncmp((*to_copy)->blocks, "EA", 2) == 0
-		&& !check_doublons(to_copy, images, 3)
-		|| ft_strncmp((*to_copy)->blocks, "F", 1) == 0
-		&& !check_doublons(to_copy, images, 4)
-		|| ft_strncmp((*to_copy)->blocks, "C", 1) == 0
-		&& !check_doublons(to_copy, images, 5)
-		|| ft_strncmp((*to_copy)->blocks, "DOOR", 4) == 0
-		&& !check_doublons(to_copy, images, 6))
+	if ((ft_strncmp((*to_copy)->blocks, "NO", 2) == 0
+		&& !check_doublons(to_copy, images, 0))
+		|| (ft_strncmp((*to_copy)->blocks, "SO", 2) == 0
+		&& !check_doublons(to_copy, images, 1))
+		|| (ft_strncmp((*to_copy)->blocks, "WE", 2) == 0
+		&& !check_doublons(to_copy, images, 2))
+		|| (ft_strncmp((*to_copy)->blocks, "EA", 2) == 0
+		&& !check_doublons(to_copy, images, 3))
+		|| (ft_strncmp((*to_copy)->blocks, "F", 1) == 0
+		&& !check_doublons(to_copy, images, 4))
+		|| (ft_strncmp((*to_copy)->blocks, "C", 1) == 0
+		&& !check_doublons(to_copy, images, 5))
+		|| (ft_strncmp((*to_copy)->blocks, "DOOR", 4) == 0
+		&& !check_doublons(to_copy, images, 6)))
 		return (1);
 	return (0);
 }
@@ -81,7 +81,7 @@ int	checking_firsts_map_lines(t_parse_map **to_copy, char ***images)
 	}
 	if (args > 0)
 	{
-		ft_printf("Error: Firsts lines can only contains NO, SO, WE, EA, F,"
+		ft_fprintf(STDERR_FILENO, "Error: Firsts lines can only contains NO, SO, WE, EA, F,"
 			"C or \\n, one of each only\n");
 		return (1);
 	}
