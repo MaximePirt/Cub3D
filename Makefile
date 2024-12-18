@@ -28,7 +28,8 @@ SRC_MEMORY				= memory_alloc.c memory_free.c window_alloc.c textures_alloc.c ima
 SRC_GAME				= keymap.c player.c
 
 SRC_RENDERING			= rendering.c textures.c vectors.c drawer$(DIRSEP)brushs.c \
-							drawer$(DIRSEP)shapes$(DIRSEP)circle.c drawer$(DIRSEP)shapes$(DIRSEP)hollow_circle.c drawer$(DIRSEP)shapes$(DIRSEP)square.c
+							drawer$(DIRSEP)shapes$(DIRSEP)circle.c drawer$(DIRSEP)shapes$(DIRSEP)hollow_circle.c \
+							drawer$(DIRSEP)shapes$(DIRSEP)square.c
 
 #############################################################################
 #									FOLDERS									#

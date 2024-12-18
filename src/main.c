@@ -12,30 +12,6 @@
 
 #include "cube.h"
 
-static void	fill_map_test(t_map *map)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < map->size_y)
-	{
-		j = 0;
-		while (j < map->size_x)
-		{
-			if (i == 0 || i == map->size_y - 1 || j == 0 || j == map->size_x - 1)
-				map->blocks[i][j].type = WALL;
-			else
-				map->blocks[i][j].type = FLOOR;
-			j++;
-		}
-		i++;
-	}
-	map->player.x = map->size_x / 2;
-	map->player.y = map->size_y / 2;
-	map->player.dir = 0;
-}
-
 int	main(int argc, char **argv)
 {
 	t_win	*win;
