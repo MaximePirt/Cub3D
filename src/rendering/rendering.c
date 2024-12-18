@@ -36,6 +36,8 @@ void	refresh(t_win *win, t_map *map)
 	minimap = draw_minimap(map, win->mlx_ptr);
 	if (!minimap)
 		return;
+	//code here
+	give_all_rays(map);
 	paste_image_on_screen(win, minimap, ft_vector2(0, 0));
 	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img_ptr, 0, 0);
 	mlx_destroy_image(win->mlx_ptr, minimap->img_ptr);

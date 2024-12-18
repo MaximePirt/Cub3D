@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpierrot <mpierrot@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 04:35:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/12/18 04:35:29 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/12/18 10:19:02 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,63 @@ exemple :
 	longueur = 1.02
 */
 
+#include <math.h>
+
+double	calculate_ray_size(t_ray *ray, double x_var, double y_var)
+{
+	double length;
+
+	length = sqrt(x_var * x_var + y_var * y_var);
+	ray->distance = length;
+	printf("Length : [%f]\n", length);
+	return (length);
+	
+}
+
+/**
+ * 	@brief Search finale x position, then calculate x size
+ * 
+ *		y start is at first players y position then position which we stopped
+ */
+double	find_finale_x(t_ray *ray, int angle, double x_start, double y_start)
+{
+	double	x_var;
+	double	y_var;
+	double	x_tan;
+	double	x_end;
+	(void) y_start;
+
+	x_tan = tan(angle * M_PI / 180);
+	y_var = 1;
+	x_var = y_var / x_tan;
+	x_end = x_start / x_var;
+	printf("Xend : [%f]\n", x_end);
+	return (calculate_ray_size(ray, x_var, y_var));
+	
+}
+
 int give_all_rays(t_map *map)
 {
-  
-  return 0;
+	// int i;
+	double	x_start;
+	double	y_start;
+	
+	x_start = map->player.x;
+	y_start = map->player.y;
+	while ((map->blocks[(int)x_start] && map->blocks[(int)x_start + 1][(int)y_start].type != WALL )
+		&& (map->blocks[(int)x_start][(int)y_start + 1].type &&  map->blocks[(int)x_start][(int)y_start + 1].type != WALL ))
+	{
+		printf("ah");
+		printf("xstart %f, ystart %f\n", x_start, y_start);
+		find_finale_x(map->rays, ANGLE, x_start, y_start);
+		x_start +=1;
+		y_start +=1;		
+	}
+//   i = 0;
+//   while (i < RAYS_COUNT)
+//   {
+	
+// 	i++;
+//   }
+  return (0);
 }
