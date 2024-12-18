@@ -24,6 +24,8 @@
 *	1. send first ray with 0 angle
 *	2. send ray from (pi/2) - FOV/2
 
+while y +1 != wall && xfin + 1 != wall
+
 How to calculate :
 	- Find finale position x where ray hit 1
 	- find ray size (hypothenuse)
@@ -45,3 +47,9 @@ exemple :
 	longueur = sqrt(1.04)
 	longueur = 1.02
 */
+
+int give_all_rays(t_map *map)
+{
+  
+  return 0;
+}
