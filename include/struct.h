@@ -50,6 +50,7 @@ typedef	struct	s_rgb
 	int				g;
 	int				b;
 }				t_rgb;
+
 typedef struct s_textures
 {
 	t_image				*wall_north;
@@ -60,6 +61,13 @@ typedef struct s_textures
 	t_rgb				floor;
 	t_rgb				ceiling;
 }						t_textures;
+
+typedef struct s_ray
+{
+	double				distance;
+	struct s_ray		*next;
+	struct s_ray		*prev;
+}						t_ray;
 
 typedef struct s_map
 {
@@ -82,5 +90,13 @@ typedef	struct s_stack
 	int					x;
 	int					y;
 }						t_stack;
+
+typedef struct s_line
+{
+	t_vector2	start;
+	t_vector2	end;
+	int			color;
+	int 		width;
+}						t_line;
 
 #endif

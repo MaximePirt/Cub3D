@@ -13,7 +13,7 @@ void draw_hollow_circle(t_image *image, t_vector2 pos, int radius, int line_widt
         {
             if (sqrt((i - radius) * (i - radius) + (j - radius) * (j - radius)) < radius &&
                 sqrt((i - radius) * (i - radius) + (j - radius) * (j - radius)) > radius - line_width)
-				ft_draw_pixel_on_image(image, pos.x + i, pos.y + j, color);
+				ft_draw_pixel_on_image(image, ft_vector2(pos.x + i, pos.y + j), color);
             j++;
         }
         i++;
