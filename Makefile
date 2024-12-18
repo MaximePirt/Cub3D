@@ -29,7 +29,7 @@ SRC_GAME				= keymap.c player.c
 
 SRC_RENDERING			= rendering.c textures.c vectors.c minimap.c drawer$(DIRSEP)brushs.c \
 							drawer$(DIRSEP)shapes$(DIRSEP)circle.c drawer$(DIRSEP)shapes$(DIRSEP)hollow_circle.c \
-							drawer$(DIRSEP)shapes$(DIRSEP)square.c
+							drawer$(DIRSEP)shapes$(DIRSEP)square.c raycast$(DIRSEP)raycasting.c
 
 #############################################################################
 #									FOLDERS									#
