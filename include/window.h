@@ -2,8 +2,8 @@
 #define WINDOW_H
 
 # define SCREEN_WIDTH 1000
-# define SCREEN_HEIGHT 1000
-# define MINIMAP_RENDER_DISTANCE 15
+# define SCREEN_HEIGHT 800
+# define MINIMAP_RENDER_DISTANCE 8
 # define RAYS_COUNT 50
 # define FOV 90
 

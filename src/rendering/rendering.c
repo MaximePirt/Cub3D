@@ -31,11 +31,9 @@ void	paste_image_on_screen(t_win *win, t_image *image, t_vector2 pos)
  */
 void	refresh(t_win *win, t_map *map)
 {
-	int		zoom;
 	t_image	*minimap;
 
-	zoom = 60;
-	minimap = draw_minimap(map, win->mlx_ptr, zoom);
+	minimap = draw_minimap(map, win->mlx_ptr);
 	if (!minimap)
 		return;
 	paste_image_on_screen(win, minimap, ft_vector2(0, 0));
