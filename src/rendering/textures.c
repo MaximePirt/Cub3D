@@ -18,14 +18,14 @@ int	filling_mlx_data(t_image *image, void *mlx_ptr)
 			&image->height);
 	if (!image->img_ptr)
 	{
-		ft_fprintf(2, "Error: loading texture failed\n");
+		ft_fprintf(STDERR_FILENO, "Error: loading texture failed\n");
 		return (1);
 	}
 	image->img_data = mlx_get_data_addr(image->img_ptr, &image->bpp,
 			&image->size_line, &image->endian);
 	if (!image->img_data)
 	{
-		ft_fprintf(2, "Error: getting texture data failed\n");
+		ft_fprintf(STDERR_FILENO, "Error: getting texture data failed\n");
 		return (1);
 	}
 	return (0);
@@ -49,7 +49,7 @@ int	load_texture(t_image *image, char *path, void *mlx_ptr)
 	fd = open(image->path, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_printf("Error: invalid texture path\n");
+		ft_fprintf(STDERR_FILENO, "Error: invalid texture path\n");
 		return (1);
 	}
 	close(fd);
@@ -88,13 +88,13 @@ int	error_in_rgb(char **tmp, int i, int **converted, char *value)
 	if (str_is_charset(tmp[i], "0123456789,") || ft_str_count_char(value,
 			',') != 2 || ft_count_words(value, "\n") != 1)
 	{
-		ft_printf("Error: Check your RGB settings\n");
+		ft_fprintf(STDERR_FILENO, "Error: Check your RGB settings\n");
 		return (1);
 	}
 	(*converted)[i] = ft_atoi(tmp[i]);
 	if ((*converted)[i] < 0 || (*converted)[i] > 255)
 	{
-		ft_printf("Error: invalid color value\n");
+		ft_fprintf(STDERR_FILENO, "Error: invalid color value\n");
 		return (1);
 	}
 	return (0);
@@ -121,5 +121,6 @@ int	fill_rgb_texture(t_rgb *items, char *value)
 	items->g = converted[2];
 	items->b = converted[3];
 	ft_tabfree(tmp);
+	free(converted);
 	return (0);
 }

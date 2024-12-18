@@ -60,8 +60,7 @@ static int	floodfill_blocks_management(int x, int y, t_map *map,
 		|| map->blocks[x][y + 1].type == VOID || map->blocks[x][y
 		- 1].type == VOID)
 	{
-		ft_printf("Error: map is not closed here %d %d\n", x, y);
-		print_enum_map(map);
+		ft_fprintf(STDERR_FILENO, "Error: map is not closed here %d %d\n", x, y);
 		free(stack);
 		return (1);
 	}

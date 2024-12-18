@@ -76,6 +76,7 @@ typedef struct s_map
 	t_textures			*textures;
 	int					size_x;
 	int					size_y;
+	t_ray				*rays;
 }						t_map;
 
 typedef struct s_parse_map

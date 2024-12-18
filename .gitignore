@@ -13,3 +13,8 @@ obj/
 # Libft
 
 libft.a
+
+# gprof
+
+gmon.out
+stats.txt

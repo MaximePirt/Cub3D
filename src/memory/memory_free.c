@@ -1,21 +1,6 @@
 #include "cube.h"
 
-//TODO: remettre en static
-void	free_parse_map(t_parse_map *map)
-{
-	t_parse_map	*tmp;
-
-	while (map)
-	{
-		tmp = map;
-		map = map->next;
-		free(tmp->blocks);
-		free(tmp);
-	}
-}
-
-//TODO: remettre en static
-void	*ft_free_map(t_block **blocks, int size_y)
+static void	*ft_free_map(t_block **blocks, int size_y)
 {
 	int	i;
 
@@ -35,7 +20,7 @@ static void	ft_free_texture(t_win *win, t_image *image)
 	free(image);
 }
 
-void ft_free_textures(t_win *win, t_textures *textures)
+static void ft_free_textures(t_win *win, t_textures *textures)
 {
 	ft_free_texture(win, textures->wall_north);
 	ft_free_texture(win, textures->wall_south);
@@ -45,9 +30,23 @@ void ft_free_textures(t_win *win, t_textures *textures)
 	free(textures);
 }
 
+void	free_parse_map(t_parse_map *map)
+{
+	t_parse_map	*tmp;
+
+	while (map)
+	{
+		tmp = map;
+		map = map->next;
+		free(tmp->blocks);
+		free(tmp);
+	}
+}
+
 int	ft_free_program(t_key_params *params)
 {
 	ft_free_map(params->map->blocks, params->map->size_y);
+	ft_free_rays(params->map->rays);
 	ft_free_textures(params->win, params->map->textures);
 	mlx_destroy_image(params->win->mlx_ptr, params->win->img_ptr);
 	mlx_clear_window(params->win->mlx_ptr, params->win->win_ptr);

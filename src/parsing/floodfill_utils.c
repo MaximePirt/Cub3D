@@ -26,7 +26,6 @@ int	check_floodfill_end(t_map *map, int *start_y, int *start_x)
 
 	i = 0;
 	j = 0;
-	ft_printf("Checking...\n");
 	while (i < map->size_y)
 	{
 		j = 0;
@@ -37,10 +36,6 @@ int	check_floodfill_end(t_map *map, int *start_y, int *start_x)
 			{
 				*start_y = i;
 				*start_x = j;
-				printf("\n\nFind a pb,"
-					"here [%d][%d] | type [%d]\n the map \n\n------\n\n", i, j, map->blocks[i][j].type);
-				print_enum_map(map);
-				ft_printf("\n\n");
 				return (1);
 			}
 			j+=1;
@@ -77,11 +72,9 @@ void	restore_map(t_map *map)
  * @brief Flood fill algorithm to fill the map
  * @param map the map
  * @return t_map*
- * TODO: remove debug print
  */
 int	preptoflood(t_map *map)
 {
-	int	component;
 	int	start_y;
 	int	start_x;
 
@@ -89,21 +82,17 @@ int	preptoflood(t_map *map)
 	start_x = map->player.x;
 	if (flood_fill(map, start_y, start_x))
 	{
-		ft_fprintf(2, "Flood fill failed\n");
+		ft_fprintf(STDERR_FILENO, "Flood fill failed\n");
 		return (1);
 	}
 	while (check_floodfill_end(map, &start_y, &start_x))
 	{
 		if (flood_fill(map, start_y, start_x))
 		{
-			ft_fprintf(2, "Flood fill failed\n");
+			ft_fprintf(STDERR_FILENO, "Flood fill failed\n");
 			return (1);
 		}
 	}
-	ft_printf("After floodfill\n");
-	print_enum_map(map);
 	restore_map(map);
-	ft_printf("After restore\n");
-	print_enum_map(map);
 	return (0);
 }
