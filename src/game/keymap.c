@@ -15,6 +15,8 @@ static int	action_key(int keycode, t_key_params *params)
 		player_look_left(params->map);
 	else if (keycode == KEY_D)
 		player_look_right(params->map);
+	else
+		return (0);
 	refresh(params->win, params->map);
 	return (0);
 }

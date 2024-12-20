@@ -23,7 +23,7 @@ t_ray	*ft_init_rays(void)
 			}
 			return (NULL);
 		}
-		current->distance = 5;
+		current->distance = 3;
 		current->next = NULL;
 		current->prev = prev;
 		if (prev)
