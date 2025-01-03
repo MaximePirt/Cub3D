@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 04:35:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/12/18 10:19:02 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/03 12:15:46 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,16 @@ int give_all_rays(t_map *map)
 	
 	x_start = map->player.x;
 	y_start = map->player.y;
+	printf("Enter here");
 	while ((map->blocks[(int)x_start] && map->blocks[(int)x_start + 1][(int)y_start].type != WALL )
 		&& (map->blocks[(int)x_start][(int)y_start + 1].type &&  map->blocks[(int)x_start][(int)y_start + 1].type != WALL ))
 	{
-		printf("ah");
 		printf("xstart %f, ystart %f\n", x_start, y_start);
 		find_finale_x(map->rays, ANGLE, x_start, y_start);
 		x_start +=1;
 		y_start +=1;		
 	}
+	printf("Out here\n");
 //   i = 0;
 //   while (i < RAYS_COUNT)
 //   {
