@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 04:35:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/03 12:15:46 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/10 19:21:19 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,14 @@ exemple :
 
 #include <math.h>
 
-double	calculate_ray_size(t_ray *ray, double x_var, double y_var)
+double	calculate_ray_size(t_ray **ray, double x_var, double y_var)
 {
 	double length;
 
 	length = sqrt(x_var * x_var + y_var * y_var);
-	ray->distance = length;
+	// ray->distance = length;
+		(*ray)->distance = 5000;
+
 	printf("Length : [%f]\n", length);
 	return (length);
 	
@@ -66,7 +68,7 @@ double	calculate_ray_size(t_ray *ray, double x_var, double y_var)
  * 
  *		y start is at first players y position then position which we stopped
  */
-double	find_finale_x(t_ray *ray, int angle, double x_start, double y_start)
+double	find_finale_x(t_ray **ray, int angle, double x_start, double y_start)
 {
 	double	x_var;
 	double	y_var;
@@ -85,22 +87,32 @@ double	find_finale_x(t_ray *ray, int angle, double x_start, double y_start)
 
 int give_all_rays(t_map *map)
 {
-	// int i;
+	int i;
 	double	x_start;
 	double	y_start;
+	t_ray	*tmp;
 	
 	x_start = map->player.x;
 	y_start = map->player.y;
-	printf("Enter here");
-	while ((map->blocks[(int)x_start] && map->blocks[(int)x_start + 1][(int)y_start].type != WALL )
-		&& (map->blocks[(int)x_start][(int)y_start + 1].type &&  map->blocks[(int)x_start][(int)y_start + 1].type != WALL ))
+	printf("Enter here"); 
+	i = 0;
+	tmp = map->rays;
+	while (i < RAYS_COUNT)
 	{
-		printf("xstart %f, ystart %f\n", x_start, y_start);
-		find_finale_x(map->rays, ANGLE, x_start, y_start);
-		x_start +=1;
-		y_start +=1;		
+		printf("ray id [%d]\n", tmp->id);
+		while ((map->blocks[(int)x_start] && map->blocks[(int)x_start + 1][(int)y_start].type != WALL )
+			&& (map->blocks[(int)x_start][(int)y_start + 1].type &&  map->blocks[(int)x_start][(int)y_start + 1].type != WALL ))
+		{
+			printf("ray id [%d], xstart %f, ystart %f\n", tmp->id, x_start, y_start);
+			find_finale_x(&tmp, ANGLE, x_start, y_start);
+			x_start +=1;
+			y_start +=1;		
+		}
+		tmp = tmp->next;
+		i++;
 	}
 	printf("Out here\n");
+
 //   i = 0;
 //   while (i < RAYS_COUNT)
 //   {
