@@ -1,8 +1,11 @@
 # Prochaines etapes a faire
 
-- Mtn que j ai recup les arguments mis dans le fichier (paths, color, etc.)
-	- les parser et les envoyer dans la structure
-- Check le parsing si dans les nombre rgb je met un \n au milieu ce que ca fait
+Tej les deplacements impossibles
+
+- Mieux placer le lancement du raycasting :
+	- minimap.c // Check draw minimap ray, si end < distance d affichage
+- Check de nouveau les calculs, aucune idee de si c est bon ou non
+- PRINT LES BONS TRAITS PTN JSUIS CON
+
 
 ## Etapes pour aider juju
-- Rien jsuis on fire la

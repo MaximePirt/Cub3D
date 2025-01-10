@@ -69,6 +69,7 @@ typedef struct s_textures
 typedef struct s_ray
 {
 	double				distance;
+	int					id;
 	struct s_ray		*next;
 	struct s_ray		*prev;
 }						t_ray;

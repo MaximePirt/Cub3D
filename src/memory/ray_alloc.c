@@ -23,7 +23,9 @@ t_ray	*ft_init_rays(void)
 			}
 			return (NULL);
 		}
-		current->distance = 3;
+		current->distance = 1;
+		//TODO: Remove id -> i use it only to debug which one i am currently 
+		current->id = i;
 		current->next = NULL;
 		current->prev = prev;
 		if (prev)

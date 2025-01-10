@@ -6,6 +6,7 @@
 # define MINIMAP_RENDER_DISTANCE 8
 # define RAYS_COUNT 50
 # define FOV 90
+# define ANGLE (FOV/RAYS_COUNT)
 
 # define KEY_ESC 65307
 # define KEY_W 119

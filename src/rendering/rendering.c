@@ -79,6 +79,7 @@ void	refresh(t_win *win, t_map *map)
 {
 	t_image	*minimap;
 
+  give_all_rays(map);
 	minimap = draw_minimap(map, win->mlx_ptr);
 	if (!minimap)
 		return;

@@ -57,4 +57,9 @@ t_image		*draw_minimap(t_map *map, void *mlx_ptr);
 t_vector2	ft_vector2(double x, double y);
 t_line		ft_line(t_vector2 start, t_vector2 end, int color, int width);
 
+
+
+// Raycast
+int			give_all_rays(t_map *map);
+
 #endif
