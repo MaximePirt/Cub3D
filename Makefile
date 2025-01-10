@@ -21,7 +21,7 @@ NAME					= cube3d
 SRCS					= main.c
 
 SRCS_PARSING            = parsing.c copy_tab_to_map.c lst_parsing$(DIRSEP)lst_pars_lib.c \
-							floodfill.c floodfill_utils.c check_first_lines.c
+							floodfill.c floodfill_utils.c check_first_lines.c textures.c
 
 SRC_MEMORY				= memory_alloc.c memory_free.c window_alloc.c textures_alloc.c image_alloc.c ray_alloc.c ray_free.c
 
@@ -29,7 +29,8 @@ SRC_GAME				= keymap.c player.c
 
 SRC_RENDERING			= rendering.c textures.c vectors.c minimap.c drawer$(DIRSEP)brushs.c \
 							drawer$(DIRSEP)shapes$(DIRSEP)circle.c drawer$(DIRSEP)shapes$(DIRSEP)hollow_circle.c \
-							drawer$(DIRSEP)shapes$(DIRSEP)square.c raycast$(DIRSEP)raycasting.c
+							drawer$(DIRSEP)shapes$(DIRSEP)square.c raycast$(DIRSEP)raycasting.c \
+							drawer$(DIRSEP)shapes$(DIRSEP)rectangle.c
 
 #############################################################################
 #									FOLDERS									#

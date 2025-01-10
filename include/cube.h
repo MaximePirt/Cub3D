@@ -42,10 +42,12 @@ void		refresh(t_win *win, t_map *map);
 int			fill_rgb_texture(t_rgb *items, char *value);
 int			load_texture(t_image *image, char *path, void *mlx_ptr);
 void		ft_draw_pixel_on_image(t_image *image, t_vector2 pos, int color);
+void		ft_draw_pixel_on_screen(t_win *win, t_vector2 pos, int color);
 void		ft_draw_line(t_image *image, t_line line);
 void		draw_square(t_image *image, t_vector2 pos, int size, int color);
 void		draw_circle(t_image *image, t_vector2 pos, int radius, int color);
-void		draw_hollow_circle(t_image *image, t_vector2 pos, int radius, int line_width, int color);
+void		draw_rectangle(t_win *win, t_vector2 pos, int width, int height, int color);
+void		copy_vertical_pixels(t_win *win, t_image *texture, t_vector2 pos, int height, int width);
 
 // Minimap
 

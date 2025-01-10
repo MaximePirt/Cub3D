@@ -12,6 +12,24 @@
 
 #include "cube.h"
 
+static	int main_loop(t_key_params *params)
+{
+	int	x;
+	int	y;
+
+	refresh(params->win, params->map);
+	if (params->map->mouse_lock)
+	{
+		mlx_mouse_get_pos(params->win->mlx_ptr, params->win->win_ptr, &x, &y);
+		mlx_mouse_move(params->win->mlx_ptr, params->win->win_ptr, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+		if (x > SCREEN_WIDTH / 2)
+			player_look_right(params->map);
+		else if (x < SCREEN_WIDTH / 2)
+			player_look_left(params->map);
+	}
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_win	*win;
@@ -53,11 +71,24 @@ int	main(int argc, char **argv)
 		return (1);
 	if (load_texture(map->textures->door, images[6], win->mlx_ptr) == 1)
 		return (1); //TODO: Remove, it's the door
+	if (load_texture(map->textures->right_hand, images[7], win->mlx_ptr) == 1)
+		return (1);
 
 	ft_tabfree(images);
 	//	//TODO: render map
-	refresh(win, map);
 	ft_init_keymap(win, map);
+
+	t_key_params	*params;
+
+	params = (t_key_params *)malloc(sizeof(t_key_params));
+	if (params == NULL)
+	{
+		ft_fprintf(STDERR_FILENO, "malloc error in ft_init_keymap\n");
+		exit(0);
+	}
+	params->win = win;
+	params->map = map;
+	mlx_loop_hook(win->mlx_ptr, main_loop, params);
 	mlx_loop(win->mlx_ptr);
 	return (0);
 }

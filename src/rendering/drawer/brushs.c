@@ -7,6 +7,13 @@ void	ft_draw_pixel_on_image(t_image *image, t_vector2 pos, int color)
     *(int *)(image->img_data + ((int)pos.x * image->bpp / 8) + ((int)pos.y * image->size_line)) = color;
 }
 
+void	ft_draw_pixel_on_screen(t_win *win, t_vector2 pos, int color)
+{
+	if (pos.x < 0 || pos.x >= SCREEN_WIDTH || pos.y < 0 || pos.y >= SCREEN_HEIGHT)
+		return ;
+	*(int *)(win->img_data + ((int)pos.x * win->bpp / 8) + ((int)pos.y * win->size_line)) = color;
+}
+
 void	ft_draw_line(t_image *image, t_line line)
 {
 	t_vector2	delta;
