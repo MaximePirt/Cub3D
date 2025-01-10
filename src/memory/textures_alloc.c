@@ -28,7 +28,8 @@ t_textures	*ft_init_textures(void)
 		!ft_init_texture(&textures->wall_south) ||
 		!ft_init_texture(&textures->wall_east) ||
 		!ft_init_texture(&textures->wall_west) ||
-		!ft_init_texture(&textures->door))
+		!ft_init_texture(&textures->door) ||
+		!ft_init_texture(&textures->right_hand))
 	{
 		free(textures);
 		return (NULL);

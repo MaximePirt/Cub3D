@@ -84,6 +84,7 @@ void	refresh(t_win *win, t_map *map)
 		return;
 	render_game(win, map);
 	paste_image_on_screen(win, minimap, ft_vector2(0, 0));
+	//paste_image_on_screen(win, map->textures->right_hand, ft_vector2(SCREEN_WIDTH - map->textures->right_hand->width, SCREEN_HEIGHT - map->textures->right_hand->height));
 	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img_ptr, 0, 0);
 	mlx_destroy_image(win->mlx_ptr, minimap->img_ptr);
 	free(minimap);

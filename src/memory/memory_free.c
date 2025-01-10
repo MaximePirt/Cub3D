@@ -27,6 +27,7 @@ static void ft_free_textures(t_win *win, t_textures *textures)
 	ft_free_texture(win, textures->wall_east);
 	ft_free_texture(win, textures->wall_west);
 	ft_free_texture(win, textures->door);
+	ft_free_texture(win, textures->right_hand);
 	free(textures);
 }
 

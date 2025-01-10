@@ -60,5 +60,6 @@ t_map	*ft_init_map(int size_x, int size_y)
 	map->size_y = size_y;
 	map->rays = ft_init_rays();
 	map->minimap_zoom = SCREEN_WIDTH / MINIMAP_RENDER_DISTANCE / 5;
+	map->mouse_lock = 0;
 	return (map);
 }

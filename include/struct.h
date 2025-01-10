@@ -34,7 +34,10 @@ typedef struct s_player
 {
 	double				x;
 	double				y;
+	double				old_x;
+	double				old_y;
 	double				dir;
+	double 				old_dir;
 	t_image				*texture;
 }						t_player;
 
@@ -58,6 +61,7 @@ typedef struct s_textures
 	t_image				*wall_east;
 	t_image				*wall_west;
 	t_image				*door;
+	t_image 			*right_hand;
 	t_rgb				floor;
 	t_rgb				ceiling;
 }						t_textures;
@@ -78,6 +82,7 @@ typedef struct s_map
 	int					size_y;
 	t_ray				*rays;
 	int 				minimap_zoom;
+	int 				mouse_lock;
 }						t_map;
 
 typedef struct s_parse_map
