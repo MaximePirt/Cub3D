@@ -32,6 +32,8 @@ static t_player	ft_init_player(void)
 	player.y = 0;
 	player.dir = 0;
 	player.texture = NULL;
+	player.hand_animation_pos = 0;
+	player.hand_animation_direction = 0;
 	return (player);
 }
 

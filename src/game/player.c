@@ -10,24 +10,31 @@ static void	update_player_old_pos(t_map *map)
 int	player_move_forward(t_map *map)
 {
 	double	angle_rad;
+	int		x;
+	int		y;
 
 	angle_rad = ((map->player.dir) * M_PI / 180.0);
-	if (map->blocks[(int)(map->player.y + sin(angle_rad) * 0.1)][(int)(map->player.x + cos(angle_rad) * 0.1)].type == FLOOR)
+	y = (int)ceil(map->player.y + sin(angle_rad) * 0.1) - 1;
+	x = (int)ceil(map->player.x + cos(angle_rad) * 0.1) - 1;
+	if (map->blocks[y][x].type == FLOOR)
 	{
 		update_player_old_pos(map);
 		map->player.x += cos(angle_rad) * 0.1;
 		map->player.y += sin(angle_rad) * 0.1;
 	}
-
 	return (0);
 }
 
 int	player_move_backward(t_map *map)
 {
-	double angle_rad;
+	double	angle_rad;
+	int		x;
+	int		y;
 
 	angle_rad = ((map->player.dir) * M_PI / 180.0);
-	if (map->blocks[(int)(map->player.y - sin(angle_rad) * 0.1)][(int)(map->player.x - cos(angle_rad) * 0.1)].type == FLOOR)
+	y = (int)ceil(map->player.y - sin(angle_rad) * 0.1) - 1;
+	x = (int)ceil(map->player.x - cos(angle_rad) * 0.1) - 1;
+	if (map->blocks[y][x].type == FLOOR)
 	{
 		update_player_old_pos(map);
 		map->player.x -= cos(angle_rad) * 0.1;

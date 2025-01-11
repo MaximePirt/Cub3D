@@ -5,6 +5,7 @@ static void	paste_image_on_screen(t_win *win, t_image *image, t_vector2 pos)
 	int i;
 	int j;
 	int color;
+	int alpha;
 
 	i = 0;
 	while (i < image->width)
@@ -13,10 +14,12 @@ static void	paste_image_on_screen(t_win *win, t_image *image, t_vector2 pos)
 		while (j < image->height)
 		{
 			color = *(int *)(image->img_data + (i * image->bpp / 8) + (j * image->size_line));
+			alpha = (color >> 24) & 0xFF;
 
 			if (pos.x < 0 || pos.x >= SCREEN_WIDTH || pos.y < 0 || pos.y >= SCREEN_HEIGHT)
 				return ;
-			*(int *)(win->img_data + ((int)pos.x + i) * win->bpp / 8 + ((int)pos.y + j) * win->size_line) = color;
+			if (alpha == 0)
+				*(int *)(win->img_data + ((int)pos.x + i) * win->bpp / 8 + ((int)pos.y + j) * win->size_line) = color;
 			j++;
 		}
 		i++;
@@ -78,14 +81,22 @@ static void render_game(t_win *win, t_map *map)
 void	refresh(t_win *win, t_map *map)
 {
 	t_image	*minimap;
+	t_vector2 hand_pos;
 
-  give_all_rays(map);
+	give_all_rays(map);
 	minimap = draw_minimap(map, win->mlx_ptr);
 	if (!minimap)
 		return;
 	render_game(win, map);
 	paste_image_on_screen(win, minimap, ft_vector2(0, 0));
-	//paste_image_on_screen(win, map->textures->right_hand, ft_vector2(SCREEN_WIDTH - map->textures->right_hand->width, SCREEN_HEIGHT - map->textures->right_hand->height));
+	if (map->player.hand_animation_direction)
+		map->player.hand_animation_pos += 1;
+	else
+		map->player.hand_animation_pos -= 1;
+	if (map->player.hand_animation_pos >= 100 || map->player.hand_animation_pos <= -100)
+		map->player.hand_animation_direction = !map->player.hand_animation_direction;
+	hand_pos = ft_vector2(SCREEN_WIDTH - map->textures->right_hand->width - 10, SCREEN_HEIGHT - map->textures->right_hand->height + 10 + map->player.hand_animation_pos / 10);
+	paste_image_on_screen(win, map->textures->right_hand, hand_pos);
 	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img_ptr, 0, 0);
 	mlx_destroy_image(win->mlx_ptr, minimap->img_ptr);
 	free(minimap);
