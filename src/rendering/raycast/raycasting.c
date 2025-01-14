@@ -56,7 +56,7 @@ double	calculate_ray_size(t_ray **ray, double x_var, double y_var)
 
 	length = sqrt(x_var * x_var + y_var * y_var);
 	// ray->distance = length;
-		(*ray)->distance = 5000;
+	(*ray)->distance = 5000;
 
 	//printf("Length : [%f]\n", length);
 	return (length);
@@ -93,13 +93,14 @@ int give_all_rays(t_map *map)
 	double	y_start;
 	t_ray	*tmp;
 	
-	x_start = map->player.x;
-	y_start = map->player.y;
+
 	//printf("Enter here");
 	i = 0;
 	tmp = map->rays;
 	while (i < RAYS_COUNT)
 	{
+		x_start = map->player.x;
+		y_start = map->player.y;
 		//printf("ray id [%d]\n", tmp->id);
 		while ((map->blocks[(int)x_start] && map->blocks[(int)x_start + 1][(int)y_start].type != WALL )
 			&& (map->blocks[(int)x_start][(int)y_start + 1].type &&  map->blocks[(int)x_start][(int)y_start + 1].type != WALL ))
