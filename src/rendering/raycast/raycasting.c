@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 04:35:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/10 19:21:19 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:50:43 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,18 +73,23 @@ double	find_finale_x(t_ray **ray, int angle, double x_start, double y_start)
 	double	x_var;
 	double	y_var;
 	double	x_tan;
-	double	x_end;
+	double length;
+	double x_end;
+	(void) x_end;
 	(void) y_start;
 	(void) x_end;
 
 	x_tan = tan(angle * M_PI / 180);
 	y_var = 1;
 	x_var = y_var / x_tan;
-	x_end = x_start / x_var;
-	//printf("Xend : [%f]\n", x_end);
-	return (calculate_ray_size(ray, x_var, y_var));
+	x_end = x_start / x_var; 
+	printf("Xend : [%f]\n", x_end);
+	length = sqrt(x_var * x_var + y_var * y_var);
+	(*ray)->distance = length;
+	return (length);
 	
 }
+
 
 int give_all_rays(t_map *map)
 {
@@ -92,34 +97,31 @@ int give_all_rays(t_map *map)
 	double	x_start;
 	double	y_start;
 	t_ray	*tmp;
-	
-
-	//printf("Enter here");
+	double length;
+	(void) length;
+	// printf("Enter here\n"); 
 	i = 0;
 	tmp = map->rays;
 	while (i < RAYS_COUNT)
 	{
 		x_start = map->player.x;
 		y_start = map->player.y;
-		//printf("ray id [%d]\n", tmp->id);
-		while ((map->blocks[(int)x_start] && map->blocks[(int)x_start + 1][(int)y_start].type != WALL )
-			&& (map->blocks[(int)x_start][(int)y_start + 1].type &&  map->blocks[(int)x_start][(int)y_start + 1].type != WALL ))
+		while (&map->blocks[(int)x_start][(int)y_start] && map->blocks[(int)x_start][(int)y_start].type != WALL)
 		{
-			//printf("ray id [%d], xstart %f, ystart %f\n", tmp->id, x_start, y_start);
-			find_finale_x(&tmp, ANGLE, x_start, y_start);
+			// double tqt = (map->player.dir + (i * ANGLE) - (FOV / 2)) * M_PI / 180.0;
+			printf("Angle [%d] distance [%f]\n", ANGLE, tmp->distance);
+
+			// printf("ray id [%d]\n xstart %f\n ystart %f\n-------\n", tmp->id, x_start, y_start);
+			length = find_finale_x(&tmp, ANGLE, x_start, y_start);
 			x_start +=1;
 			y_start +=1;		
+
 		}
+		printf("Ray id [%d] distance [%f]\n", tmp->id, tmp->distance);
 		tmp = tmp->next;
 		i++;
 	}
-	//printf("Out here\n");
-
-//   i = 0;
-//   while (i < RAYS_COUNT)
-//   {
+	// printf("Out here\n");
 	
-// 	i++;
-//   }
   return (0);
 }

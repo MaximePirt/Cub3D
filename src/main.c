@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:40:32 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/12/10 21:47:47 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/12 03:48:23 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 static	int main_loop(t_key_params *params)
 {
-	int	x;
-	int	y;
-
+  int	x;
+  int	y;
 
 	refresh(params->win, params->map);
 	if (params->map->mouse_lock)
@@ -71,9 +70,9 @@ int	main(int argc, char **argv)
 	if (fill_rgb_texture(&map->textures->ceiling, images[5]) == 1)
 		return (1);
 	if (load_texture(map->textures->door, images[6], win->mlx_ptr) == 1)
-		return (1); //TODO: Remove, it's the door
-	if (load_texture(map->textures->right_hand, images[7], win->mlx_ptr) == 1)
-		return (1);
+		return (1); //TODO: Remove, it's the door and readd hand
+	// if (load_texture(map->textures->right_hand, images[7], win->mlx_ptr) == 1)
+	// 	return (1);
 
 	ft_tabfree(images);
 	ft_init_keymap(win, map);

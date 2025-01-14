@@ -7,5 +7,6 @@ Tej les deplacements impossibles
 - Check de nouveau les calculs, aucune idee de si c est bon ou non
 - PRINT LES BONS TRAITS PTN JSUIS CON
 
+Arreter MAJ h24 si pas changement pos
 
 ## Etapes pour aider juju
