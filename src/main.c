@@ -6,29 +6,29 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:40:32 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/12/10 21:47:47 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/12 03:48:23 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-static	int main_loop(t_key_params *params)
-{
-	int	x;
-	int	y;
+// static	int main_loop(t_key_params *params)
+// {
+// 	int	x;
+// 	int	y;
 
-	refresh(params->win, params->map);
-	if (params->map->mouse_lock)
-	{
-		mlx_mouse_get_pos(params->win->mlx_ptr, params->win->win_ptr, &x, &y);
-		mlx_mouse_move(params->win->mlx_ptr, params->win->win_ptr, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-		if (x > SCREEN_WIDTH / 2)
-			player_look_right(params->map);
-		else if (x < SCREEN_WIDTH / 2)
-			player_look_left(params->map);
-	}
-	return (0);
-}
+// 	refresh(params->win, params->map);
+// 	if (params->map->mouse_lock)
+// 	{
+// 		mlx_mouse_get_pos(params->win->mlx_ptr, params->win->win_ptr, &x, &y);
+// 		mlx_mouse_move(params->win->mlx_ptr, params->win->win_ptr, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+// 		if (x > SCREEN_WIDTH / 2)
+// 			player_look_right(params->map);
+// 		else if (x < SCREEN_WIDTH / 2)
+// 			player_look_left(params->map);
+// 	}
+// 	return (0);
+// }
 
 int	main(int argc, char **argv)
 {
@@ -70,9 +70,9 @@ int	main(int argc, char **argv)
 	if (fill_rgb_texture(&map->textures->ceiling, images[5]) == 1)
 		return (1);
 	if (load_texture(map->textures->door, images[6], win->mlx_ptr) == 1)
-		return (1); //TODO: Remove, it's the door
-	if (load_texture(map->textures->right_hand, images[7], win->mlx_ptr) == 1)
-		return (1);
+		return (1); //TODO: Remove, it's the door and readd hand
+	// if (load_texture(map->textures->right_hand, images[7], win->mlx_ptr) == 1)
+	// 	return (1);
 
 	ft_tabfree(images);
 	//	//TODO: render map
@@ -88,7 +88,7 @@ int	main(int argc, char **argv)
 	}
 	params->win = win;
 	params->map = map;
-	mlx_loop_hook(win->mlx_ptr, main_loop, params);
+	// mlx_loop_hook(win->mlx_ptr, main_loop, params);
 	mlx_loop(win->mlx_ptr);
 	return (0);
 }
