@@ -73,10 +73,10 @@ typedef struct s_ray
 	double				distance;
 	int					id;
 	double				angle;
-	double				pos_y;
-	double				pos_x;
-	double				y_offset;
-	double				x_offset;
+	// double				pos_y;
+	// double				pos_x;
+	// double				y_offset;
+	// double				x_offset;
 	struct s_ray		*next;
 	struct s_ray		*prev;
 }						t_ray;

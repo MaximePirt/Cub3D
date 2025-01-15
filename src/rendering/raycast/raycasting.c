@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 04:35:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/14 16:09:19 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:05:53 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,20 @@ int give_all_rays(t_map *map)
 	double arctan;
 	t_ray	*tmp;
 	double length;
+	double pos_x;
+	double pos_y;
+	double y_offset;
+	double x_offset;
+	int pos_r_mx;
+	int pos_r_my;
+	int pos_r_mp;
+	(void) pos_r_mp;
+	(void) pos_r_mx;
+	(void) pos_r_my;
+	(void) y_offset;
+	(void) x_offset;
+	(void) pos_x;
+	(void) pos_y;
 	(void) length;
 	// printf("Enter here\n"); 
 	i = 0;
@@ -106,52 +120,49 @@ int give_all_rays(t_map *map)
 	while (i < RAYS_COUNT)
 	{
 		int stop = 0;
+
 		tmp->angle = i * ANGLE;
 		arctan = -1/tan(tmp->angle);		
 		//look up
 		if (tmp->angle > M_PI)
 		{
-			tmp->pos_y = ceil(map->player.y) - 0.0001;
-			tmp->pos_x = map->player.y - tmp->pos_y * arctan + map->player.x;
-			tmp->y_offset = -64;
-			tmp->x_offset = tmp->y_offset * arctan;
+			pos_y = ceil(map->player.y) - 0.0001;
+			pos_x = map->player.y - pos_y * arctan + map->player.x;
+			y_offset = -64;
+			x_offset = y_offset * arctan;
 		}
 		//look down
-
 		if (tmp->angle < M_PI)
 		{
-			tmp->pos_y = ceil(map->player.y) + 64;
-			tmp->pos_x = map->player.y - tmp->pos_y * arctan + map->player.x;
-			tmp->y_offset = 64;
-			tmp->x_offset = tmp->y_offset * arctan;
+			pos_y = ceil(map->player.y) + 64;
+			pos_x = map->player.y - pos_y * arctan + map->player.x;
+			y_offset = 64;
+			x_offset = y_offset * arctan;
 		}
 		//look left/right
 		if (tmp->angle == 0 || tmp->angle == M_PI)
 		{
-			tmp->pos_x = map->player.x;
-			tmp->pos_x = map->player.y;
+			pos_x = map->player.x;
+			pos_x = map->player.y;
 			stop = 8;
 		}
-		int pos_r_mx;
-		int pos_r_my;
-		int pos_r_mp;
-		(void) pos_r_mp;
 		while (stop < 8)
 		{
-			pos_r_mx = (int) tmp->pos_x / 64;
-			pos_r_my = (int) tmp->pos_y / 64;
+			pos_r_mx = (int) pos_x / 64;
+			pos_r_my = (int) pos_y / 64;
 			pos_r_mp = pos_r_my * map->size_x + pos_r_mx;
-			if (pos_r_mp < map->size_x * map->size_y && map->blocks[pos_r_mp]->type == 1)
-				stop = 8;
-			else
-			{
-				printf("Avant : pos_x = %f, x_offset = %f\n", tmp->pos_x, tmp->x_offset);
-				tmp->pos_x += tmp->x_offset;
-				printf("Après : pos_x = %f\n", tmp->pos_x);				// tmp->pos_y += tmp->y_offset;
-				stop +=1;				
+				if (pos_r_mp < map->size_x * map->size_y && map->blocks[pos_r_mp]->type == 1)
+					stop = 8;
+				else
+				{
+					printf("Avant : pos_x = %f, x_offset = %f\n", pos_x, x_offset);
+					pos_x += x_offset;
+					printf("Après : pos_x = %f\n", pos_x);
+					// tmp->pos_y += tmp->y_offset;
+					stop +=1;				
 			}
 		}
-		// tmp->distance = sqrt(pow(tmp->pos_x - map->player.x, 2) + pow(tmp->pos_y - map->player.y, 2));
+		tmp->distance = sqrt(pow(pos_x - map->player.x, 2) + pow(pos_y - map->player.y, 2));
 		i++;
 		tmp = tmp->next;
 	}
