@@ -50,6 +50,19 @@ exemple :
 
 #include <math.h>
 
+double	calculate_ray_size(t_ray **ray, double x_var, double y_var)
+{
+	double length;
+
+	length = sqrt(x_var * x_var + y_var * y_var);
+	// ray->distance = length;
+	(*ray)->distance = 5000;
+
+	//printf("Length : [%f]\n", length);
+	return (length);
+	
+}
+
 /**
  * 	@brief Search finale x position, then calculate x size
  * 
@@ -64,6 +77,7 @@ double	find_finale_x(t_ray **ray, int angle, double x_start, double y_start)
 	double x_end;
 	(void) x_end;
 	(void) y_start;
+	(void) x_end;
 
 	x_tan = tan(angle * M_PI / 180);
 	y_var = 1;

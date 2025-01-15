@@ -38,6 +38,8 @@ typedef struct s_player
 	double				old_y;
 	double				dir;
 	double 				old_dir;
+	int 				hand_animation_pos;
+	int 				hand_animation_direction;
 	t_image				*texture;
 }						t_player;
 
