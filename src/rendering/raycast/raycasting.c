@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 04:35:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/14 14:50:43 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/14 16:09:19 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,9 @@ double	find_finale_x(t_ray **ray, int angle, double x_start, double y_start)
 int give_all_rays(t_map *map)
 {
 	int i;
-	double	x_start;
-	double	y_start;
+	// double	x_start;
+	// double	y_start;
+	double arctan;
 	t_ray	*tmp;
 	double length;
 	(void) length;
@@ -90,23 +91,61 @@ int give_all_rays(t_map *map)
 	tmp = map->rays;
 	while (i < RAYS_COUNT)
 	{
-		x_start = map->player.x;
-		y_start = map->player.y;
-		while (&map->blocks[(int)x_start][(int)y_start] && map->blocks[(int)x_start][(int)y_start].type != WALL)
+		int stop = 0;
+		tmp->angle = i * ANGLE;
+		arctan = -1/tan(tmp->angle);		
+		//look up
+		if (tmp->angle > M_PI)
 		{
-			// double tqt = (map->player.dir + (i * ANGLE) - (FOV / 2)) * M_PI / 180.0;
-			printf("Angle [%d] distance [%f]\n", ANGLE, tmp->distance);
-
-			// printf("ray id [%d]\n xstart %f\n ystart %f\n-------\n", tmp->id, x_start, y_start);
-			length = find_finale_x(&tmp, ANGLE, x_start, y_start);
-			x_start +=1;
-			y_start +=1;		
-
+			tmp->pos_y = ceil(map->player.y) - 0.0001;
+			tmp->pos_x = map->player.y - tmp->pos_y * arctan + map->player.x;
+			tmp->y_offset = -64;
+			tmp->x_offset = tmp->y_offset * arctan;
 		}
-		printf("Ray id [%d] distance [%f]\n", tmp->id, tmp->distance);
-		tmp = tmp->next;
+		//look down
+
+		if (tmp->angle < M_PI)
+		{
+			tmp->pos_y = ceil(map->player.y) + 64;
+			tmp->pos_x = map->player.y - tmp->pos_y * arctan + map->player.x;
+			tmp->y_offset = 64;
+			tmp->x_offset = tmp->y_offset * arctan;
+		}
+		//look left/right
+		if (tmp->angle == 0 || tmp->angle == M_PI)
+		{
+			tmp->pos_x = map->player.x;
+			tmp->pos_x = map->player.y;
+			stop = 8;
+		}
+		int pos_r_mx;
+		int pos_r_my;
+		int pos_r_mp;
+		(void) pos_r_mp;
+		while (stop < 8)
+		{
+			pos_r_mx = (int) tmp->pos_x / 64;
+			pos_r_my = (int) tmp->pos_y / 64;
+			pos_r_mp = pos_r_my * map->size_x + pos_r_mx;
+			if (pos_r_mp < map->size_x * map->size_y && map->blocks[pos_r_mp]->type == 1)
+				stop = 8;
+			else
+			{
+				printf("Avant : pos_x = %f, x_offset = %f\n", tmp->pos_x, tmp->x_offset);
+				tmp->pos_x += tmp->x_offset;
+				printf("Après : pos_x = %f\n", tmp->pos_x);				// tmp->pos_y += tmp->y_offset;
+				stop +=1;				
+			}
+		}
+		// tmp->distance = sqrt(pow(tmp->pos_x - map->player.x, 2) + pow(tmp->pos_y - map->player.y, 2));
 		i++;
+		tmp = tmp->next;
 	}
+
+	// while (i < RAYS_COUNT)
+	// {
+	// 	// Check Vertical ray
+	// }
 	// printf("Out here\n");
 	
   return (0);
