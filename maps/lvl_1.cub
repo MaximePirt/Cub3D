@@ -4,6 +4,7 @@ WE ./maps/wall.xpm
 EA ./maps/wall.xpm
 
 DOOR ./maps/wall.xpm
+RIGHT_HAND ./maps/right_hand.xpm
 
 F 220,100,0
 C 225,30,0

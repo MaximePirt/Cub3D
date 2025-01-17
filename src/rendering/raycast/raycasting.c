@@ -47,81 +47,86 @@ exemple :
 	longueur = sqrt(1.04)
 	longueur = 1.02
 */
+#define DEG_TO_RAD(angleDegrees) ((angleDegrees) * M_PI / 180.0)
 
-#include <math.h>
+double process_ray(t_map *map, int ray_index) {
+	double add_angle = (ray_index * (FOV / (double)RAYS_COUNT)) - (FOV / 2);
+	double angle = map->player.dir + add_angle;
 
-double	calculate_ray_size(t_ray **ray, double x_var, double y_var)
-{
-	double length;
+	double ray_dirX = cos(DEG_TO_RAD(angle));
+	double ray_dirY = sin(DEG_TO_RAD(angle));
 
-	length = sqrt(x_var * x_var + y_var * y_var);
-	// ray->distance = length;
-	(*ray)->distance = 5000;
+	double posX = map->player.x;
+	double posY = map->player.y;
 
-	//printf("Length : [%f]\n", length);
-	return (length);
-	
+	int mapX = (int)posX;
+	int mapY = (int)posY;
+
+	double deltaDistX = (ray_dirX == 0) ? 1e30 : fabs(1 / ray_dirX);
+	double deltaDistY = (ray_dirY == 0) ? 1e30 : fabs(1 / ray_dirY);
+
+	int stepX, stepY;
+	double sideDistX, sideDistY;
+
+	if (ray_dirX < 0) {
+		stepX = -1;
+		sideDistX = (posX - mapX) * deltaDistX;
+	} else {
+		stepX = 1;
+		sideDistX = (mapX + 1.0 - posX) * deltaDistX;
+	}
+	if (ray_dirY < 0) {
+		stepY = -1;
+		sideDistY = (posY - mapY) * deltaDistY;
+	} else {
+		stepY = 1;
+		sideDistY = (mapY + 1.0 - posY) * deltaDistY;
+	}
+
+	int hit = 0;
+	int side = 0;
+	while (hit == 0) {
+		if (sideDistX < sideDistY) {
+			sideDistX += deltaDistX;
+			mapX += stepX;
+			side = 0;
+		} else {
+			sideDistY += deltaDistY;
+			mapY += stepY;
+			side = 1;
+		}
+		if (map->blocks[mapY][mapX].type != FLOOR) {
+			hit = 1;
+		}
+	}
+
+	double perpWallDist;
+	if (side == 0) {
+		perpWallDist = (mapX - posX + (1 - stepX) / 2) / ray_dirX;
+	} else {
+		perpWallDist = (mapY - posY + (1 - stepY) / 2) / ray_dirY;
+	}
+
+	return perpWallDist;
 }
+
 
 /**
- * 	@brief Search finale x position, then calculate x size
- * 
- *		y start is at first players y position then position which we stopped
+ * @brief Cast all rays for the player's field of view and calculate distances.
+ * @param map The map containing ray and block data.
+ * @return int Status code (0 for success).
  */
-double	find_finale_x(t_ray **ray, int angle, double x_start, double y_start)
-{
-	double	x_var;
-	double	y_var;
-	double	x_tan;
-	double length;
-	double x_end;
-	(void) x_end;
-	(void) y_start;
-	(void) x_end;
-
-	x_tan = tan(angle * M_PI / 180);
-	y_var = 1;
-	x_var = y_var / x_tan;
-	x_end = x_start / x_var; 
-	printf("Xend : [%f]\n", x_end);
-	length = sqrt(x_var * x_var + y_var * y_var);
-	(*ray)->distance = length;
-	return (length);
-	
-}
-
-
 int give_all_rays(t_map *map)
 {
-	int i;
-	double	x_start;
-	double	y_start;
-	t_ray	*tmp;
-	double length;
-	(void) length;
-	// printf("Enter here\n"); 
-	i = 0;
-	tmp = map->rays;
+	int i = 0;
+	t_ray *tmp = map->rays;
+
 	while (i < RAYS_COUNT)
 	{
-		x_start = map->player.x;
-		y_start = map->player.y;
-		while (&map->blocks[(int)x_start][(int)y_start] && map->blocks[(int)x_start][(int)y_start].type != WALL)
-		{
-			// double tqt = (map->player.dir + (i * ANGLE) - (FOV / 2)) * M_PI / 180.0;
-			printf("Angle [%d] distance [%f]\n", ANGLE, tmp->distance);
-
-			// printf("ray id [%d]\n xstart %f\n ystart %f\n-------\n", tmp->id, x_start, y_start);
-			length = find_finale_x(&tmp, ANGLE, x_start, y_start);
-			x_start +=1;
-			y_start +=1;		
-
-		}
-		printf("Ray id [%d] distance [%f]\n", tmp->id, tmp->distance);
+		tmp->distance = process_ray(map, i);
 		tmp = tmp->next;
 		i++;
 	}
-	// printf("Out here\n");
-	
-  return (0);
+
+	return 0;
 }
