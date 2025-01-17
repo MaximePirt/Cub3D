@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 04:35:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/15 16:05:53 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/17 14:30:35 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,9 @@ int give_all_rays(t_map *map)
 	// printf("Enter here\n"); 
 	i = 0;
 	tmp = map->rays;
-	while (i < RAYS_COUNT)
-	{
+	// while (i < RAYS_COUNT)
+	// {
+		fprintf(stderr, "debug1\n");
 		int stop = 0;
 
 		tmp->angle = i * ANGLE;
@@ -131,6 +132,7 @@ int give_all_rays(t_map *map)
 			y_offset = -64;
 			x_offset = y_offset * arctan;
 		}
+		fprintf(stderr, "debug2\n");
 		//look down
 		if (tmp->angle < M_PI)
 		{
@@ -139,6 +141,7 @@ int give_all_rays(t_map *map)
 			y_offset = 64;
 			x_offset = y_offset * arctan;
 		}
+		fprintf(stderr, "debug3\n");
 		//look left/right
 		if (tmp->angle == 0 || tmp->angle == M_PI)
 		{
@@ -146,26 +149,32 @@ int give_all_rays(t_map *map)
 			pos_x = map->player.y;
 			stop = 8;
 		}
+		printf("debug4\n");
 		while (stop < 8)
 		{
+			printf("debug5\n");
 			pos_r_mx = (int) pos_x / 64;
 			pos_r_my = (int) pos_y / 64;
 			pos_r_mp = pos_r_my * map->size_x + pos_r_mx;
-				if (pos_r_mp < map->size_x * map->size_y && map->blocks[pos_r_mp]->type == 1)
-					stop = 8;
-				else
-				{
-					printf("Avant : pos_x = %f, x_offset = %f\n", pos_x, x_offset);
-					pos_x += x_offset;
-					printf("Après : pos_x = %f\n", pos_x);
-					// tmp->pos_y += tmp->y_offset;
-					stop +=1;				
+			if (pos_r_mp < map->size_x * map->size_y && map->blocks[pos_r_mp]->type == 1)
+				stop = 8;
+			else
+			{
+				printf("Avant : pos_x = %f, x_offset = %f\n", pos_x, x_offset);
+				pos_x += x_offset;
+				printf("Après : pos_x = %f\n", pos_x);
+				// tmp->pos_y += tmp->y_offset;
+				stop +=1;				
 			}
+			fprintf(stdin, "debug6\n");
 		}
-		tmp->distance = sqrt(pow(pos_x - map->player.x, 2) + pow(pos_y - map->player.y, 2));
+		fprintf(stdin, "debug7\n");
+		write(1, "ok", 2);
+		// tmp->distance = sqrt(pow(pos_x - map->player.x, 2) + pow(pos_y - map->player.y, 2));
+		fprintf(stdin, "\ndebug8\n");
 		i++;
-		tmp = tmp->next;
-	}
+		// tmp = tmp->next;
+	// }
 
 	// while (i < RAYS_COUNT)
 	// {
