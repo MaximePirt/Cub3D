@@ -47,140 +47,86 @@ exemple :
 	longueur = sqrt(1.04)
 	longueur = 1.02
 */
+#define DEG_TO_RAD(angleDegrees) ((angleDegrees) * M_PI / 180.0)
 
-#include <math.h>
+double process_ray(t_map *map, int ray_index) {
+	double add_angle = (ray_index * (FOV / (double)RAYS_COUNT)) - (FOV / 2);
+	double angle = map->player.dir + add_angle;
 
-double	calculate_ray_size(t_ray **ray, double x_var, double y_var)
-{
-	double length;
+	double ray_dirX = cos(DEG_TO_RAD(angle));
+	double ray_dirY = sin(DEG_TO_RAD(angle));
 
-	length = sqrt(x_var * x_var + y_var * y_var);
-	// ray->distance = length;
-	(*ray)->distance = 5000;
+	double posX = map->player.x;
+	double posY = map->player.y;
 
-	//printf("Length : [%f]\n", length);
-	return (length);
-	
+	int mapX = (int)posX;
+	int mapY = (int)posY;
+
+	double deltaDistX = (ray_dirX == 0) ? 1e30 : fabs(1 / ray_dirX);
+	double deltaDistY = (ray_dirY == 0) ? 1e30 : fabs(1 / ray_dirY);
+
+	int stepX, stepY;
+	double sideDistX, sideDistY;
+
+	if (ray_dirX < 0) {
+		stepX = -1;
+		sideDistX = (posX - mapX) * deltaDistX;
+	} else {
+		stepX = 1;
+		sideDistX = (mapX + 1.0 - posX) * deltaDistX;
+	}
+	if (ray_dirY < 0) {
+		stepY = -1;
+		sideDistY = (posY - mapY) * deltaDistY;
+	} else {
+		stepY = 1;
+		sideDistY = (mapY + 1.0 - posY) * deltaDistY;
+	}
+
+	int hit = 0;
+	int side = 0;
+	while (hit == 0) {
+		if (sideDistX < sideDistY) {
+			sideDistX += deltaDistX;
+			mapX += stepX;
+			side = 0;
+		} else {
+			sideDistY += deltaDistY;
+			mapY += stepY;
+			side = 1;
+		}
+		if (map->blocks[mapY][mapX].type != FLOOR) {
+			hit = 1;
+		}
+	}
+
+	double perpWallDist;
+	if (side == 0) {
+		perpWallDist = (mapX - posX + (1 - stepX) / 2) / ray_dirX;
+	} else {
+		perpWallDist = (mapY - posY + (1 - stepY) / 2) / ray_dirY;
+	}
+
+	return perpWallDist;
 }
+
 
 /**
- * 	@brief Search finale x position, then calculate x size
- * 
- *		y start is at first players y position then position which we stopped
+ * @brief Cast all rays for the player's field of view and calculate distances.
+ * @param map The map containing ray and block data.
+ * @return int Status code (0 for success).
  */
-double	find_finale_x(t_ray **ray, int angle, double x_start, double y_start)
-{
-	double	x_var;
-	double	y_var;
-	double	x_tan;
-	double length;
-	double x_end;
-	(void) x_end;
-	(void) y_start;
-	(void) x_end;
-
-	x_tan = tan(angle * M_PI / 180);
-	y_var = 1;
-	x_var = y_var / x_tan;
-	x_end = x_start / x_var; 
-	printf("Xend : [%f]\n", x_end);
-	length = sqrt(x_var * x_var + y_var * y_var);
-	(*ray)->distance = length;
-	return (length);
-	
-}
-
-
 int give_all_rays(t_map *map)
 {
-	int i;
-	// double	x_start;
-	// double	y_start;
-	double arctan;
-	t_ray	*tmp;
-	double length;
-	double pos_x;
-	double pos_y;
-	double y_offset;
-	double x_offset;
-	int pos_r_mx;
-	int pos_r_my;
-	int pos_r_mp;
-	(void) pos_r_mp;
-	(void) pos_r_mx;
-	(void) pos_r_my;
-	(void) y_offset;
-	(void) x_offset;
-	(void) pos_x;
-	(void) pos_y;
-	(void) length;
-	// printf("Enter here\n"); 
-	i = 0;
-	tmp = map->rays;
-	// while (i < RAYS_COUNT)
-	// {
-		fprintf(stderr, "debug1\n");
-		int stop = 0;
+	int i = 0;
+	t_ray *tmp = map->rays;
 
-		tmp->angle = i * ANGLE;
-		arctan = -1/tan(tmp->angle);		
-		//look up
-		if (tmp->angle > M_PI)
-		{
-			pos_y = ceil(map->player.y) - 0.0001;
-			pos_x = map->player.y - pos_y * arctan + map->player.x;
-			y_offset = -64;
-			x_offset = y_offset * arctan;
-		}
-		fprintf(stderr, "debug2\n");
-		//look down
-		if (tmp->angle < M_PI)
-		{
-			pos_y = ceil(map->player.y) + 64;
-			pos_x = map->player.y - pos_y * arctan + map->player.x;
-			y_offset = 64;
-			x_offset = y_offset * arctan;
-		}
-		fprintf(stderr, "debug3\n");
-		//look left/right
-		if (tmp->angle == 0 || tmp->angle == M_PI)
-		{
-			pos_x = map->player.x;
-			pos_x = map->player.y;
-			stop = 8;
-		}
-		printf("debug4\n");
-		while (stop < 8)
-		{
-			printf("debug5\n");
-			pos_r_mx = (int) pos_x / 64;
-			pos_r_my = (int) pos_y / 64;
-			pos_r_mp = pos_r_my * map->size_x + pos_r_mx;
-			if (pos_r_mp < map->size_x * map->size_y && map->blocks[pos_r_mp]->type == 1)
-				stop = 8;
-			else
-			{
-				printf("Avant : pos_x = %f, x_offset = %f\n", pos_x, x_offset);
-				pos_x += x_offset;
-				printf("Après : pos_x = %f\n", pos_x);
-				// tmp->pos_y += tmp->y_offset;
-				stop +=1;				
-			}
-			fprintf(stdin, "debug6\n");
-		}
-		fprintf(stdin, "debug7\n");
-		write(1, "ok", 2);
-		// tmp->distance = sqrt(pow(pos_x - map->player.x, 2) + pow(pos_y - map->player.y, 2));
-		fprintf(stdin, "\ndebug8\n");
+	while (i < RAYS_COUNT)
+	{
+		tmp->distance = process_ray(map, i);
+		tmp = tmp->next;
 		i++;
-		// tmp = tmp->next;
-	// }
+	}
 
-	// while (i < RAYS_COUNT)
-	// {
-	// 	// Check Vertical ray
-	// }
-	// printf("Out here\n");
-	
-  return (0);
+	return 0;
 }

@@ -71,8 +71,8 @@ int	main(int argc, char **argv)
 		return (1);
 	if (load_texture(map->textures->door, images[6], win->mlx_ptr) == 1)
 		return (1); //TODO: Remove, it's the door and readd hand
-	// if (load_texture(map->textures->right_hand, images[7], win->mlx_ptr) == 1)
-	// 	return (1);
+	if (load_texture(map->textures->right_hand, images[7], win->mlx_ptr) == 1)
+		return (1);
 
 	ft_tabfree(images);
 	ft_init_keymap(win, map);

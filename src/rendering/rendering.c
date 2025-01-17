@@ -35,7 +35,6 @@ static void process_ray(t_win *win, t_map *map, double distance, int ray_index)
 	int		x;
 	int		y;
 	//decrese distance by a random value between 0 and 3
-	distance -= (rand() % 3);
 	height = (int)(SCREEN_HEIGHT / distance);
 	//ray witdh corresponds to: SCREEN_WIDTH / RAYS_COUNT
 	width = SCREEN_WIDTH / RAYS_COUNT;
