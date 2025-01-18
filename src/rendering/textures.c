@@ -22,7 +22,7 @@ static int	extract_image_pixel(t_image *texture, t_vector2 pos)
 	return (color);
 }
 
-void	copy_vertical_pixels(t_win *win, t_image *texture, t_vector2 pos, int height, int width, int texture_x)
+void	copy_vertical_pixels(t_image *img, t_image *texture, t_vector2 pos, int height, int width, int texture_x)
 {
 	int		i;
 	int		j;
@@ -39,7 +39,7 @@ void	copy_vertical_pixels(t_win *win, t_image *texture, t_vector2 pos, int heigh
 			new_pos = ft_vector2(pos.x + i, pos.y + j);
 			if (new_pos.x < 0 || new_pos.x >= SCREEN_WIDTH || new_pos.y < 0 || new_pos.y >= SCREEN_HEIGHT)
 				return ;
-			*(int *)(win->img_data + (int)new_pos.y * win->size_line + (int)new_pos.x * (win->bpp / 8)) = color;
+			*(int *)(img->img_data + (int)new_pos.y * img->size_line + (int)new_pos.x * (img->bpp / 8)) = color;
 			j++;
 		}
 		i++;

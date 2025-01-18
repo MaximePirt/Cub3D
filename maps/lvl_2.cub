@@ -1,0 +1,19 @@
+NO ./maps/wall.xpm
+SO ./maps/wall.xpm
+WE ./maps/wall.xpm
+EA ./maps/wall.xpm
+
+DOOR ./maps/wall.xpm
+RIGHT_HAND ./maps/right_hand.xpm
+
+F 220,100,0
+C 225,30,0
+
+111111111
+100001001
+100001001
+100100001
+1000N0001
+100000001
+100000001
+111111111
