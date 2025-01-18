@@ -100,24 +100,24 @@ static void	struct_filler(t_calcul_ray *calcul, t_map *map, int ray_index)
 		calcul->deltaDistY = fabs(1 / calcul->ray_dirY);
 	struct_fill_forest(calcul);
 }
-static void	hit_loop(t_calcul_ray calcul, t_map *map)
+static void	hit_loop(t_calcul_ray *calcul, t_map *map)
 {
-	while (calcul.hit == 0)
+	while (calcul->hit == 0)
 	{
-		if (calcul.sideDistX < calcul.sideDistY)
+		if (calcul->sideDistX < calcul->sideDistY)
 		{
-			calcul.sideDistX += calcul.deltaDistX;
-			calcul.mapX += calcul.stepX;
-			calcul.side = 0;
+			calcul->sideDistX += calcul->deltaDistX;
+			calcul->mapX += calcul->stepX;
+			calcul->side = 0;
 		}
 		else
 		{
-			calcul.sideDistY += calcul.deltaDistY;
-			calcul.mapY += calcul.stepY;
-			calcul.side = 1;
+			calcul->sideDistY += calcul->deltaDistY;
+			calcul->mapY += calcul->stepY;
+			calcul->side = 1;
 		}
-		if (map->blocks[calcul.mapY][calcul.mapX].type != FLOOR)
-			calcul.hit = 1;
+		if (map->blocks[calcul->mapY][calcul->mapX].type != FLOOR)
+			calcul->hit = 1;
 	}
 	return ;
 }
@@ -127,7 +127,7 @@ void	process_ray(t_map *map, t_ray *ray, int ray_index)
 	t_calcul_ray	calcul;
 
 	struct_filler(&calcul, map, ray_index);
-	hit_loop(calcul, map);
+	hit_loop(&calcul, map);
 	if (calcul.side == 0)
 		calcul.perpWallDist = (calcul.mapX - calcul.posX + (1 - calcul.stepX)
 				/ 2) / calcul.ray_dirX;
