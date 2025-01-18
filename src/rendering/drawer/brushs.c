@@ -47,3 +47,20 @@ void	ft_draw_line(t_image *image, t_line line)
 		w += 1.0;
 	}
 }
+
+int	get_pixel_color(t_image *texture, t_vector2 pos)
+{
+	int	color;
+
+	if (pos.x < 0 || pos.x >= texture->width || pos.y < 0 || pos.y >= texture->height)
+		return (0);
+	color = *(int *)(texture->img_data + (int)pos.y * texture->size_line + (int)pos.x * (texture->bpp / 8));
+	return (color);
+}
+
+void	set_pixel_color(t_image *img, t_vector2 pos, int color)
+{
+	if (pos.x < 0 || pos.x >= SCREEN_WIDTH || pos.y < 0 || pos.y >= SCREEN_HEIGHT)
+		return ;
+	*(int *)(img->img_data + (int)pos.y * img->size_line + (int)pos.x * (img->bpp / 8)) = color;
+}

@@ -22,25 +22,24 @@
  */
 int	is_wall_floor_door(t_parse_map *to_copy, t_map *map, int i, int j)
 {
+	map->blocks[i][j].status = 0;
 	if (to_copy->blocks[j] == 'D')
 	{
 		map->blocks[i][j].type = DOOR;
 		map->blocks[i][j].status = 1;
 		return (1);
 	}
-	if (!map->blocks[i][j].status)
-		map->blocks[i][j].status = 0;
 	if (to_copy->blocks[j] == '1')
 	{
 		map->blocks[i][j].type = WALL;
 		return (1);
 	}
-	else if (to_copy->blocks[j] == '0')
+	if (to_copy->blocks[j] == '0')
 	{
 		map->blocks[i][j].type = FLOOR;
 		return (1);
 	}
-	else if (to_copy->blocks[j] == ' ')
+	if (to_copy->blocks[j] == ' ')
 	{
 		map->blocks[i][j].type = VOID;
 		return (1);

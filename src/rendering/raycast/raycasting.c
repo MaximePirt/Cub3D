@@ -78,46 +78,28 @@ static void	struct_fill_forest(t_calcul_ray *calcul)
 	}
 }
 
-static void	struct_filler(t_calcul_ray *calcul, t_map *map, int ray_index)
-{
-	calcul->add_angle = (ray_index * (FOV / (double)RAYS_COUNT)) - (FOV / 2);
-	calcul->angle = map->player.dir + calcul->add_angle;
-	calcul->ray_dirX = cos(DEG_TO_RAD(calcul->angle));
-	calcul->ray_dirY = sin(DEG_TO_RAD(calcul->angle));
-	calcul->posX = map->player.x;
-	calcul->posY = map->player.y;
-	calcul->mapX = (int)calcul->posX;
-	calcul->mapY = (int)calcul->posY;
-	calcul->hit = 0;
-	calcul->side = 0;
-	if (calcul->ray_dirX == 0)
-		calcul->deltaDistX = 1e30;
-	else
-		calcul->deltaDistX = fabs(1 / calcul->ray_dirX);
-	if (calcul->ray_dirY == 0)
-		calcul->deltaDistY = 1e30;
-	else
-		calcul->deltaDistY = fabs(1 / calcul->ray_dirY);
-	struct_fill_forest(calcul);
-}
-static void	hit_loop(t_calcul_ray *calcul, t_map *map)
-{
-	while (calcul->hit == 0)
-	{
-		if (calcul->sideDistX < calcul->sideDistY)
-		{
-			calcul->sideDistX += calcul->deltaDistX;
-			calcul->mapX += calcul->stepX;
-			calcul->side = 0;
+	int hit = 0;
+	int side = 0;
+	while (hit == 0) {
+
+		if (sideDistX < sideDistY) {
+			sideDistX += deltaDistX;
+			mapX += stepX;
+			side = 0;
+		} else {
+			sideDistY += deltaDistY;
+			mapY += stepY;
+			side = 1;
+		}
+		ray->type = FLOOR;
+		if (map->blocks[mapY][mapX].type == WALL)
+			hit = 1;
+		else if (map->blocks[mapY][mapX].type == DOOR && map->blocks[mapY][mapX].status == 1) {
+			hit = 1;
+			ray->type = DOOR;
 		}
 		else
-		{
-			calcul->sideDistY += calcul->deltaDistY;
-			calcul->mapY += calcul->stepY;
-			calcul->side = 1;
-		}
-		if (map->blocks[calcul->mapY][calcul->mapX].type != FLOOR)
-			calcul->hit = 1;
+			hit = 0;
 	}
 	return ;
 }

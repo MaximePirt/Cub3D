@@ -13,7 +13,7 @@ static int	action_key(int keycode, t_key_params *params)
 		ft_free_program(params);
 		return (1);
 	}
-	else if (keycode == KEY_W)
+	if (keycode == KEY_W)
 		player_move_forward(params->map);
 	else if (keycode == KEY_S)
 		player_move_backward(params->map);
@@ -21,6 +21,8 @@ static int	action_key(int keycode, t_key_params *params)
 		player_look_left(params->map);
 	else if (keycode == KEY_D)
 		player_look_right(params->map);
+	else if (keycode == KEY_T)
+		door_interact(params->map);
 	else
 		return (0);
 	refresh(params->win, params->map);
