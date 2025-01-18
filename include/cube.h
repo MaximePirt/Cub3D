@@ -47,7 +47,7 @@ void		ft_draw_line(t_image *image, t_line line);
 void		draw_square(t_image *image, t_vector2 pos, int size, int color);
 void		draw_circle(t_image *image, t_vector2 pos, int radius, int color);
 void		draw_rectangle(t_win *win, t_vector2 pos, int width, int height, int color);
-void		copy_vertical_pixels(t_win *win, t_image *texture, t_vector2 pos, int height, int width);
+void		copy_vertical_pixels(t_win *win, t_image *texture, t_vector2 pos, int height, int width, int texture_x);
 
 // Minimap
 

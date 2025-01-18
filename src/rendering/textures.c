@@ -22,15 +22,15 @@ static int	extract_image_pixel(t_image *texture, t_vector2 pos)
 	return (color);
 }
 
-void	copy_vertical_pixels(t_win *win, t_image *texture, t_vector2 pos, int height, int width)
+void	copy_vertical_pixels(t_win *win, t_image *texture, t_vector2 pos, int height, int width, int texture_x)
 {
 	int		i;
 	int		j;
 	int		color;
 	t_vector2	new_pos;
 
-	i = 0;
-	while (i < width)
+	i = texture_x;
+	while (i < width + texture_x)
 	{
 		j = 0;
 		while (j < height)

@@ -49,7 +49,7 @@ exemple :
 */
 #define DEG_TO_RAD(angleDegrees) ((angleDegrees) * M_PI / 180.0)
 
-double process_ray(t_map *map, int ray_index) {
+void	process_ray(t_map *map, t_ray *ray, int ray_index) {
 	double add_angle = (ray_index * (FOV / (double)RAYS_COUNT)) - (FOV / 2);
 	double angle = map->player.dir + add_angle;
 
@@ -107,7 +107,9 @@ double process_ray(t_map *map, int ray_index) {
 		perpWallDist = (mapY - posY + (1 - stepY) / 2) / ray_dirY;
 	}
 
-	return perpWallDist;
+	ray->distance = perpWallDist;
+	ray->x_axis = side == 0 ? posY + perpWallDist * ray_dirY : posX + perpWallDist * ray_dirX;
+	ray->x_axis = ray->x_axis - (int)ray->x_axis;
 }
 
 
@@ -123,7 +125,7 @@ int give_all_rays(t_map *map)
 
 	while (i < RAYS_COUNT)
 	{
-		tmp->distance = process_ray(map, i);
+		process_ray(map, tmp, i);
 		tmp = tmp->next;
 		i++;
 	}

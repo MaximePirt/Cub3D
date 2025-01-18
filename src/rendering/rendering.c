@@ -26,34 +26,51 @@ static void	paste_image_on_screen(t_win *win, t_image *image, t_vector2 pos)
 	}
 }
 
-static void process_ray(t_win *win, t_map *map, double distance, int ray_index)
+static void process_ray(t_win *win, t_map *map, t_ray *ray, int ray_index)
 {
 	t_image	*texture;
+	int		screen_height;
+	int		screen_width;
 	int		height;
-	int 	width;
-	int 	direction;
+	int		width;
+	double	angle;
 	int		x;
 	int		y;
-	//decrese distance by a random value between 0 and 3
-	height = (int)(SCREEN_HEIGHT / distance);
-	//ray witdh corresponds to: SCREEN_WIDTH / RAYS_COUNT
-	width = SCREEN_WIDTH / RAYS_COUNT;
-	direction = map->player.dir + (ray_index * (FOV / (double)RAYS_COUNT)) - (FOV / 2);
-	//x corresponds to the direction of the ray on the texture
-	x = (ray_index - 1) * width;
-	y = (SCREEN_HEIGHT - height) / 2;
-	//get correct texture depending on the direction
-	if (direction >= 0 && direction < 90)
+	int		texture_x;
+
+	screen_height = SCREEN_HEIGHT;
+	screen_width = SCREEN_WIDTH;
+
+	double add_angle = (ray_index * (FOV / (double)RAYS_COUNT)) - (FOV / 2);
+	angle = fmod(map->player.dir + add_angle + 360, 360);
+
+	if (angle >= 0 && angle < 90)
 		texture = map->textures->wall_north;
-	else if (direction >= 90 && direction < 180)
+	else if (angle >= 90 && angle < 180)
 		texture = map->textures->wall_east;
-	else if (direction >= 180 && direction < 270)
+	else if (angle >= 180 && angle < 270)
 		texture = map->textures->wall_south;
 	else
 		texture = map->textures->wall_west;
-	copy_vertical_pixels(win, texture, ft_vector2(x, y), height, width);
-	draw_rectangle(win, ft_vector2(x, 0), width, (SCREEN_WIDTH - height) / 2, map->textures->ceiling.r);
-	draw_rectangle(win, ft_vector2(x, (SCREEN_HEIGHT + height) / 2), width, (SCREEN_WIDTH - height) / 2, map->textures->floor.g);
+
+	height = screen_height / ray->distance;
+	width = fmin(1, screen_width / RAYS_COUNT);
+
+	texture_x = (int)((ray->x_axis - floor(ray->x_axis)) * texture->width);
+
+	x = ray_index * width;
+	y = (screen_height - height) / 2;
+
+	// Débogage des valeurs
+
+	// Copier les pixels de la texture vers l'écran
+	copy_vertical_pixels(win, texture, ft_vector2(x, y), height, width, texture_x);
+
+	// Dessiner le plafond
+	//draw_rectangle(win, ft_vector2(x, 0), width, y, map->textures->ceiling.r);
+
+	// Dessiner le sol
+	//draw_rectangle(win, ft_vector2(x, y + height), width, screen_height - (y + height), map->textures->floor.g);
 }
 
 static void render_game(t_win *win, t_map *map)
@@ -62,10 +79,10 @@ static void render_game(t_win *win, t_map *map)
 	int 	i;
 
 	ray = map->rays;
-	i = 1;
+	i = 0;
 	while (ray)
 	{
-		process_ray(win, map, ray->distance, i);
+		process_ray(win, map, ray, i);
 		ray = ray->next;
 		i++;
 	}
