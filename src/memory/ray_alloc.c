@@ -27,7 +27,6 @@ t_ray	*ft_init_rays(void)
 		//TODO: Remove id -> i use it only to debug which one i am currently 
 		current->id = i;
 		current->x_axis = 0;
-		current->y_axis = 0;
 		current->next = NULL;
 		current->prev = prev;
 		if (prev)
