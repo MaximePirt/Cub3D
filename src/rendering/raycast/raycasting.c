@@ -86,6 +86,7 @@ void	process_ray(t_map *map, t_ray *ray, int ray_index) {
 	int hit = 0;
 	int side = 0;
 	while (hit == 0) {
+
 		if (sideDistX < sideDistY) {
 			sideDistX += deltaDistX;
 			mapX += stepX;
@@ -95,9 +96,15 @@ void	process_ray(t_map *map, t_ray *ray, int ray_index) {
 			mapY += stepY;
 			side = 1;
 		}
-		if (map->blocks[mapY][mapX].type != FLOOR) {
+		ray->type = FLOOR;
+		if (map->blocks[mapY][mapX].type == WALL)
 			hit = 1;
+		else if (map->blocks[mapY][mapX].type == DOOR && map->blocks[mapY][mapX].status == 1) {
+			hit = 1;
+			ray->type = DOOR;
 		}
+		else
+			hit = 0;
 	}
 
 	double perpWallDist;

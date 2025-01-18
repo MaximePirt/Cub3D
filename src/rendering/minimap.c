@@ -71,6 +71,8 @@ t_image	*draw_minimap(t_map *map, void *mlx_ptr)
 			{
 				if (map->blocks[j][i].type == WALL)
 					draw_square(image, ft_vector2(offset_x, offset_y), map->minimap_zoom, HEX_BLACK);
+				else if (map->blocks[j][i].type == DOOR)
+					draw_square(image, ft_vector2(offset_x, offset_y), map->minimap_zoom, HEX_CYAN);
 				else
 					draw_square(image, ft_vector2(offset_x, offset_y), map->minimap_zoom, HEX_WHITE);
 			}

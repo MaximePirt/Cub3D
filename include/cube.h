@@ -35,6 +35,7 @@ int			player_move_forward(t_map *map);
 int			player_move_backward(t_map *map);
 int			player_look_left(t_map *map);
 int			player_look_right(t_map *map);
+int			door_interact(t_map *map);
 
 // Rendering
 
@@ -44,6 +45,9 @@ int			load_texture(t_image *image, char *path, void *mlx_ptr);
 void		ft_draw_pixel_on_image(t_image *image, t_vector2 pos, int color);
 void		ft_draw_pixel_on_screen(t_image *img, t_vector2 pos, int color);
 void		ft_draw_line(t_image *image, t_line line);
+int			get_pixel_color(t_image *texture, t_vector2 pos);
+void		set_pixel_color(t_image *img, t_vector2 pos, int color);
+
 void		draw_square(t_image *image, t_vector2 pos, int size, int color);
 void		draw_circle(t_image *image, t_vector2 pos, int radius, int color);
 void		draw_rectangle(t_image *img, t_vector2 pos, int width, int height, int color);

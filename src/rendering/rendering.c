@@ -25,7 +25,6 @@ static void	paste_image_on_screen(t_win *win, t_image *image, t_vector2 pos)
 		i++;
 	}
 }
-
 static void process_ray(t_image *img, t_map *map, t_ray *ray, int ray_index)
 {
 	t_image	*texture;
@@ -45,14 +44,18 @@ static void process_ray(t_image *img, t_map *map, t_ray *ray, int ray_index)
 	else if (angle < 0)
 		angle += 360;
 
-	if (angle >= 0 && angle < 90)
-		texture = map->textures->wall_north;
-	else if (angle >= 90 && angle < 180)
-		texture = map->textures->wall_east;
-	else if (angle >= 180 && angle < 270)
-		texture = map->textures->wall_south;
-	else
-		texture = map->textures->wall_west;
+	if (ray->type == DOOR) {
+		texture = map->textures->door;
+	} else {
+		if (angle >= 0 && angle < 90)
+			texture = map->textures->wall_north;
+		else if (angle >= 90 && angle < 180)
+			texture = map->textures->wall_east;
+		else if (angle >= 180 && angle < 270)
+			texture = map->textures->wall_south;
+		else
+			texture = map->textures->wall_west;
+	}
 
 	double ray_angle = add_angle * M_PI / 180.0;
 	corrected_distance = ray->distance * cos(ray_angle);
@@ -63,15 +66,16 @@ static void process_ray(t_image *img, t_map *map, t_ray *ray, int ray_index)
 	height = (int)(SCREEN_HEIGHT / corrected_distance);
 	width = fmax(1, SCREEN_WIDTH / RAYS_COUNT);
 
-	texture_x = (int)((ray->x_axis - floor(ray->x_axis)) * texture->width);
+	texture_x = (int)(ray->x_axis * texture->width) % texture->width;
 
 	x = ray_index * width;
 	y = (SCREEN_HEIGHT - height) / 2;
 
-	if (width + texture_x > texture->width)
-		width = texture->width - texture_x;
-
-	copy_vertical_pixels(img, texture, ft_vector2(x, y), height, width, texture_x);
+	for (int screen_y = 0; screen_y < height; screen_y++) {
+		int texture_y = (screen_y * texture->height) / height;
+		int pixel_color = get_pixel_color(texture, ft_vector2(texture_x, texture_y));
+		set_pixel_color(img, ft_vector2(x, y + screen_y), pixel_color);
+	}
 
 	draw_rectangle(img, ft_vector2(x, 0), width, y, map->textures->ceiling.r);
 

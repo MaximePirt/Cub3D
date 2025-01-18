@@ -73,7 +73,7 @@ typedef struct s_ray
 	double				distance;
 	int					id;
 	double				x_axis;
-	double				y_axis;
+	t_block_type		type;
 	struct s_ray		*next;
 	struct s_ray		*prev;
 }						t_ray;
