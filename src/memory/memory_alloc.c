@@ -19,6 +19,7 @@ static t_block	**ft_alloc_map(int size_x, int size_y)
 			free(map);
 			return (NULL);
 		}
+		map[i] = ft_memset(map[i], 0, sizeof(t_block) * size_x);
 	}
 	return (map);
 }
@@ -30,34 +31,10 @@ static t_player	ft_init_player(void)
 	player.x = 0;
 	player.y = 0;
 	player.dir = 0;
+	player.texture = NULL;
+	player.hand_animation_pos = 0;
+	player.hand_animation_direction = 0;
 	return (player);
-}
-
-static t_textures	*ft_init_textures(void)
-{
-	t_textures	*textures;
-
-	textures = (t_textures *)malloc(sizeof(t_textures));
-	if (textures == NULL)
-		return (NULL);
-	textures->wall_north = NULL;
-	textures->wall_south = NULL;
-	textures->wall_east = NULL;
-	textures->wall_west = NULL;
-	textures->door = NULL;
-	return (textures);
-}
-
-t_block	*ft_init_block(void)
-{
-	t_block	*block;
-
-	block = (t_block *)malloc(sizeof(t_block));
-	if (block == NULL)
-		return (NULL);
-	block->type = VOID;
-	block->status = 0;
-	return (block);
 }
 
 t_map	*ft_init_map(int size_x, int size_y)
@@ -83,5 +60,8 @@ t_map	*ft_init_map(int size_x, int size_y)
 	}
 	map->size_x = size_x;
 	map->size_y = size_y;
+	map->rays = ft_init_rays();
+	map->minimap_zoom = SCREEN_WIDTH / MINIMAP_RENDER_DISTANCE / 5;
+	map->mouse_lock = 0;
 	return (map);
 }
