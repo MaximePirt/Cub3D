@@ -36,20 +36,23 @@ static void process_ray(t_image *img, t_map *map, t_ray *ray, int ray_index)
 	double	corrected_distance;
 
 	double add_angle = (ray_index * (FOV / (double)RAYS_COUNT)) - (FOV / 2);
+	if (ray->angle > 360)
+        ray->angle -= 360;
+	else if(ray->angle < 0)
+		ray->angle += 360;
 
 	if (ray->type == DOOR)
 		texture = map->textures->door;
 	else if (ray->side == 1)
 	{
-		if (ray->angle < 180)
+		if (ray->angle > 0 && ray->angle < 180)
 			texture = map->textures->wall_north;
 		else
 			texture = map->textures->wall_south;
-
 	}
 	else
 	{
-		if (ray->angle < 270)
+		if (ray->angle > 90 && ray->angle < 270)
 			texture = map->textures->wall_east;
 		else
 			texture = map->textures->wall_west;
