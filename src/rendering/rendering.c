@@ -30,29 +30,27 @@ static void process_ray(t_image *img, t_map *map, t_ray *ray, int ray_index)
 	t_image	*texture;
 	int		height;
 	int		width;
-	double	angle;
 	int		x;
 	int		y;
 	int		texture_x;
 	double	corrected_distance;
 
 	double add_angle = (ray_index * (FOV / (double)RAYS_COUNT)) - (FOV / 2);
-	angle = fmod(map->player.dir + add_angle + 360, 360);
 
-	if (angle >= 360)
-		angle -= 360;
-	else if (angle < 0)
-		angle += 360;
-
-	if (ray->type == DOOR) {
+	if (ray->type == DOOR)
 		texture = map->textures->door;
-	} else {
-		if (angle >= 0 && angle < 90)
+	else if (ray->side == 1)
+	{
+		if (ray->angle < 180)
 			texture = map->textures->wall_north;
-		else if (angle >= 90 && angle < 180)
-			texture = map->textures->wall_east;
-		else if (angle >= 180 && angle < 270)
+		else
 			texture = map->textures->wall_south;
+
+	}
+	else
+	{
+		if (ray->angle < 270)
+			texture = map->textures->wall_east;
 		else
 			texture = map->textures->wall_west;
 	}

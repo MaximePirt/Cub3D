@@ -134,6 +134,7 @@ void	process_ray(t_map *map, t_ray *ray, int ray_index)
 	t_calcul_ray	calcul;
 
 	struct_filler(&calcul, map, ray_index);
+    ray->angle = calcul.angle;
 	hit_loop(&calcul, map, ray);
 	if (calcul.side == 0)
 		calcul.perpWallDist = (calcul.mapX - calcul.posX + (1 - calcul.stepX)
@@ -147,6 +148,7 @@ void	process_ray(t_map *map, t_ray *ray, int ray_index)
 	else
 		ray->x_axis = calcul.posX + calcul.perpWallDist * calcul.ray_dirX;
 	ray->x_axis = ray->x_axis - (int)ray->x_axis;
+    ray->side = calcul.side;
 }
 
 /**
