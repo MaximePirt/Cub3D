@@ -5,6 +5,7 @@ int game_loop(t_key_params *params)
 	int	x;
 	int	y;
 
+	refresh(params->win, params->map);
 	if (params->map->mouse_lock)
 	{
 		mlx_mouse_get_pos(params->win->mlx_ptr, params->win->win_ptr, &x, &y);
@@ -14,6 +15,5 @@ int game_loop(t_key_params *params)
 		else if (x < SCREEN_WIDTH / 2)
 			player_look_left(params->map);
 	}
-	refresh(params->win, params->map);
 	return (0);
 }

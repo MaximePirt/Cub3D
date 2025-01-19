@@ -25,7 +25,6 @@ int	action_key(int keycode, t_key_params *params)
 		door_interact(params->map);
 	else
 		return (0);
-	refresh(params->win, params->map);
 	return (1);
 }
 
@@ -33,11 +32,6 @@ int	action_mouse_key(int button, int x, int y, t_key_params *params)
 {
 	(void)x;
 	(void)y;
-	(void)params;
-
-	//button 1 = left click
-	//button 2 = middle click
-	//button 3 = right click
 	if (button == 1)
 	{
 		if (params->map->mouse_lock == 1)

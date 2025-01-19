@@ -37,6 +37,18 @@ static t_player	ft_init_player(void)
 	return (player);
 }
 
+static t_minimap	*ft_init_minimap(void)
+{
+	t_minimap	*minimap;
+
+	minimap = (t_minimap *)malloc(sizeof(t_minimap));
+	if (minimap == NULL)
+		return (NULL);
+	minimap->zoom = SCREEN_WIDTH / MINIMAP_RENDER_DISTANCE / 5;
+	minimap->image = NULL;
+	return (minimap);
+}
+
 t_map	*ft_init_map(int size_x, int size_y)
 {
 	t_map	*map;
@@ -61,7 +73,7 @@ t_map	*ft_init_map(int size_x, int size_y)
 	map->size_x = size_x;
 	map->size_y = size_y;
 	map->rays = ft_init_rays();
-	map->minimap_zoom = SCREEN_WIDTH / MINIMAP_RENDER_DISTANCE / 5;
+	map->minimap = ft_init_minimap();
 	map->mouse_lock = 0;
 	return (map);
 }

@@ -117,7 +117,7 @@ re: fclean all
 
 gprof: CFLAGS += -pg
 gprof: re
-	./$(NAME) maps/ps.cub
+	./$(NAME) maps/lvl_2.cub
 	gprof $(NAME) gmon.out > stats.txt
 	@echo "Profiling complete. Results saved in stats.txt."
 

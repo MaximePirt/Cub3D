@@ -52,19 +52,19 @@ void		refresh(t_win *win, t_map *map);
 int			fill_rgb_texture(t_rgb *items, char *value);
 int			load_texture(t_image *image, char *path, void *mlx_ptr);
 void		ft_draw_pixel_on_image(t_image *image, t_vector2 pos, int color);
-void		ft_draw_pixel_on_screen(t_image *img, t_vector2 pos, int color);
-void		ft_draw_line(t_image *image, t_line line);
+void		ft_draw_pixel_on_screen(t_win *win, t_vector2 pos, int color);
+void		ft_draw_line(t_image *img, t_line line);
 int			get_pixel_color(t_image *texture, t_vector2 pos);
-void		set_pixel_color(t_image *img, t_vector2 pos, int color);
+void		set_pixel_color(t_win *win, t_vector2 pos, int color);
 
-void		draw_square(t_image *image, t_vector2 pos, int size, int color);
-void		draw_circle(t_image *image, t_vector2 pos, int radius, int color);
-void		draw_rectangle(t_image *img, t_vector2 pos, int width, int height, int color);
+void		draw_square(t_image *img, t_vector2 pos, int size, int color);
+void		draw_circle(t_image *img, t_vector2 pos, int radius, int color);
+void		draw_rectangle(t_win *win, t_vector2 pos, int width, int height, int color);
 void		copy_vertical_pixels(t_image *img, t_image *texture, t_vector2 pos, int height, int width, int texture_x);
 
 // Minimap
 
-t_image		*draw_minimap(t_map *map, void *mlx_ptr);
+void		draw_minimap(t_map *map);
 
 // Vectors
 t_vector2	ft_vector2(double x, double y);
