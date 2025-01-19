@@ -36,6 +36,7 @@ int	main(int argc, char **argv)
 	t_map	*map;
 	char	**images;
 
+        //super comment
 	if (argc != 2)
 	{
 		ft_fprintf(STDERR_FILENO, "Error: please provide a map file\n");
