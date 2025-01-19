@@ -29,6 +29,15 @@ int			ft_free_program(t_key_params *params);
 void		free_parse_map(t_parse_map *map);
 void		*ft_free_rays(t_ray *rays);
 
+// Game loop
+
+int			game_loop(t_key_params *params);
+
+// Key/Mouse actions
+
+int			action_key(int keycode, t_key_params *params);
+int			action_mouse_key(int button, int x, int y, t_key_params *params);
+
 // Player actions
 
 int			player_move_forward(t_map *map);
