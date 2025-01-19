@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 04:35:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/19 16:10:01 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/19 16:18:27 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ static void	hit_loop(t_calcul_ray *calcul, t_map *map, t_ray *ray)
 			calcul->side = 1;
 		}
 		ray->type = FLOOR;
+		calcul->hit = 0;
 		if (map->blocks[calcul->mapY][calcul->mapX].type == WALL)
 			calcul->hit = 1;
 		else if (map->blocks[calcul->mapY][calcul->mapX].type == DOOR
@@ -125,8 +126,6 @@ static void	hit_loop(t_calcul_ray *calcul, t_map *map, t_ray *ray)
 			calcul->hit = 1;
 			ray->type = DOOR;
 		}
-		else
-			calcul->hit = 0;
 	}
 }
 
