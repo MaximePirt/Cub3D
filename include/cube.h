@@ -62,6 +62,11 @@ void		draw_circle(t_image *img, t_vector2 pos, int radius, int color);
 void		draw_rectangle(t_win *win, t_vector2 pos, int width, int height, int color);
 void		copy_vertical_pixels(t_image *img, t_image *texture, t_vector2 pos, int height, int width, int texture_x);
 
+// Images tools
+
+void		paste_image_on_screen(t_win *win, t_image *image, t_vector2 pos);
+
+
 // Minimap
 
 void		draw_minimap(t_map *map);

@@ -1,30 +1,5 @@
 #include "cube.h"
 
-static void	paste_image_on_screen(t_win *win, t_image *image, t_vector2 pos)
-{
-	int i;
-	int j;
-	int color;
-	int alpha;
-
-	i = 0;
-	while (i < image->width)
-	{
-		j = 0;
-		while (j < image->height)
-		{
-			color = *(int *)(image->img_data + (i * image->bpp / 8) + (j * image->size_line));
-			alpha = (color >> 24) & 0xFF;
-
-			if (pos.x < 0 || pos.x >= SCREEN_WIDTH || pos.y < 0 || pos.y >= SCREEN_HEIGHT)
-				return ;
-			if (alpha == 0)
-				*(int *)(win->img_data + ((int)pos.x + i) * win->bpp / 8 + ((int)pos.y + j) * win->size_line) = color;
-			j++;
-		}
-		i++;
-	}
-}
 static void process_ray(t_win *win, t_map *map, t_ray *ray, int ray_index)
 {
 	t_image	*texture;
@@ -63,6 +38,7 @@ static void process_ray(t_win *win, t_map *map, t_ray *ray, int ray_index)
 	if (corrected_distance < 0.1)
 		corrected_distance = 0.1;
 
+
 	height = (int)(SCREEN_HEIGHT / corrected_distance);
 	width = fmax(1, SCREEN_WIDTH / RAYS_COUNT);
 
@@ -70,11 +46,18 @@ static void process_ray(t_win *win, t_map *map, t_ray *ray, int ray_index)
 
 	x = ray_index * width;
 	y = (SCREEN_HEIGHT - height) / 2;
+	//y = fmax(-height, y); WE CAN KEEP
+	double	texture_step = (double)texture->height / height;
+	double	texture_pos = 0.0;
+	int		screen_y = 0;
+	while (screen_y < height)
+		{
+		int texture_y = (int)texture_pos % texture->height;
+		texture_pos += texture_step;
 
-	for (int screen_y = 0; screen_y < height; screen_y++) {
-		int texture_y = (screen_y * texture->height) / height;
 		int pixel_color = get_pixel_color(texture, ft_vector2(texture_x, texture_y));
 		set_pixel_color(win, ft_vector2(x, y + screen_y), pixel_color);
+		screen_y++;
 	}
 
 	draw_rectangle(win, ft_vector2(x, 0), width, y, map->textures->ceiling.r);
