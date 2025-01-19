@@ -12,29 +12,12 @@
 
 #include "cube.h"
 
-static	int main_loop(t_key_params *params)
-{
-  int	x;
-  int	y;
-
-	refresh(params->win, params->map);
-	if (params->map->mouse_lock)
-	{
-		mlx_mouse_get_pos(params->win->mlx_ptr, params->win->win_ptr, &x, &y);
-		mlx_mouse_move(params->win->mlx_ptr, params->win->win_ptr, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-		if (x > SCREEN_WIDTH / 2)
-			player_look_right(params->map);
-		else if (x < SCREEN_WIDTH / 2)
-			player_look_left(params->map);
-	}
-	return (0);
-}
-
 int	main(int argc, char **argv)
 {
-	t_win	*win;
-	t_map	*map;
-	char	**images;
+	t_win			*win;
+	t_map			*map;
+	char			**images;
+	t_key_params	*params;
 
 	if (argc != 2)
 	{
@@ -47,16 +30,21 @@ int	main(int argc, char **argv)
 		return (1);	
 	}
 	map = NULL;
-	images = ft_calloc(sizeof(char *), 8);
+	images = ft_calloc(sizeof(char *), 9);
 	if (check_map(&map, argv[1], &images) == 1)
 	{
 		ft_tabfree(images);
 		ft_fprintf(STDERR_FILENO, "Error: invalid map\n");
 		return (1);
 	}
-  
 	win = ft_init_window();
-    //TODO: RETURN (1) IS TEMPORARY, NEED TO WORK ON THE EXIT WAY
+	map->minimap->image = ft_init_image(win->mlx_ptr, MINIMAP_RENDER_DISTANCE * map->minimap->zoom, MINIMAP_RENDER_DISTANCE * map->minimap->zoom);
+	if (map->minimap->image == NULL)
+	{
+		ft_fprintf(STDERR_FILENO, "Error: failed to init minimap\n");
+		return (1);
+	}
+	//TODO: RETURN (1) IS TEMPORARY, NEED TO WORK ON THE EXIT WAY
 	if (load_texture(map->textures->wall_north, images[0], win->mlx_ptr) == 1)
 		return (1);
 	if (load_texture(map->textures->wall_south, images[1], win->mlx_ptr) == 1)
@@ -75,10 +63,6 @@ int	main(int argc, char **argv)
 		return (1);
 
 	ft_tabfree(images);
-	ft_init_keymap(win, map);
-
-	t_key_params	*params;
-
 	params = (t_key_params *)malloc(sizeof(t_key_params));
 	if (params == NULL)
 	{
@@ -87,9 +71,8 @@ int	main(int argc, char **argv)
 	}
 	params->win = win;
 	params->map = map;
-	mlx_loop_hook(win->mlx_ptr, main_loop, params);
-	//todo: find a way to free the params
-	//free(params);
+	ft_init_keymap(params);
+	mlx_loop_hook(win->mlx_ptr, game_loop, params);
 	mlx_loop(win->mlx_ptr);
 	return (0);
 }

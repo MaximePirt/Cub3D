@@ -1,6 +1,6 @@
 #include "cube.h"
 
-static int	action_key(int keycode, t_key_params *params)
+int	action_key(int keycode, t_key_params *params)
 {
 	if (keycode == KEY_ESC)
 	{
@@ -25,24 +25,18 @@ static int	action_key(int keycode, t_key_params *params)
 		door_interact(params->map);
 	else
 		return (0);
-	refresh(params->win, params->map);
 	return (1);
 }
 
-static int	action_mouse_key(int button, int x, int y, t_key_params *params)
+int	action_mouse_key(int button, int x, int y, t_key_params *params)
 {
 	(void)x;
 	(void)y;
-	(void)params;
-
-	//button 1 = left click
-	//button 2 = middle click
-	//button 3 = right click
 	if (button == 1)
 	{
 		if (params->map->mouse_lock == 1)
 		{
-			//do doors
+			door_interact(params->map);
 		}
 		else
 		{
@@ -54,20 +48,10 @@ static int	action_mouse_key(int button, int x, int y, t_key_params *params)
 	return (0);
 }
 
-void	ft_init_keymap(t_win *win, t_map *map)
+void	ft_init_keymap(t_key_params *params)
 {
-	t_key_params	*params;
-
-	params = (t_key_params *)malloc(sizeof(t_key_params));
-	if (params == NULL)
-	{
-		ft_fprintf(STDERR_FILENO, "malloc error in ft_init_keymap\n");
-		exit(0);
-	}
-	params->win = win;
-	params->map = map;
-	mlx_do_key_autorepeaton(win->mlx_ptr);
-	mlx_hook(win->win_ptr, 2, 1L << 0, action_key, params);
-	mlx_mouse_hook(win->win_ptr, action_mouse_key, params);
-	mlx_hook(win->win_ptr, 17, 1L << 17, ft_free_program, params);
+	mlx_do_key_autorepeaton(params->win->mlx_ptr);
+	mlx_hook(params->win->win_ptr, 2, 1L << 0, action_key, params);
+	mlx_mouse_hook(params->win->win_ptr, action_mouse_key, params);
+	mlx_hook(params->win->win_ptr, 17, 1L << 17, ft_free_program, params);
 }

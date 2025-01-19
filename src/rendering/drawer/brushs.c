@@ -7,14 +7,12 @@ void	ft_draw_pixel_on_image(t_image *image, t_vector2 pos, int color)
     *(int *)(image->img_data + ((int)pos.x * image->bpp / 8) + ((int)pos.y * image->size_line)) = color;
 }
 
-void	ft_draw_pixel_on_screen(t_image *img, t_vector2 pos, int color)
+void	ft_draw_pixel_on_screen(t_win *win, t_vector2 pos, int color)
 {
-	if (pos.x < 0 || pos.x >= SCREEN_WIDTH || pos.y < 0 || pos.y >= SCREEN_HEIGHT)
-		return ;
-	*(int *)(img->img_data + ((int)pos.x * img->bpp / 8) + ((int)pos.y * img->size_line)) = color;
+	*(int *)(win->img_data + ((int)pos.x * win->bpp / 8) + ((int)pos.y * win->size_line)) = color;
 }
 
-void	ft_draw_line(t_image *image, t_line line)
+void	ft_draw_line(t_image *img, t_line line)
 {
 	t_vector2	delta;
 	t_vector2	current_point;
@@ -37,10 +35,10 @@ void	ft_draw_line(t_image *image, t_line line)
 			current_point.x = line.start.x + (delta.x * i) / steps;
 			current_point.y = line.start.y + (delta.y * i) / steps;
 			if (fabs(delta.x) > fabs(delta.y))
-				ft_draw_pixel_on_image(image,
+				ft_draw_pixel_on_image(img,
 									   ft_vector2(current_point.x, current_point.y + w), line.color);
 			else
-				ft_draw_pixel_on_image(image,
+				ft_draw_pixel_on_image(img,
 									   ft_vector2(current_point.x + w, current_point.y), line.color);
 			i += 1.0;
 		}
@@ -58,9 +56,9 @@ int	get_pixel_color(t_image *texture, t_vector2 pos)
 	return (color);
 }
 
-void	set_pixel_color(t_image *img, t_vector2 pos, int color)
+void	set_pixel_color(t_win *win, t_vector2 pos, int color)
 {
 	if (pos.x < 0 || pos.x >= SCREEN_WIDTH || pos.y < 0 || pos.y >= SCREEN_HEIGHT)
 		return ;
-	*(int *)(img->img_data + (int)pos.y * img->size_line + (int)pos.x * (img->bpp / 8)) = color;
+	*(int *)(win->img_data + (int)pos.y * win->size_line + (int)pos.x * (win->bpp / 8)) = color;
 }
