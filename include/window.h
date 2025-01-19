@@ -17,6 +17,11 @@
 # define KEY_D 100
 # define KEY_T 116
 
+#define NORTH 270
+#define EAST 0
+#define SOUTH 90
+#define WEST 180
+
 typedef struct s_win
 {
 	void				*mlx_ptr;
