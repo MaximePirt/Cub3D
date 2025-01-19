@@ -64,13 +64,13 @@ int	is_a_player(t_parse_map *to_copy, t_map *map, int i, int j)
 		map->player.x = i + 0.5;
 		map->player.y = j + 0.5;
 		if (to_copy->blocks[j] == 'N')
-			map->player.dir = 0;
+			map->player.dir = NORTH;
 		else if (to_copy->blocks[j] == 'E')
-			map->player.dir = 90;
+			map->player.dir = EAST;
 		else if (to_copy->blocks[j] == 'S')
-			map->player.dir = 180;
+			map->player.dir = SOUTH;
 		else if (to_copy->blocks[j] == 'W')
-			map->player.dir = 270;
+			map->player.dir = WEST;
 		return (1);
 	}
 	return (0);
