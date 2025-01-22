@@ -16,6 +16,8 @@
 # define KEY_S 115
 # define KEY_D 100
 # define KEY_T 116
+# define KEY_ARROW_LEFT 65361
+# define KEY_ARROW_RIGHT 65363
 
 #define NORTH 270
 #define EAST 0

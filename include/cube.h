@@ -42,6 +42,8 @@ int			action_mouse_key(int button, int x, int y, t_key_params *params);
 
 int			player_move_forward(t_map *map);
 int			player_move_backward(t_map *map);
+int			player_move_left(t_map *map);
+int			player_move_right(t_map *map);
 int			player_look_left(t_map *map);
 int			player_look_right(t_map *map);
 int			door_interact(t_map *map);

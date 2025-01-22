@@ -53,6 +53,7 @@ static void process_ray(t_win *win, t_map *map, t_ray *ray, int ray_index)
 	int		screen_y = 0;
 	int i = 0;
 	while (screen_y < height)
+	{
 		{
 			i++;
 			if (ray->distance < 0.5 && i % 2)
