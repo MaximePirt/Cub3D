@@ -51,8 +51,12 @@ static void process_ray(t_win *win, t_map *map, t_ray *ray, int ray_index)
 	double	texture_step = (double)texture->height / height;
 	double	texture_pos = 0.0;
 	int		screen_y = 0;
+	int i = 0;
 	while (screen_y < height)
 		{
+			i++;
+			if (ray->distance < 0.5 && i % 2)
+				continue;
 		int texture_y = (int)texture_pos % texture->height;
 		texture_pos += texture_step;
 
