@@ -24,50 +24,55 @@ static void	texture_selection(t_map *map, t_ray *ray, t_image **texture)
 	}
 }
 
-static void	process_ray(t_win *win, t_map *map, t_ray *ray, int ray_index)
+static void	process_loop(t_image *texture, t_ray *ray, \
+			t_win *win, t_calcul_process calc)
 {
-	t_image		*texture;
-	int			height;
-	int			width;
-	int			texture_x;
-	double		corrected_distance;
-	t_vector2	pos;
-	double		texture_step;
+	t_vector2	texture_xy;
 	double		texture_pos;
-	int			screen_y;
+	double		texture_step;
 	int			i;
-	int			texture_y;
-	double		add_angle;
-	double		ray_angle;
+	int			screen_y;
 
-	add_angle = ray_index * (FOV / (double)RAYS_COUNT) - FOV / 2;
-	texture_selection(map, ray, &texture);
-	ray_angle = add_angle * M_PI / 180.0;
-	corrected_distance = ray->distance * cos(ray_angle);
-	if (corrected_distance < 0.1)
-		corrected_distance = 0.1;
-	height = (int)(SCREEN_HEIGHT / corrected_distance);
-	width = fmax(1, SCREEN_WIDTH / RAYS_COUNT);
-	texture_x = (int)(ray->x_axis * texture->width) % texture->width;
-	pos.x = ray_index * width;
-	pos.y = (SCREEN_HEIGHT - height) / 2;
-	texture_step = (double)texture->height / height;
-	texture_pos = 0.0;
-	screen_y = 0;
 	i = 0;
-	while (screen_y < height)
+	screen_y = 0;
+	texture_pos = 0.0;
+	texture_xy.x = (int)(ray->x_axis * texture->width) % texture->width;
+	texture_step = (double)texture->height / calc.height;
+	while (screen_y < calc.height)
 	{
 		i++;
 		if (ray->distance < 0.5 && i % 2)
-			continue;
-		texture_y = (int)texture_pos % texture->height;
+			continue ;
+		texture_xy.y = (int)texture_pos % texture->height;
 		texture_pos += texture_step;
-		set_pixel_color(win, ft_vector2(pos.x, pos.y + screen_y),
-			get_pixel_color(texture, ft_vector2(texture_x, texture_y)));
+		set_pixel_color(win, ft_vector2(calc.pos.x, calc.pos.y + screen_y),
+			get_pixel_color(texture, ft_vector2(texture_xy.x, texture_xy.y)));
 		screen_y++;
 	}
-	draw_rectangle(win, ft_vector2(pos.x, 0), width, pos.y, map->textures->ceiling.r);
-	draw_rectangle(win, ft_vector2(pos.x, pos.y + height), width, SCREEN_HEIGHT - (pos.y + height), map->textures->floor.g);
+}
+
+static void	process_ray(t_win *win, t_map *map, t_ray *ray, int ray_index)
+{
+	t_image				*texture;
+	t_calcul_process	calc;
+	double				corrected_distance;
+
+	calc.add_angle = ray_index * (FOV / (double)RAYS_COUNT) - FOV / 2;
+	texture_selection(map, ray, &texture);
+	calc.ray_angle = calc.add_angle * M_PI / 180.0;
+	corrected_distance = ray->distance * cos(calc.ray_angle);
+	if (corrected_distance < 0.1)
+		corrected_distance = 0.1;
+	calc.height = (int)(SCREEN_HEIGHT / corrected_distance);
+	calc.width = fmax(1, SCREEN_WIDTH / RAYS_COUNT);
+	calc.pos = ft_vector2(ray_index * calc.width, \
+		(SCREEN_HEIGHT - calc.height) / 2);
+	process_loop(texture, ray, win, calc);
+	draw_rectangle(win, ft_vector2(calc.pos.x, 0), \
+		calc.width, calc.pos.y, map->textures->ceiling.r);
+	draw_rectangle(win, ft_vector2(calc.pos.x, calc.pos.y + \
+		calc.height), calc.width, SCREEN_HEIGHT - \
+		(calc.pos.y + calc.height), map->textures->floor.g);
 }
 
 static void	render_game(t_win *win, t_map *map)

@@ -100,6 +100,15 @@ typedef struct s_calcul_ray
 	double				sideDistY;
 }						t_calcul_ray;
 
+typedef struct s_calcul_process
+{
+	double		ray_angle;
+	double		add_angle;
+	int			height;
+	int			width;
+	t_vector2	pos;
+}		t_calcul_process;
+
 typedef struct s_minimap
 {
 	int					zoom;
