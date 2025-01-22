@@ -69,10 +69,10 @@ static void	process_ray(t_win *win, t_map *map, t_ray *ray, int ray_index)
 		(SCREEN_HEIGHT - calc.height) / 2);
 	process_loop(texture, ray, win, calc);
 	draw_rectangle(win, ft_vector2(calc.pos.x, 0), \
-		calc.width, calc.pos.y, map->textures->ceiling.r);
+		ft_vector2(calc.width, calc.pos.y), map->textures->ceiling.r);
 	draw_rectangle(win, ft_vector2(calc.pos.x, calc.pos.y + \
-		calc.height), calc.width, SCREEN_HEIGHT - \
-		(calc.pos.y + calc.height), map->textures->floor.g);
+	calc.height), ft_vector2(calc.width, SCREEN_HEIGHT - \
+	(calc.pos.y + calc.height)), map->textures->floor.g);
 }
 
 static void	render_game(t_win *win, t_map *map)
