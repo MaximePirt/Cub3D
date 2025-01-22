@@ -25,7 +25,7 @@ SRCS_PARSING            = parsing.c copy_tab_to_map.c lst_parsing$(DIRSEP)lst_pa
 
 SRC_MEMORY				= memory_alloc.c memory_free.c window_alloc.c textures_alloc.c image_alloc.c ray_alloc.c ray_free.c
 
-SRC_GAME				= game.c keymap.c player.c
+SRC_GAME				= game.c keymap.c player.c player_movement.c
 
 SRC_RENDERING			= rendering.c textures.c vectors.c minimap.c drawer$(DIRSEP)brushs.c \
 							drawer$(DIRSEP)shapes$(DIRSEP)circle.c \
