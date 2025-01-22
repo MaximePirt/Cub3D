@@ -1,5 +1,20 @@
 #include "cube.h"
 
+static int	player_movement_key(t_key_params *params, int keycode)
+{
+	if (keycode == KEY_W)
+		player_move_forward(params->map);
+	else if (keycode == KEY_S)
+		player_move_backward(params->map);
+	else if (keycode == KEY_D)
+		player_move_left(params->map);
+	else if (keycode == KEY_A)
+		player_move_right(params->map);
+	else
+		return (0);
+	return (1);
+}
+
 int	action_key(int keycode, t_key_params *params)
 {
 	if (keycode == KEY_ESC)
@@ -11,16 +26,9 @@ int	action_key(int keycode, t_key_params *params)
 			return (0);
 		}
 		ft_free_program(params);
-		return (1);
 	}
-	if (keycode == KEY_W)
-		player_move_forward(params->map);
-	else if (keycode == KEY_S)
-		player_move_backward(params->map);
-	else if (keycode == KEY_D)
-		player_move_left(params->map);
-	else if (keycode == KEY_A)
-		player_move_right(params->map);
+	else if (player_movement_key(params, keycode))
+		return (1);
 	else if (keycode == KEY_T)
 		door_interact(params->map);
 	else if (keycode == KEY_ARROW_LEFT)
@@ -45,7 +53,8 @@ int	action_mouse_key(int button, int x, int y, t_key_params *params)
 		else
 		{
 			mlx_mouse_hide(params->win->mlx_ptr, params->win->win_ptr);
-			mlx_mouse_move(params->win->mlx_ptr, params->win->win_ptr, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+			mlx_mouse_move(params->win->mlx_ptr, params->win->win_ptr, \
+				SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 			params->map->mouse_lock = 1;
 		}
 	}
