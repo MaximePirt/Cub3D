@@ -54,13 +54,15 @@ static int	floodfill_blocks_management(int x, int y, t_map *map,
 	if (x >= map->size_y || y >= map->size_x || !map->blocks[x][y].type
 		|| map->blocks[x][y].type == WALL || map->blocks[x][y].type == FILL)
 		return (2);
-	if (!map->blocks[x - 1] || !map->blocks[x][y
-		- 1].type || (map->blocks[x+1] && map->blocks[x + 1][y].type == VOID)
-		||  map->blocks[x - 1][y].type == VOID
+	if (!map->blocks[x - 1] || !map->blocks[x][y - 1].type
+		|| (map->blocks[x + 1]
+			&& map->blocks[x + 1][y].type == VOID)
+		|| map->blocks[x - 1][y].type == VOID
 		|| map->blocks[x][y + 1].type == VOID || map->blocks[x][y
 		- 1].type == VOID)
 	{
-		ft_fprintf(STDERR_FILENO, "Error: map is not closed here %d %d\n", x, y);
+		ft_fprintf(STDERR_FILENO,
+			"Error: map is not closed here %d %d\n", x, y);
 		free(stack);
 		return (1);
 	}
@@ -82,25 +84,23 @@ int	flood_fill(t_map *map, int x, int y)
 	int		block_management;
 
 	if (x <= 0 || y <= 0 || x >= map->size_y || y >= map->size_x)
-	    return (1);
+		return (1);
 	stack = malloc(sizeof(t_stack) * map->size_x * map->size_y);
 	if (!stack)
 		return (1);
-	pos = 0;
-	stack[pos].x = x;
-	stack[pos].y = y;
-	pos++;
+	pos = 1;
+	stack[pos - 1].x = x;
+	stack[pos - 1].y = y;
 	while (pos-- > 0)
 	{
-		x = stack[pos].x;
-		y = stack[pos].y;
-		block_management = floodfill_blocks_management(x, y, map, stack);
+		block_management = floodfill_blocks_management(
+				stack[pos].x, stack[pos].y, map, stack);
 		if (block_management == 1)
 			return (1);
 		if (block_management == 2)
 			continue ;
-		map->blocks[x][y].type = FILL;
-		manage_stack(stack, x, y, &pos);
+		map->blocks[stack[pos].x][stack[pos].y].type = FILL;
+		manage_stack(stack, stack[pos].x, stack[pos].y, &pos);
 	}
 	free(stack);
 	return (0);
