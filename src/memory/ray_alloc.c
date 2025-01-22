@@ -1,5 +1,19 @@
 #include "cube.h"
 
+static t_ray	*ft_init_ray(void)
+{
+	t_ray	*ray;
+
+	ray = (t_ray *)malloc(sizeof(t_ray));
+	if (!ray)
+		return (NULL);
+	ray->distance = 1;
+	ray->x_axis = 0;
+	ray->next = NULL;
+	ray->prev = NULL;
+	return (ray);
+}
+
 t_ray	*ft_init_rays(void)
 {
 	t_ray	*head;
@@ -12,22 +26,12 @@ t_ray	*ft_init_rays(void)
 	i = 0;
 	while (i < RAYS_COUNT)
 	{
-		current = (t_ray *)malloc(sizeof(t_ray));
+		current = ft_init_ray();
 		if (!current)
 		{
-			while (head)
-			{
-				t_ray *temp = head->next;
-				free(head);
-				head = temp;
-			}
+			ft_free_rays(head);
 			return (NULL);
 		}
-		current->distance = 1;
-		//TODO: Remove id -> i use it only to debug which one i am currently 
-		current->id = i;
-		current->x_axis = 0;
-		current->next = NULL;
 		current->prev = prev;
 		if (prev)
 			prev->next = current;
