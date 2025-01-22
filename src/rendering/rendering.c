@@ -1,12 +1,11 @@
 #include "cube.h"
 
-static void texture_selection(t_map *map, t_ray *ray, t_image **texture)
+static void	texture_selection(t_map *map, t_ray *ray, t_image **texture)
 {
 	if (ray->angle > 360)
-        ray->angle -= 360;
-	else if(ray->angle < 0)
+		ray->angle -= 360;
+	else if (ray->angle < 0)
 		ray->angle += 360;
-
 	if (ray->type == DOOR)
 		(*texture) = map->textures->door;
 	else if (ray->side == 1)
@@ -25,18 +24,25 @@ static void texture_selection(t_map *map, t_ray *ray, t_image **texture)
 	}
 }
 
-static void process_ray(t_win *win, t_map *map, t_ray *ray, int ray_index)
+static void	process_ray(t_win *win, t_map *map, t_ray *ray, int ray_index)
 {
-	t_image	*texture;
-	int		height;
-	int		width;
-	int		texture_x;
-	double	corrected_distance;
-	t_vector2 pos;
+	t_image		*texture;
+	int			height;
+	int			width;
+	int			texture_x;
+	double		corrected_distance;
+	t_vector2	pos;
+	double		texture_step;
+	double		texture_pos;
+	int			screen_y;
+	int			i;
+	int			texture_y;
+	double		add_angle;
+	double		ray_angle;
 
-	double add_angle = (ray_index * (FOV / (double)RAYS_COUNT)) - (FOV / 2);
+	add_angle = ray_index * (FOV / (double)RAYS_COUNT) - FOV / 2;
 	texture_selection(map, ray, &texture);
-	double ray_angle = add_angle * M_PI / 180.0;
+	ray_angle = add_angle * M_PI / 180.0;
 	corrected_distance = ray->distance * cos(ray_angle);
 	if (corrected_distance < 0.1)
 		corrected_distance = 0.1;
@@ -45,29 +51,29 @@ static void process_ray(t_win *win, t_map *map, t_ray *ray, int ray_index)
 	texture_x = (int)(ray->x_axis * texture->width) % texture->width;
 	pos.x = ray_index * width;
 	pos.y = (SCREEN_HEIGHT - height) / 2;
-	double	texture_step = (double)texture->height / height;
-	double	texture_pos = 0.0;
-	int		screen_y = 0;
-	int i = 0;
+	texture_step = (double)texture->height / height;
+	texture_pos = 0.0;
+	screen_y = 0;
+	i = 0;
 	while (screen_y < height)
 	{
 		i++;
 		if (ray->distance < 0.5 && i % 2)
 			continue;
-		int texture_y = (int)texture_pos % texture->height;
+		texture_y = (int)texture_pos % texture->height;
 		texture_pos += texture_step;
-		int pixel_color = get_pixel_color(texture, ft_vector2(texture_x, texture_y));
-		set_pixel_color(win, ft_vector2(pos.x, pos.y + screen_y), pixel_color);
+		set_pixel_color(win, ft_vector2(pos.x, pos.y + screen_y),
+			get_pixel_color(texture, ft_vector2(texture_x, texture_y)));
 		screen_y++;
 	}
 	draw_rectangle(win, ft_vector2(pos.x, 0), width, pos.y, map->textures->ceiling.r);
 	draw_rectangle(win, ft_vector2(pos.x, pos.y + height), width, SCREEN_HEIGHT - (pos.y + height), map->textures->floor.g);
 }
 
-static void render_game(t_win *win, t_map *map)
+static void	render_game(t_win *win, t_map *map)
 {
 	t_ray	*ray;
-	int 	i;
+	int		i;
 
 	ray = map->rays;
 	i = 0;
@@ -91,18 +97,19 @@ void	refresh(t_win *win, t_map *map)
 
 	give_all_rays(map);
 	render_game(win, map);
-
 	draw_minimap(map);
 	paste_image_on_screen(win, map->minimap->image, ft_vector2(0, 0));
-
 	if (map->player.hand_animation_direction)
 		map->player.hand_animation_pos += 1;
 	else
 		map->player.hand_animation_pos -= 1;
-	if (map->player.hand_animation_pos >= 100 || map->player.hand_animation_pos <= -100)
-		map->player.hand_animation_direction = !map->player.hand_animation_direction;
-	hand_pos = ft_vector2(SCREEN_WIDTH - map->textures->right_hand->width - 10, SCREEN_HEIGHT - map->textures->right_hand->height + 10 + map->player.hand_animation_pos / 10);
+	if (map->player.hand_animation_pos >= 100
+		|| map->player.hand_animation_pos <= -100)
+		map->player.hand_animation_direction
+			= !map->player.hand_animation_direction;
+	hand_pos = ft_vector2(SCREEN_WIDTH - map->textures->right_hand->width - 10,
+			SCREEN_HEIGHT - map->textures->right_hand->height + 10
+			+ map->player.hand_animation_pos / 10);
 	paste_image_on_screen(win, map->textures->right_hand, hand_pos);
-
 	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img_ptr, 0, 0);
 }
