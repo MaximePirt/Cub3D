@@ -27,7 +27,7 @@ SRC_MEMORY				= memory_alloc.c memory_free.c window_alloc.c textures_alloc.c ima
 
 SRC_GAME				= game.c keymap.c player.c player_movement.c
 
-SRC_RENDERING			= rendering.c textures.c vectors.c minimap.c drawer$(DIRSEP)brushs.c \
+SRC_RENDERING			= rendering.c vectors.c minimap.c drawer$(DIRSEP)brushs.c \
 							drawer$(DIRSEP)shapes$(DIRSEP)circle.c \
 							drawer$(DIRSEP)shapes$(DIRSEP)square.c raycast$(DIRSEP)raycasting.c \
 							drawer$(DIRSEP)shapes$(DIRSEP)rectangle.c drawer$(DIRSEP)image_tools.c
