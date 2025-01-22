@@ -17,12 +17,16 @@ int	action_key(int keycode, t_key_params *params)
 		player_move_forward(params->map);
 	else if (keycode == KEY_S)
 		player_move_backward(params->map);
-	else if (keycode == KEY_A)
-		player_look_left(params->map);
 	else if (keycode == KEY_D)
-		player_look_right(params->map);
+		player_move_left(params->map);
+	else if (keycode == KEY_A)
+		player_move_right(params->map);
 	else if (keycode == KEY_T)
 		door_interact(params->map);
+	else if (keycode == KEY_ARROW_LEFT)
+		player_look_left(params->map);
+	else if (keycode == KEY_ARROW_RIGHT)
+		player_look_right(params->map);
 	else
 		return (0);
 	return (1);
