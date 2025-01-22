@@ -7,20 +7,20 @@ static void	texture_selection(t_map *map, t_ray *ray, t_image **texture)
 	else if (ray->angle < 0)
 		ray->angle += 360;
 	if (ray->type == DOOR)
-		(*texture) = map->textures->door;
+		*texture = map->textures->door;
 	else if (ray->side == 1)
 	{
 		if (ray->angle > 0 && ray->angle < 180)
-			(*texture) = map->textures->wall_north;
+			*texture = map->textures->wall_north;
 		else
-			(*texture) = map->textures->wall_south;
+			*texture = map->textures->wall_south;
 	}
 	else
 	{
 		if (ray->angle > 90 && ray->angle < 270)
-			(*texture) = map->textures->wall_east;
+			*texture = map->textures->wall_east;
 		else
-			(*texture) = map->textures->wall_west;
+			*texture = map->textures->wall_west;
 	}
 }
 

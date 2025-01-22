@@ -148,4 +148,18 @@ typedef struct s_line
 	int					width;
 }						t_line;
 
+
+typedef struct s_cache
+{
+	t_image		*texture;
+	int			height;
+	int			width;
+	int			texture_x;
+	double		corrected_distance;
+	t_vector2	pos;
+	double		texture_step;
+	double		add_angle;
+	double		ray_angle;
+}				t_cache;
+
 #endif
