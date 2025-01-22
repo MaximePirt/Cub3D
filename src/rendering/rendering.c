@@ -24,53 +24,55 @@ static void	texture_selection(t_map *map, t_ray *ray, t_image **texture)
 	}
 }
 
-static void	draw_walls(t_cache cache, t_ray *ray, t_win *win, t_map *map)
+static void	process_loop(t_image *texture, t_ray *ray, \
+			t_win *win, t_calcul_process calc)
 {
-	int		texture_y;
-	double	texture_pos;
-	int		screen_y;
-	int		i;
+	t_vector2	texture_xy;
+	double		texture_pos;
+	double		texture_step;
+	int			i;
+	int			screen_y;
 
-	texture_pos = 0.0;
-	screen_y = 0;
 	i = 0;
-	while (screen_y < cache.height)
+	screen_y = 0;
+	texture_pos = 0.0;
+	texture_xy.x = (int)(ray->x_axis * texture->width) % texture->width;
+	texture_step = (double)texture->height / calc.height;
+	while (screen_y < calc.height)
 	{
 		i++;
 		if (ray->distance < 0.5 && i % 2)
 			continue ;
-		texture_y = (int)texture_pos % cache.texture->height;
-		texture_pos += cache.texture_step;
-		set_pixel_color(win, ft_vector2(cache.pos.x, cache.pos.y + screen_y),
-			get_pixel_color(cache.texture,
-				ft_vector2(cache.texture_x, texture_y)));
+		texture_xy.y = (int)texture_pos % texture->height;
+		texture_pos += texture_step;
+		set_pixel_color(win, ft_vector2(calc.pos.x, calc.pos.y + screen_y),
+			get_pixel_color(texture, ft_vector2(texture_xy.x, texture_xy.y)));
 		screen_y++;
 	}
-	draw_rectangle(win, ft_vector2(cache.pos.x, 0),
-		ft_vector2(cache.width, cache.pos.y), map->textures->ceiling.r);
-	draw_rectangle(win, ft_vector2(cache.pos.x, cache.pos.y + cache.height),
-		ft_vector2(cache.width, SCREEN_HEIGHT - (cache.pos.y + cache.height)),
-		map->textures->floor.g);
 }
 
 static void	process_ray(t_win *win, t_map *map, t_ray *ray, int ray_index)
 {
-	t_cache	cache;
+	t_image				*texture;
+	t_calcul_process	calc;
+	double				corrected_distance;
 
-	cache.add_angle = ray_index * (FOV / (double)RAYS_COUNT) - FOV / 2;
-	texture_selection(map, ray, &cache.texture);
-	cache.ray_angle = cache.add_angle * M_PI / 180.0;
-	cache.corrected_distance = ray->distance * cos(cache.ray_angle);
-	if (cache.corrected_distance < 0.1)
-		cache.corrected_distance = 0.1;
-	cache.height = (int)(SCREEN_HEIGHT / cache.corrected_distance);
-	cache.width = fmax(1, SCREEN_WIDTH / RAYS_COUNT);
-	cache.texture_x = (int)(ray->x_axis * cache.texture->width)
-		% cache.texture->width;
-	cache.pos.x = ray_index * cache.width;
-	cache.pos.y = (SCREEN_HEIGHT - cache.height) / 2;
-	cache.texture_step = (double)cache.texture->height / cache.height;
-	draw_walls(cache, ray, win, map);
+	calc.add_angle = ray_index * (FOV / (double)RAYS_COUNT) - FOV / 2;
+	texture_selection(map, ray, &texture);
+	calc.ray_angle = calc.add_angle * M_PI / 180.0;
+	corrected_distance = ray->distance * cos(calc.ray_angle);
+	if (corrected_distance < 0.1)
+		corrected_distance = 0.1;
+	calc.height = (int)(SCREEN_HEIGHT / corrected_distance);
+	calc.width = fmax(1, SCREEN_WIDTH / RAYS_COUNT);
+	calc.pos = ft_vector2(ray_index * calc.width, \
+		(SCREEN_HEIGHT - calc.height) / 2);
+	process_loop(texture, ray, win, calc);
+	draw_rectangle(win, ft_vector2(calc.pos.x, 0), \
+		calc.width, calc.pos.y, map->textures->ceiling.r);
+	draw_rectangle(win, ft_vector2(calc.pos.x, calc.pos.y + \
+		calc.height), calc.width, SCREEN_HEIGHT - \
+		(calc.pos.y + calc.height), map->textures->floor.g);
 }
 
 static void	render_game(t_win *win, t_map *map)

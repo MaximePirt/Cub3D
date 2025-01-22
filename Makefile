@@ -30,7 +30,8 @@ SRC_GAME				= game.c keymap.c player.c player_movement.c
 SRC_RENDERING			= rendering.c vectors.c minimap.c drawer$(DIRSEP)brushs.c \
 							drawer$(DIRSEP)shapes$(DIRSEP)circle.c \
 							drawer$(DIRSEP)shapes$(DIRSEP)square.c raycast$(DIRSEP)raycasting.c \
-							drawer$(DIRSEP)shapes$(DIRSEP)rectangle.c drawer$(DIRSEP)image_tools.c
+							drawer$(DIRSEP)shapes$(DIRSEP)rectangle.c drawer$(DIRSEP)image_tools.c \
+							drawer$(DIRSEP)draw.c
 
 
 #############################################################################
