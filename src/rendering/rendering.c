@@ -45,8 +45,6 @@ static void process_ray(t_win *win, t_map *map, t_ray *ray, int ray_index)
 	texture_x = (int)(ray->x_axis * texture->width) % texture->width;
 	pos.x = ray_index * width;
 	pos.y = (SCREEN_HEIGHT - height) / 2;
-	x = ray_index * width;
-	y = (SCREEN_HEIGHT - height) / 2;
 	double	texture_step = (double)texture->height / height;
 	double	texture_pos = 0.0;
 	int		screen_y = 0;
