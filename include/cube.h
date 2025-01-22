@@ -8,6 +8,7 @@
 # include "struct.h"
 # include "window.h"
 # include "parsing.h"
+# include "player.h"
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -29,10 +30,21 @@ int			ft_free_program(t_key_params *params);
 void		free_parse_map(t_parse_map *map);
 void		*ft_free_rays(t_ray *rays);
 
+// Game loop
+
+int			game_loop(t_key_params *params);
+
+// Key/Mouse actions
+
+int			action_key(int keycode, t_key_params *params);
+int			action_mouse_key(int button, int x, int y, t_key_params *params);
+
 // Player actions
 
 int			player_move_forward(t_map *map);
 int			player_move_backward(t_map *map);
+int			player_move_left(t_map *map);
+int			player_move_right(t_map *map);
 int			player_look_left(t_map *map);
 int			player_look_right(t_map *map);
 int			door_interact(t_map *map);
@@ -43,19 +55,23 @@ void		refresh(t_win *win, t_map *map);
 int			fill_rgb_texture(t_rgb *items, char *value);
 int			load_texture(t_image *image, char *path, void *mlx_ptr);
 void		ft_draw_pixel_on_image(t_image *image, t_vector2 pos, int color);
-void		ft_draw_pixel_on_screen(t_image *img, t_vector2 pos, int color);
-void		ft_draw_line(t_image *image, t_line line);
+void		ft_draw_pixel_on_screen(t_win *win, t_vector2 pos, int color);
+void		ft_draw_line(t_image *img, t_line line);
 int			get_pixel_color(t_image *texture, t_vector2 pos);
-void		set_pixel_color(t_image *img, t_vector2 pos, int color);
+void		set_pixel_color(t_win *win, t_vector2 pos, int color);
 
-void		draw_square(t_image *image, t_vector2 pos, int size, int color);
-void		draw_circle(t_image *image, t_vector2 pos, int radius, int color);
-void		draw_rectangle(t_image *img, t_vector2 pos, int width, int height, int color);
-void		copy_vertical_pixels(t_image *img, t_image *texture, t_vector2 pos, int height, int width, int texture_x);
+void		draw_square(t_image *img, t_vector2 pos, int size, int color);
+void		draw_circle(t_image *img, t_vector2 pos, int radius, int color);
+void		draw_rectangle(t_win *win, t_vector2 pos, t_vector2 width_eight, int color);
+
+// Images tools
+
+void		paste_image_on_screen(t_win *win, t_image *image, t_vector2 pos);
+
 
 // Minimap
 
-t_image		*draw_minimap(t_map *map, void *mlx_ptr);
+void		draw_minimap(t_map *map);
 
 // Vectors
 t_vector2	ft_vector2(double x, double y);

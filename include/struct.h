@@ -71,7 +71,8 @@ typedef struct s_textures
 typedef struct s_ray
 {
 	double				distance;
-	int					id;
+	double				angle;
+	int					side;
 	double				x_axis;
 	t_block_type		type;
 	struct s_ray		*next;
@@ -99,6 +100,21 @@ typedef struct s_calcul_ray
 	double				sideDistY;
 }						t_calcul_ray;
 
+typedef struct s_calcul_process
+{
+	double		ray_angle;
+	double		add_angle;
+	int			height;
+	int			width;
+	t_vector2	pos;
+}		t_calcul_process;
+
+typedef struct s_minimap
+{
+	int					zoom;
+	t_image				*image;
+}						t_minimap;
+
 typedef struct s_map
 {
 	t_block				**blocks;
@@ -107,7 +123,7 @@ typedef struct s_map
 	int					size_x;
 	int					size_y;
 	t_ray				*rays;
-	int					minimap_zoom;
+	t_minimap			*minimap;
 	int					mouse_lock;
 }						t_map;
 

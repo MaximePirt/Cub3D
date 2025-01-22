@@ -1,88 +1,107 @@
 #include "cube.h"
 
-
-void	draw_minimap_rays(t_map *map, t_image *image, int zoom)
+/**
+ *TODO: remove
+ * @brief Draw the minimap
+ * @param map the map
+ */
+static void	draw_minimap_rays(t_image *img, t_map *map, int zoom)
 {
 	t_vector2	start;
-	t_vector2	end;
 	int			i;
 	double		xy;
 	double		angle;
 	t_ray		*ray;
 
 	if (!map->rays)
-		return;
+		return ;
 	xy = (MINIMAP_RENDER_DISTANCE / 2) * zoom;
 	start = ft_vector2(xy, xy);
 	ray = map->rays;
 	i = 0;
 	while (i < RAYS_COUNT && ray)
 	{
-		angle = (map->player.dir + (i * (FOV / (double)RAYS_COUNT)) - (FOV / 2)) * M_PI / 180.0;
-		end = ft_vector2(
-				start.x + cos(angle) * ray->distance * zoom,
-				start.y + sin(angle) * ray->distance * zoom
-		);
-		ft_draw_line(image, ft_line(start, end, HEX_RED, 1));
+		angle = (map->player.dir
+				+ i * (FOV / (double)RAYS_COUNT) - FOV / 2) * M_PI / 180.0;
+		ft_draw_line(img, ft_line(start,
+				ft_vector2(
+					start.x + cos(angle) * ray->distance * zoom,
+					start.y + sin(angle) * ray->distance * zoom
+					), HEX_RED, 1));
 		ray = ray->next;
 		i++;
 	}
 }
 
-void	draw_minimap_player(t_image *image, int zoom)
+static int	find_map_color(t_map *map, int i, int j)
 {
-	int xy;
-
-	xy = (MINIMAP_RENDER_DISTANCE / 2) * zoom;
-	draw_circle(image,
-				ft_vector2(xy, xy),
-				zoom / 4,
-				HEX_RED
-	);
+	if (i >= 0 && i < map->size_x && j >= 0 && j < map->size_y)
+	{
+		if (map->blocks[j][i].type == WALL)
+			return (HEX_BLACK);
+		if (map->blocks[j][i].type == DOOR)
+			return (HEX_CYAN);
+		return (HEX_WHITE);
+	}
+	return (HEX_BLACK);
 }
 
-t_image	*draw_minimap(t_map *map, void *mlx_ptr)
+/**
+ * @brief Draw the player on the minimap
+ * @param img the image
+ * @param zoom the zoom
+ */
+static void	draw_minimap_player(t_image *img, int zoom)
 {
-	t_image	*image;
-	int		i;
-	int		j;
-	double		start_x, start_y;
-	double		end_x, end_y;
-	double		offset_x, offset_y;
+	int	xy;
 
-	image = ft_init_image(mlx_ptr, MINIMAP_RENDER_DISTANCE * map->minimap_zoom, MINIMAP_RENDER_DISTANCE * map->minimap_zoom);
-	if (!image)
-		return (NULL);
+	xy = (MINIMAP_RENDER_DISTANCE / 2) * zoom;
+	draw_circle(img,
+		ft_vector2(xy, xy),
+		zoom / 4,
+		HEX_RED);
+}
 
-	start_x = map->player.x - (MINIMAP_RENDER_DISTANCE / 2);
-	start_y = map->player.y - (MINIMAP_RENDER_DISTANCE / 2);
-	end_x = start_x + MINIMAP_RENDER_DISTANCE;
-	end_y = start_y + MINIMAP_RENDER_DISTANCE;
+/**
+ * @brief Draw the minimap part 2 (thx norminette...)
+ * @param start the start
+ * @param end the end
+ * @param map the map
+ */
+static void	draw_minimap_2(t_vector2 start, t_vector2 end, t_map *map)
+{
+	t_vector2	offset;
+	int			i;
+	int			j;
 
-	j = start_y;
-	while (j < end_y)
+	j = start.y - 1;
+	while (++j < end.y)
 	{
-		i = start_x;
-		while (i < end_x)
+		i = start.x - 1;
+		while (++i < end.x)
 		{
-			offset_x = (i - start_x) * map->minimap_zoom;
-			offset_y = (j - start_y) * map->minimap_zoom;
-			if (i >= 0 && i < map->size_x && j >= 0 && j < map->size_y)
-			{
-				if (map->blocks[j][i].type == WALL)
-					draw_square(image, ft_vector2(offset_x, offset_y), map->minimap_zoom, HEX_BLACK);
-				else if (map->blocks[j][i].type == DOOR)
-					draw_square(image, ft_vector2(offset_x, offset_y), map->minimap_zoom, HEX_CYAN);
-				else
-					draw_square(image, ft_vector2(offset_x, offset_y), map->minimap_zoom, HEX_WHITE);
-			}
-			else
-				draw_square(image, ft_vector2(offset_x, offset_y), map->minimap_zoom, HEX_BLACK);
-			i++;
+			offset = ft_vector2((i - start.x) * map->minimap->zoom,
+					(j - start.y) * map->minimap->zoom);
+			draw_square(map->minimap->image,
+				offset, map->minimap->zoom, find_map_color(map, i, j));
 		}
-		j++;
 	}
-	draw_minimap_player(image, map->minimap_zoom);
-	draw_minimap_rays(map, image, map->minimap_zoom);
-	return (image);
+}
+
+/**
+ * @brief Draw the minimap
+ * @param map the map
+ */
+void	draw_minimap(t_map *map)
+{
+	t_vector2	start;
+	t_vector2	end;
+
+	start = ft_vector2(map->player.x - MINIMAP_RENDER_DISTANCE / 2,
+			map->player.y - MINIMAP_RENDER_DISTANCE / 2);
+	end = ft_vector2(start.x + MINIMAP_RENDER_DISTANCE,
+			start.y + MINIMAP_RENDER_DISTANCE);
+	draw_minimap_2(start, end, map);
+	draw_minimap_player(map->minimap->image, map->minimap->zoom);
+	draw_minimap_rays(map->minimap->image, map, map->minimap->zoom);
 }

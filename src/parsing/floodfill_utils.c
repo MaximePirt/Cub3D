@@ -38,7 +38,7 @@ int	check_floodfill_end(t_map *map, int *start_y, int *start_x)
 				*start_x = j;
 				return (1);
 			}
-			j+=1;
+			j++;
 		}
 		i++;
 	}

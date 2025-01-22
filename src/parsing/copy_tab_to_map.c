@@ -64,13 +64,13 @@ int	is_a_player(t_parse_map *to_copy, t_map *map, int i, int j)
 		map->player.x = i + 0.5;
 		map->player.y = j + 0.5;
 		if (to_copy->blocks[j] == 'N')
-			map->player.dir = 0;
+			map->player.dir = NORTH;
 		else if (to_copy->blocks[j] == 'E')
-			map->player.dir = 90;
+			map->player.dir = EAST;
 		else if (to_copy->blocks[j] == 'S')
-			map->player.dir = 180;
+			map->player.dir = SOUTH;
 		else if (to_copy->blocks[j] == 'W')
-			map->player.dir = 270;
+			map->player.dir = WEST;
 		return (1);
 	}
 	return (0);
@@ -112,17 +112,17 @@ int	blocks_loop(t_parse_map *to_copy, t_map **map, int i, int *player_nb)
 	{
 		if (is_wall_floor_door(to_copy, (*map), i, j))
 			continue ;
-		else if (is_a_player(to_copy, (*map), i, j))
+		if (is_a_player(to_copy, (*map), i, j))
 		{
 			(*player_nb)++;
 			continue ;
 		}
-		else if (to_copy->blocks[j] == '\n')
+		if (to_copy->blocks[j] == '\n')
 			break ;
-		else if (to_copy->blocks[j])
+		if (to_copy->blocks[j])
 		{
-			ft_fprintf(STDERR_FILENO, "Error: invalid character in map : [%c]\n",
-				to_copy->blocks[j]);
+			ft_fprintf(STDERR_FILENO,
+				"Error: invalid character in map : [%c]\n", to_copy->blocks[j]);
 			return (1);
 		}
 	}

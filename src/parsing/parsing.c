@@ -29,19 +29,13 @@ int	check_map(t_map **map, char *filename, char ***images)
 		return (1);
 	tmp = parse_map;
 	find_map_start(&tmp);
-	(*map) = ft_init_map(parse_map_max_size(tmp), parse_map_size(tmp));
-	if ((*map) == NULL)
+	*map = ft_init_map(parse_map_max_size(tmp), parse_map_size(tmp));
+	if (*map == NULL)
 	{
 		free_parse_map(parse_map);
 		return (1);
 	}
-	if (copy_tab_to_map(parse_map, (*map), images))
-	{
-
-		free_parse_map(parse_map);
-		return (1);
-	}
-	if (preptoflood((*map)))
+	if (copy_tab_to_map(parse_map, *map, images) || preptoflood(*map))
 	{
 		free_parse_map(parse_map);
 		return (1);
