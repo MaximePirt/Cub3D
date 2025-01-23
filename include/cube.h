@@ -67,7 +67,7 @@ void		draw_rectangle(t_win *win, t_vector2 pos, t_vector2 width_eight, int color
 // Images tools
 
 void		paste_image_on_screen(t_win *win, t_image *image, t_vector2 pos);
-
+void		ft_fill_image(t_image *img, int color);
 
 // Minimap
 

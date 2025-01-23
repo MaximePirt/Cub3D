@@ -40,3 +40,20 @@ void	paste_image_on_screen(t_win *win, t_image *image, t_vector2 pos)
 		i++;
 	}
 }
+
+/**
+ * @brief Draw a square on the image
+ * @param img the image
+ * @param color the color
+ */
+void	ft_fill_image(t_image *img, int color)
+{
+	int	i;
+
+	i = 0;
+	while (i < img->width * img->height)
+	{
+		((int *)img->img_data)[i] = color;
+		i++;
+	}
+}
