@@ -37,6 +37,9 @@ static void	process_loop(t_image *texture, t_ray *ray, \
 	screen_y = 0;
 	texture_pos = 0.0;
 	texture_xy.x = (int)(ray->x_axis * texture->width) % texture->width;
+	if ((ray->side == 1 && ray->angle >= 0 && ray->angle < 180) || 
+	    (ray->side == 0 && (ray->angle >= 90 && ray->angle < 270)))
+	    texture_xy.x = texture->width - 1 - texture_xy.x;
 	texture_step = (double)texture->height / calc.height;
 	while (screen_y < calc.height)
 	{
@@ -50,6 +53,11 @@ static void	process_loop(t_image *texture, t_ray *ray, \
 		screen_y++;
 	}
 }
+
+
+
+
+
 
 static void	process_ray(t_win *win, t_map *map, t_ray *ray, int ray_index)
 {
