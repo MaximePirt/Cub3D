@@ -66,11 +66,6 @@ static void	process_loop(t_image *texture, t_ray *ray, \
 	}
 }
 
-
-
-
-
-
 static void	process_ray(t_win *win, t_map *map, t_ray *ray, int ray_index)
 {
 	t_image				*texture;
@@ -122,6 +117,7 @@ void	refresh(t_win *win, t_map *map)
 
 	give_all_rays(map);
 	render_game(win, map);
+	ft_fill_image(map->minimap->image, HEX_WHITE);
 	draw_minimap(map);
 	paste_image_on_screen(win, map->minimap->image, ft_vector2(0, 0));
 	if (map->player.hand_animation_direction)
