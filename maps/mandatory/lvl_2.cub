@@ -1,0 +1,16 @@
+NO ./maps/textures/wall.xpm
+SO ./maps/textures/wall_2.xpm
+WE ./maps/textures/wall_3.xpm
+EA ./maps/textures/wall_4.xpm
+
+F 220,100,0
+C 225,30,0
+
+111111111
+100001001
+100101001
+100100001
+1000N0001
+100000001
+100000001
+111111111
