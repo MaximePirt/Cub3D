@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:40:32 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/22 17:14:56 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/24 01:29:36 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,23 @@
 static int	load_textures(t_map *map, t_win *win, char **images)
 {
 	if (load_texture(map->textures->wall_north, images[0], win->mlx_ptr) == 1)
-		return (0);
+		return (1);
 	if (load_texture(map->textures->wall_south, images[1], win->mlx_ptr) == 1)
-		return (0);
+		return (1);
 	if (load_texture(map->textures->wall_east, images[2], win->mlx_ptr) == 1)
-		return (0);
+		return (1);
 	if (load_texture(map->textures->wall_west, images[3], win->mlx_ptr) == 1)
-		return (0);
+		return (1);
 	if (fill_rgb_texture(&map->textures->floor, images[4]) == 1)
-		return (0);
+		return (1);
 	if (fill_rgb_texture(&map->textures->ceiling, images[5]) == 1)
-		return (0);
+		return (1);
 	if (load_texture(map->textures->door, images[6], win->mlx_ptr) == 1) // TODO: Bonus part
-		return (0);
+		return (1);
 	if (load_texture(map->textures->right_hand, images[7], win->mlx_ptr) == 1) // TODO: Bonus part
-		return (0);
+		return (1);
 	ft_tabfree(images);
-	return (1);
+	return (0);
 }
 
 int	init_game(int argc, char **argv, t_map **map, char ***images)
@@ -80,7 +80,8 @@ int	main(int argc, char **argv)
 		ft_fprintf(STDERR_FILENO, "Error: failed to init minimap\n");
 		return (1);
 	}
-	load_textures(map, win, images);
+	if (load_textures(map, win, images))
+		return (1);
 	params = (t_key_params *)malloc(sizeof(t_key_params));
 	if (params == NULL)
 		exit(0);

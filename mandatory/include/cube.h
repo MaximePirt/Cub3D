@@ -1,9 +1,9 @@
 #ifndef CUBE_H
 #define CUBE_H
 
-# include "../libft/include/libft.h"
-# include "../libft/include/colors.h"
-# include "../minilibx/mlx.h"
+# include "../../libft/include/libft.h"
+# include "../../libft/include/colors.h"
+# include "../../minilibx/mlx.h"
 
 # include "struct.h"
 # include "window.h"
