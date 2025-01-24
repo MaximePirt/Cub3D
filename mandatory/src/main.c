@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:40:32 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/24 01:29:36 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/24 01:35:26 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,6 @@ static int	load_textures(t_map *map, t_win *win, char **images)
 	if (fill_rgb_texture(&map->textures->floor, images[4]) == 1)
 		return (1);
 	if (fill_rgb_texture(&map->textures->ceiling, images[5]) == 1)
-		return (1);
-	if (load_texture(map->textures->door, images[6], win->mlx_ptr) == 1) // TODO: Bonus part
-		return (1);
-	if (load_texture(map->textures->right_hand, images[7], win->mlx_ptr) == 1) // TODO: Bonus part
 		return (1);
 	ft_tabfree(images);
 	return (0);
