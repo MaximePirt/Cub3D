@@ -12,7 +12,7 @@
 
 #include "cube_bonus.h"
 
-static void	*ft_free_map(t_block **blocks, int size_y)
+void	*ft_free_map(t_block **blocks, int size_y)
 {
 	int	i;
 
@@ -32,7 +32,7 @@ static void	ft_free_texture(t_win *win, t_image *image)
 	free(image);
 }
 
-static void	ft_free_textures(t_win *win, t_textures *textures)
+void	ft_free_textures(t_win *win, t_textures *textures)
 {
 	ft_free_texture(win, textures->wall_north);
 	ft_free_texture(win, textures->wall_south);

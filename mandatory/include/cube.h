@@ -28,6 +28,8 @@ t_ray		*ft_init_rays(void);
 
 int			ft_free_program(t_key_params *params);
 void		free_parse_map(t_parse_map *map);
+void		ft_free_textures(t_win *win, t_textures *textures);
+void		*ft_free_map(t_block **blocks, int size_y);
 void		*ft_free_rays(t_ray *rays);
 
 // Game loop
@@ -47,7 +49,6 @@ int			player_move_left(t_map *map);
 int			player_move_right(t_map *map);
 int			player_look_left(t_map *map);
 int			player_look_right(t_map *map);
-int			door_interact(t_map *map);
 
 // Rendering
 

@@ -50,6 +50,7 @@ int	load_texture(t_image *image, char *path, void *mlx_ptr)
 	if (fd == -1)
 	{
 		ft_fprintf(STDERR_FILENO, "Error: invalid texture path\n");
+		ft_tabfree(tmp);
 		return (1);
 	}
 	close(fd);
