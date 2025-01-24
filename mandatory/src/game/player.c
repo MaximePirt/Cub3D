@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 04:12:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/12/01 06:13:17 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/24 01:50:54 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	player_look_right(t_map *map)
 	map->player.dir += MOUSE_SENSITIVITY;
 	return (0);
 }
-
+//TODO: remove this function bc its only for bonus
 int	door_interact(t_map *map)
 {
 	double	angle_rad;

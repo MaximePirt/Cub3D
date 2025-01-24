@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 04:12:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/12/01 06:13:17 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/24 01:50:35 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	action_key(int keycode, t_key_params *params)
 {
 	if (keycode == KEY_ESC)
 	{
-		if (params->map->mouse_lock)
+		if (params->map->mouse_lock) //TODO: remove this line bc its only for bonus
 		{
 			mlx_mouse_show(params->win->mlx_ptr, params->win->win_ptr);
 			params->map->mouse_lock = 0;
@@ -41,7 +41,7 @@ int	action_key(int keycode, t_key_params *params)
 	}
 	else if (player_movement_key(params, keycode))
 		return (1);
-	else if (keycode == KEY_T)
+	else if (keycode == KEY_T) //TODO: remove this line bc its only for bonus
 		door_interact(params->map);
 	else if (keycode == KEY_ARROW_LEFT)
 		player_look_left(params->map);
@@ -51,7 +51,7 @@ int	action_key(int keycode, t_key_params *params)
 		return (0);
 	return (1);
 }
-
+//TODO: Remove this function bc its only for bonus
 int	action_mouse_key(int button, int x, int y, t_key_params *params)
 {
 	(void)x;
