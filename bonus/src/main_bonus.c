@@ -41,6 +41,9 @@ static int	load_textures(t_map *map, t_win *win, char **images)
 
 static int	init_game(int argc, char **argv, t_map **map, char ***images)
 {
+  	int	i;
+
+	*map = NULL;
 	if (argc != 2)
 	{
 		ft_fprintf(STDERR_FILENO, "Error: please provide a map file\n");
@@ -52,11 +55,13 @@ static int	init_game(int argc, char **argv, t_map **map, char ***images)
 			"Error : filename doesn't respect the subject\n");
 		return (1);
 	}
-	*map = NULL;
 	*images = ft_calloc(sizeof(char *), 9);
 	if (check_map(map, argv[1], images) == 1)
 	{
-		ft_tabfree(*images);
+		i = 0;
+		while (i < 8)
+			free((*images)[i++]);
+		free(*images);
 		ft_fprintf(STDERR_FILENO, "Error: invalid map\n");
 		return (1);
 	}
@@ -65,18 +70,25 @@ static int	init_game(int argc, char **argv, t_map **map, char ***images)
 
 static int	ft_free_error(t_map *map, t_win *win)
 {
-	ft_free_map(map->blocks, map->size_y);
-	ft_free_rays(map->rays);
-	ft_free_textures(win, map->textures);
-	free(map->minimap->image);
-	free(map->minimap);
-	mlx_destroy_image(win->mlx_ptr, win->img_ptr);
-	mlx_clear_window(win->mlx_ptr, win->win_ptr);
-	mlx_destroy_window(win->mlx_ptr, win->win_ptr);
-	mlx_destroy_display(win->mlx_ptr);
-	free(win->mlx_ptr);
-	free(win);
-	free(map);
+	if (map)
+	{
+		ft_free_map(map->blocks, map->size_y);
+		ft_free_rays(map->rays);
+		if (win)
+			ft_free_textures(win, map->textures);
+		free(map->minimap->image);
+		free(map->minimap);
+		free(map);
+	}
+	if (win)
+	{
+		mlx_destroy_image(win->mlx_ptr, win->img_ptr);
+		mlx_clear_window(win->mlx_ptr, win->win_ptr);
+		mlx_destroy_window(win->mlx_ptr, win->win_ptr);
+		mlx_destroy_display(win->mlx_ptr);
+		free(win->mlx_ptr);
+		free(win);
+	}
 	exit(0);
 }
 

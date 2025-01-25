@@ -1,9 +1,7 @@
 NO ./maps/textures/wall.xpm
-SO ./maps/textures/wall.xpm
-WE ./maps/textures/wall.xpm
-EA ./maps/textures/wall.xpm
+WE ./maps/texturezoijfd.xpm
 
-DOOR ./maps/textures/wall.xpm
+DOOR ./maps/textures/door.xpm
 RIGHT_HAND ./maps/textures/right_hand.xpm
 
 F 220,100,0

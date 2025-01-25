@@ -37,6 +37,9 @@ static int	load_textures(t_map *map, t_win *win, char **images)
 
 static int	init_game(int argc, char **argv, t_map **map, char ***images)
 {
+  	int	i;
+
+  	*map = NULL;
 	if (argc != 2)
 	{
 		ft_fprintf(STDERR_FILENO, "Error: please provide a map file\n");
@@ -48,11 +51,13 @@ static int	init_game(int argc, char **argv, t_map **map, char ***images)
 			"Error : filename doesn't respect the subject\n");
 		return (1);
 	}
-	*map = NULL;
-	*images = ft_calloc(sizeof(char *), 9);
+	*images = ft_calloc(sizeof(char *), 6);
 	if (check_map(map, argv[1], images) == 1)
 	{
-		ft_tabfree(*images);
+		i = 0;
+        while (i < 6)
+			free((*images)[i++]);
+        free(*images);
 		ft_fprintf(STDERR_FILENO, "Error: invalid map\n");
 		return (1);
 	}
