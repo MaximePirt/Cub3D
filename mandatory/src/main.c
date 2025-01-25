@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:40:32 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/24 01:35:26 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/25 02:46:33 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	load_textures(t_map *map, t_win *win, char **images)
 	return (0);
 }
 
-int	init_game(int argc, char **argv, t_map **map, char ***images)
+static int	init_game(int argc, char **argv, t_map **map, char ***images)
 {
 	if (argc != 2)
 	{
@@ -59,7 +59,7 @@ int	init_game(int argc, char **argv, t_map **map, char ***images)
 	return (0);
 }
 
-int    ft_free_error(t_map *map, t_win *win)
+static int	ft_free_error(t_map *map, t_win *win)
 {
 	ft_free_map(map->blocks, map->size_y);
 	ft_free_rays(map->rays);
@@ -76,6 +76,15 @@ int    ft_free_error(t_map *map, t_win *win)
 	exit(0);
 }
 
+static void	launch_game(t_win *win, t_map *map, t_key_params *params)
+{
+	params->win = win;
+	params->map = map;
+	ft_init_keymap(params);
+	mlx_loop_hook(win->mlx_ptr, game_loop, params);
+	mlx_loop(win->mlx_ptr);
+}
+
 int	main(int argc, char **argv)
 {
 	t_win			*win;
@@ -84,16 +93,13 @@ int	main(int argc, char **argv)
 	t_key_params	*params;
 
 	win = ft_init_window();
-	if (init_game(argc, argv, &map, &images) == 1)
-    {
+	if (init_game(argc, argv, &map, &images))
 		ft_free_error(map, win);
-		return (1);
-    }
 	if (load_textures(map, win, images))
-    {
-        ft_tabfree(images);
+	{
+		ft_tabfree(images);
 		ft_free_error(map, win);
-    }
+	}
 	map->minimap->image = ft_init_image(win->mlx_ptr, MINIMAP_RENDER_DISTANCE
 			* map->minimap->zoom, MINIMAP_RENDER_DISTANCE * map->minimap->zoom);
 	if (map->minimap->image == NULL)
@@ -104,10 +110,6 @@ int	main(int argc, char **argv)
 	params = (t_key_params *)malloc(sizeof(t_key_params));
 	if (params == NULL)
 		exit(0);
-	params->win = win;
-	params->map = map;
-	ft_init_keymap(params);
-	mlx_loop_hook(win->mlx_ptr, game_loop, params);
-	mlx_loop(win->mlx_ptr);
+	launch_game(win, map, params);
 	return (0);
 }

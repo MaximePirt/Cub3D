@@ -1,19 +1,29 @@
-#ifndef CUBE_H
-#define CUBE_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cube_bonus.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/25 02:47:24 by mpierrot          #+#    #+#             */
+/*   Updated: 2025/01/25 02:47:47 by mpierrot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-# include "../../libft/include/libft.h"
+#ifndef CUBE_BONUS_H
+# define CUBE_BONUS_H
+
 # include "../../libft/include/colors.h"
+# include "../../libft/include/libft.h"
 # include "../../minilibx/mlx.h"
-
-# include "struct_bonus.h"
-# include "window_bonus.h"
 # include "parsing_bonus.h"
 # include "player_bonus.h"
-
-# include <stdio.h>
-# include <stdlib.h>
+# include "struct_bonus.h"
+# include "window_bonus.h"
 # include <fcntl.h>
 # include <math.h>
+# include <stdio.h>
+# include <stdlib.h>
 
 // Memory allocation
 
@@ -21,7 +31,7 @@ t_map		*ft_init_map(int size_x, int size_y);
 t_block		*ft_init_block(void);
 t_win		*ft_init_window(void);
 t_textures	*ft_init_textures(void);
-t_image 	*ft_init_image(void *mlx_ptr, int width, int height);
+t_image		*ft_init_image(void *mlx_ptr, int width, int height);
 t_ray		*ft_init_rays(void);
 
 // Memory free
@@ -64,7 +74,8 @@ void		set_pixel_color(t_win *win, t_vector2 pos, int color);
 
 void		draw_square(t_image *img, t_vector2 pos, int size, int color);
 void		draw_circle(t_image *img, t_vector2 pos, int radius, int color);
-void		draw_rectangle(t_win *win, t_vector2 pos, t_vector2 width_eight, int color);
+void		draw_rectangle(t_win *win, t_vector2 pos, t_vector2 width_eight,
+				int color);
 
 // Images tools
 
@@ -78,8 +89,6 @@ void		draw_minimap(t_map *map);
 // Vectors
 t_vector2	ft_vector2(double x, double y);
 t_line		ft_line(t_vector2 start, t_vector2 end, int color, int width);
-
-
 
 // Raycast
 int			give_all_rays(t_map *map);

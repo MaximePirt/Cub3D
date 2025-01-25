@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   struct_bonus.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/25 02:47:01 by mpierrot          #+#    #+#             */
+/*   Updated: 2025/01/25 02:49:45 by mpierrot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#ifndef STRUCT_H
-# define STRUCT_H
+#ifndef STRUCT_BONUS_H
+# define STRUCT_BONUS_H
 
 typedef enum s_block_type
 {
@@ -83,31 +94,31 @@ typedef struct s_calcul_ray
 {
 	double				add_angle;
 	double				angle;
-	double				ray_dirX;
-	double				ray_dirY;
-	double				posX;
-	double				posY;
-	int					mapX;
-	int					mapY;
-	double				deltaDistX;
-	double				deltaDistY;
+	double				ray_dirx;
+	double				ray_diry;
+	double				posx;
+	double				posy;
+	int					mapx;
+	int					mapy;
+	double				deltadistx;
+	double				deltadisty;
 	int					hit;
 	int					side;
-	double				perpWallDist;
-	int					stepX;
-	int					stepY;
-	double				sideDistX;
-	double				sideDistY;
+	double				perpwalldist;
+	int					stepx;
+	int					stepy;
+	double				sidedistx;
+	double				sidedisty;
 }						t_calcul_ray;
 
 typedef struct s_calcul_process
 {
-	double		ray_angle;
-	double		add_angle;
-	int			height;
-	int			width;
-	t_vector2	pos;
-}		t_calcul_process;
+	double				ray_angle;
+	double				add_angle;
+	int					height;
+	int					width;
+	t_vector2			pos;
+}						t_calcul_process;
 
 typedef struct s_minimap
 {

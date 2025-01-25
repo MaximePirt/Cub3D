@@ -1,9 +1,21 @@
-#ifndef PARSING_H
-#define PARSING_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_bonus.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/25 02:46:52 by mpierrot          #+#    #+#             */
+/*   Updated: 2025/01/25 02:47:52 by mpierrot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "struct_bonus.h"
+#ifndef PARSING_BONUS_H
+# define PARSING_BONUS_H
 
-int     	check_name(char *file);
+# include "struct_bonus.h"
+
+int			check_name(char *file);
 int			check_map(t_map **map, char *filename, char ***images);
 void		find_map_start(t_parse_map **parse_map);
 
@@ -16,7 +28,6 @@ int			checking_firsts_map_lines(t_parse_map **to_copy, char ***images);
 
 ///////////////////////copy_tab_to_map/////////////////////////
 int			copy_tab_to_map(t_parse_map *to_copy, t_map *map, char ***images);
-
 
 /////////////////////////lst_parsing/////////////////////////
 t_parse_map	*parsemaplast(t_parse_map *lst);
