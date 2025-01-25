@@ -6,29 +6,23 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:37:19 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/12/01 06:13:37 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/25 02:35:31 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
 /**
- * @brief Check if the block is a wall, floor or door
+ * @brief Check if the block is a wall or a floor
  * @param to_copy the parse map
  * @param map the map
  * @param i the i index
  * @param j the j index
- * @return int 1 if a floor or a door, 0 else
+ * @return int 1 if a floor 0 else
  */
-int	is_wall_floor_door(t_parse_map *to_copy, t_map *map, int i, int j)
+static int	is_wall_floor(t_parse_map *to_copy, t_map *map, int i, int j)
 {
 	map->blocks[i][j].status = 0;
-	if (to_copy->blocks[j] == 'D')
-	{
-		map->blocks[i][j].type = DOOR;
-		map->blocks[i][j].status = 1;
-		return (1);
-	}
 	if (to_copy->blocks[j] == '1')
 	{
 		map->blocks[i][j].type = WALL;
@@ -55,7 +49,7 @@ int	is_wall_floor_door(t_parse_map *to_copy, t_map *map, int i, int j)
  * @param j the j index
  * @return int 1 if a player, 0 else
  */
-int	is_a_player(t_parse_map *to_copy, t_map *map, int i, int j)
+static int	is_a_player(t_parse_map *to_copy, t_map *map, int i, int j)
 {
 	if (to_copy->blocks[j] == 'N' || to_copy->blocks[j] == 'S'
 		|| to_copy->blocks[j] == 'E' || to_copy->blocks[j] == 'W')
@@ -110,7 +104,7 @@ int	blocks_loop(t_parse_map *to_copy, t_map **map, int i, int *player_nb)
 	j = -1;
 	while (to_copy->blocks[++j])
 	{
-		if (is_wall_floor_door(to_copy, (*map), i, j))
+		if (is_wall_floor(to_copy, (*map), i, j))
 			continue ;
 		if (is_a_player(to_copy, (*map), i, j))
 		{

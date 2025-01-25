@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 04:12:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/12/01 06:13:17 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/25 02:34:32 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	ft_free_textures(t_win *win, t_textures *textures)
 	ft_free_texture(win, textures->wall_south);
 	ft_free_texture(win, textures->wall_east);
 	ft_free_texture(win, textures->wall_west);
-	ft_free_texture(win, textures->door);
 	ft_free_texture(win, textures->right_hand);
 	free(textures);
 }

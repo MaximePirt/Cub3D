@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 04:12:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/12/01 06:13:17 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/25 02:36:06 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ static int	find_map_color(t_map *map, int i, int j)
 	{
 		if (map->blocks[j][i].type == WALL)
 			return (HEX_BLACK);
-		if (map->blocks[j][i].type == DOOR)
-			return (HEX_CYAN);
 		return (HEX_WHITE);
 	}
 	return (HEX_WHITE);

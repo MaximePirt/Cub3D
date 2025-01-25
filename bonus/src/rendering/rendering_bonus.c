@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 04:12:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/24 00:41:06 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/25 02:50:59 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static void	texture_selection(t_map *map, t_ray *ray, t_image **texture)
 	}
 }
 
-static void	process_loop(t_image *texture, t_ray *ray, \
-			t_win *win, t_calcul_process calc)
+static void	process_loop(t_image *texture, t_ray *ray, t_win *win,
+		t_calcul_process calc)
 {
 	t_vector2	texture_xy;
 	double		texture_pos;
@@ -49,9 +49,9 @@ static void	process_loop(t_image *texture, t_ray *ray, \
 	screen_y = 0;
 	texture_pos = 0.0;
 	texture_xy.x = (int)(ray->x_axis * texture->width) % texture->width;
-	if ((ray->side == 1 && ray->angle >= 0 && ray->angle < 180) || 
-	    (ray->side == 0 && (ray->angle >= 90 && ray->angle < 270)))
-	    texture_xy.x = texture->width - 1 - texture_xy.x;
+	if ((ray->side == 1 && ray->angle >= 0 && ray->angle < 180)
+		|| (ray->side == 0 && (ray->angle >= 90 && ray->angle < 270)))
+		texture_xy.x = texture->width - 1 - texture_xy.x;
 	texture_step = (double)texture->height / calc.height;
 	while (screen_y < calc.height)
 	{
@@ -80,14 +80,14 @@ static void	process_ray(t_win *win, t_map *map, t_ray *ray, int ray_index)
 		corrected_distance = 0.1;
 	calc.height = (int)(SCREEN_HEIGHT / corrected_distance);
 	calc.width = fmax(1, SCREEN_WIDTH / RAYS_COUNT);
-	calc.pos = ft_vector2(ray_index * calc.width, \
-		(SCREEN_HEIGHT - calc.height) / 2);
+	calc.pos = ft_vector2(ray_index * calc.width, (SCREEN_HEIGHT - calc.height)
+			/ 2);
 	process_loop(texture, ray, win, calc);
-	draw_rectangle(win, ft_vector2(calc.pos.x, 0), \
-		ft_vector2(calc.width, calc.pos.y), map->textures->ceiling.r);
-	draw_rectangle(win, ft_vector2(calc.pos.x, calc.pos.y + \
-	calc.height), ft_vector2(calc.width, SCREEN_HEIGHT - \
-	(calc.pos.y + calc.height)), map->textures->floor.g);
+	draw_rectangle(win, ft_vector2(calc.pos.x, 0), ft_vector2(calc.width,
+			calc.pos.y), map->textures->ceiling.r);
+	draw_rectangle(win, ft_vector2(calc.pos.x, calc.pos.y + calc.height),
+		ft_vector2(calc.width, SCREEN_HEIGHT - (calc.pos.y + calc.height)),
+		map->textures->floor.g);
 }
 
 static void	render_game(t_win *win, t_map *map)
@@ -126,8 +126,8 @@ void	refresh(t_win *win, t_map *map)
 		map->player.hand_animation_pos -= 1;
 	if (map->player.hand_animation_pos >= 100
 		|| map->player.hand_animation_pos <= -100)
-		map->player.hand_animation_direction
-			= !map->player.hand_animation_direction;
+		map->player.hand_animation_direction \
+		= !map->player.hand_animation_direction;
 	hand_pos = ft_vector2(SCREEN_WIDTH - map->textures->right_hand->width - 10,
 			SCREEN_HEIGHT - map->textures->right_hand->height + 10
 			+ map->player.hand_animation_pos / 10);

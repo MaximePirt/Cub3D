@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 04:12:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/24 01:47:53 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/25 02:43:16 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	player_move_forward(t_map *map)
 	y = (int)ceil(map->player.y + sin(angle_rad) * 0.1) - 1;
 	x = (int)ceil(map->player.x + cos(angle_rad) * 0.1) - 1;
 	if (x <= 0 || y <= 0 || x >= map->size_x - 1 || y >= map->size_y - 1)
-          return (0);
+		return (0);
 	update_player_old_pos(map);
 	map->player.x += cos(angle_rad) * 0.1;
 	map->player.y += sin(angle_rad) * 0.1;
