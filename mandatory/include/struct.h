@@ -7,7 +7,6 @@ typedef enum s_block_type
 	VOID,
 	FLOOR,
 	WALL,
-	DOOR,
 	FILL,
 	NOTHING
 }						t_block_type;
@@ -62,7 +61,6 @@ typedef struct s_textures
 	t_image				*wall_south;
 	t_image				*wall_east;
 	t_image				*wall_west;
-	t_image				*door;
 	t_image				*right_hand;
 	t_rgb				floor;
 	t_rgb				ceiling;

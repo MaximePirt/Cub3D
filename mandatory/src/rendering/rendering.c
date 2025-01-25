@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 04:12:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/12/01 06:13:17 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/25 02:36:19 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ static void	texture_selection(t_map *map, t_ray *ray, t_image **texture)
 		ray->angle -= 360;
 	else if (ray->angle < 0)
 		ray->angle += 360;
-	if (ray->type == DOOR)
-		*texture = map->textures->door;
-	else if (ray->side == 1)
+	if (ray->side == 1)
 	{
 		if (ray->angle > 0 && ray->angle < 180)
 			*texture = map->textures->wall_north;

@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 04:12:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/12/01 06:13:17 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/25 02:34:35 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ t_textures	*ft_init_textures(void)
 		|| !ft_init_texture(&textures->wall_south)
 		|| !ft_init_texture(&textures->wall_east)
 		|| !ft_init_texture(&textures->wall_west)
-		|| !ft_init_texture(&textures->door)
 		|| !ft_init_texture(&textures->right_hand))
 	{
 		free(textures);

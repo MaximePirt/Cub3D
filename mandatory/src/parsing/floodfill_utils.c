@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:35:39 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/12/11 17:47:37 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/25 02:36:01 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ int	check_floodfill_end(t_map *map, int *start_y, int *start_x)
 		j = 0;
 		while (j < map->size_x)
 		{
-			if (map->blocks[i][j].type == FLOOR
-				|| map->blocks[i][j].type == DOOR)
+			if (map->blocks[i][j].type == FLOOR)
 			{
 				*start_y = i;
 				*start_x = j;
@@ -58,9 +57,6 @@ void	restore_map(t_map *map)
 		{
 			if (map->blocks[i][j].type == FILL && map->blocks[i][j].status == 0)
 				map->blocks[i][j].type = FLOOR;
-			else if (map->blocks[i][j].type == FILL
-				&& map->blocks[i][j].status == 1)
-				map->blocks[i][j].type = DOOR;
 			j++;
 		}
 		i++;
