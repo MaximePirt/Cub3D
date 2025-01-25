@@ -42,8 +42,8 @@ static void	struct_filler(t_calcul_ray *calcul, t_map *map, int ray_index)
 {
 	calcul->add_angle = (ray_index * (FOV / (double)RAYS_COUNT)) - (FOV / 2);
 	calcul->angle = map->player.dir + calcul->add_angle;
-	calcul->ray_dirx = cos(DEG_TO_RAD(calcul->angle));
-	calcul->ray_diry = sin(DEG_TO_RAD(calcul->angle));
+	calcul->ray_dirx = cos((calcul->angle) * M_PI / 180.0);
+	calcul->ray_diry = sin((calcul->angle) * M_PI / 180.0);
 	calcul->posx = map->player.x;
 	calcul->posy = map->player.y;
 	calcul->mapx = (int)calcul->posx;

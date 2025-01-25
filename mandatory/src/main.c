@@ -59,21 +59,29 @@ static int	init_game(int argc, char **argv, t_map **map, char ***images)
 	return (0);
 }
 
-static int	ft_free_error(t_map *map, t_win *win)
+static int    ft_free_error(t_map *map, t_win *win)
 {
-	ft_free_map(map->blocks, map->size_y);
-	ft_free_rays(map->rays);
-	ft_free_textures(win, map->textures);
-	free(map->minimap->image);
-	free(map->minimap);
-	mlx_destroy_image(win->mlx_ptr, win->img_ptr);
-	mlx_clear_window(win->mlx_ptr, win->win_ptr);
-	mlx_destroy_window(win->mlx_ptr, win->win_ptr);
-	mlx_destroy_display(win->mlx_ptr);
-	free(win->mlx_ptr);
-	free(win);
-	free(map);
-	exit(0);
+    if (map)
+    {
+        ft_free_map(map->blocks, map->size_y);
+        ft_free_rays(map->rays);
+        if (win)
+            ft_free_textures(win, map->textures);
+        free(map->minimap->image);
+        free(map->minimap);
+        free(map);
+    }
+    if (win)
+    {
+        mlx_destroy_image(win->mlx_ptr, win->img_ptr);
+        mlx_clear_window(win->mlx_ptr, win->win_ptr);
+        mlx_destroy_window(win->mlx_ptr, win->win_ptr);
+        mlx_destroy_display(win->mlx_ptr);
+        free(win->mlx_ptr);
+        free(win);
+    }
+
+    exit(0);
 }
 
 static void	launch_game(t_win *win, t_map *map, t_key_params *params)
@@ -92,6 +100,7 @@ int	main(int argc, char **argv)
 	char			**images;
 	t_key_params	*params;
 
+    map = NULL;
 	win = ft_init_window();
 	if (init_game(argc, argv, &map, &images))
 		ft_free_error(map, win);
