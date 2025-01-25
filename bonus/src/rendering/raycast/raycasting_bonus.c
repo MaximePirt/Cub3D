@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 04:35:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/25 02:49:45 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/25 21:16:45 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	struct_filler(t_calcul_ray *calcul, t_map *map, int ray_index)
 	calcul->add_angle = (ray_index * (FOV / (double)RAYS_COUNT)) - (FOV / 2);
 	calcul->angle = map->player.dir + calcul->add_angle;
 	calcul->ray_dirx = cos((calcul->angle) * M_PI / 180.0);
-	calcul->ray_diry = sin((calcul->angle)*M_PI / 180.0);
+	calcul->ray_diry = sin((calcul->angle) * M_PI / 180.0);
 	calcul->posx = map->player.x;
 	calcul->posy = map->player.y;
 	calcul->mapx = (int)calcul->posx;
