@@ -29,6 +29,8 @@ t_ray		*ft_init_rays(void);
 int			ft_free_program(t_key_params *params);
 void		free_parse_map(t_parse_map *map);
 void		*ft_free_rays(t_ray *rays);
+void		*ft_free_map(t_block **blocks, int size_y);
+void		ft_free_textures(t_win *win, t_textures *textures);
 
 // Game loop
 

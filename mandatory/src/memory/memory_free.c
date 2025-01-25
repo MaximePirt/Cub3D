@@ -12,17 +12,6 @@
 
 #include "cube.h"
 
-static void	*ft_free_map(t_block **blocks, int size_y)
-{
-	int	i;
-
-	i = -1;
-	while (++i < size_y)
-		free(blocks[i]);
-	free(blocks);
-	return (NULL);
-}
-
 static void	ft_free_texture(t_win *win, t_image *image)
 {
 	if (image->path)
@@ -32,7 +21,7 @@ static void	ft_free_texture(t_win *win, t_image *image)
 	free(image);
 }
 
-static void	ft_free_textures(t_win *win, t_textures *textures)
+void	ft_free_textures(t_win *win, t_textures *textures)
 {
 	ft_free_texture(win, textures->wall_north);
 	ft_free_texture(win, textures->wall_south);
@@ -41,6 +30,17 @@ static void	ft_free_textures(t_win *win, t_textures *textures)
 	ft_free_texture(win, textures->door);
 	ft_free_texture(win, textures->right_hand);
 	free(textures);
+}
+
+void	*ft_free_map(t_block **blocks, int size_y)
+{
+	int	i;
+
+	i = -1;
+	while (++i < size_y)
+		free(blocks[i]);
+	free(blocks);
+	return (NULL);
 }
 
 void	free_parse_map(t_parse_map *map)

@@ -79,14 +79,13 @@ static void	hit_loop(t_calcul_ray *calcul, t_map *map, t_ray *ray)
 		}
 		ray->type = FLOOR;
 		calcul->hit = 0;
-		if (map->blocks[calcul->mapY][calcul->mapX].type == WALL)
+        if (calcul->mapX < 0 || calcul->mapY < 0 || calcul->mapX >= map->size_x || calcul->mapY >= map->size_y)
+        {
+            calcul->hit = 1;
+            ray->type = WALL;
+        }
+		else if (map->blocks[calcul->mapY][calcul->mapX].type == WALL)
 			calcul->hit = 1;
-		else if (map->blocks[calcul->mapY][calcul->mapX].type == DOOR
-			&& map->blocks[calcul->mapY][calcul->mapX].status == 1)
-		{
-			calcul->hit = 1;
-			ray->type = DOOR;
-		}
 	}
 }
 

@@ -31,7 +31,7 @@ typedef struct s_win
 	void				*win_ptr;
 	void				*img_ptr;
 	char				*img_data;
-	int					bpp; //TODO: wtf?
+	int					bpp;
 	int					size_line;
 	int					endian;
 }						t_win;

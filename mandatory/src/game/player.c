@@ -36,17 +36,3 @@ int	player_look_right(t_map *map)
 	map->player.dir += MOUSE_SENSITIVITY;
 	return (0);
 }
-//TODO: remove this function bc its only for bonus
-int	door_interact(t_map *map)
-{
-	double	angle_rad;
-	int		x;
-	int		y;
-
-	angle_rad = ((map->player.dir) * M_PI / 180.0);
-	y = (int)ceil(map->player.y + sin(angle_rad) * 0.9) - 1;
-	x = (int)ceil(map->player.x + cos(angle_rad) * 0.9) - 1;
-	if (map->blocks[y][x].type == DOOR)
-		map->blocks[y][x].status = !map->blocks[y][x].status;
-	return (0);
-}

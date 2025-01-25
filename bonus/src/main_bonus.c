@@ -63,6 +63,23 @@ int	init_game(int argc, char **argv, t_map **map, char ***images)
 	return (0);
 }
 
+int    ft_free_error(t_map *map, t_win *win)
+{
+	ft_free_map(map->blocks, map->size_y);
+	ft_free_rays(map->rays);
+	ft_free_textures(win, map->textures);
+	free(map->minimap->image);
+	free(map->minimap);
+	mlx_destroy_image(win->mlx_ptr, win->img_ptr);
+	mlx_clear_window(win->mlx_ptr, win->win_ptr);
+	mlx_destroy_window(win->mlx_ptr, win->win_ptr);
+	mlx_destroy_display(win->mlx_ptr);
+	free(win->mlx_ptr);
+	free(win);
+	free(map);
+	exit(0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_win			*win;
@@ -70,9 +87,17 @@ int	main(int argc, char **argv)
 	char			**images;
 	t_key_params	*params;
 
-	if (init_game(argc, argv, &map, &images) == 1)
-		return (1);
 	win = ft_init_window();
+	if (init_game(argc, argv, &map, &images) == 1)
+	{
+		ft_free_error(map, win);
+		return (1);
+	}
+	if (load_textures(map, win, images))
+	{
+		ft_tabfree(images);
+		ft_free_error(map, win);
+	}
 	map->minimap->image = ft_init_image(win->mlx_ptr, MINIMAP_RENDER_DISTANCE
 			* map->minimap->zoom, MINIMAP_RENDER_DISTANCE * map->minimap->zoom);
 	if (map->minimap->image == NULL)
@@ -80,8 +105,6 @@ int	main(int argc, char **argv)
 		ft_fprintf(STDERR_FILENO, "Error: failed to init minimap\n");
 		return (1);
 	}
-	if (load_textures(map, win, images))
-		return (1);		
 	params = (t_key_params *)malloc(sizeof(t_key_params));
 	if (params == NULL)
 		exit(0);
