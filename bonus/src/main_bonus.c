@@ -35,7 +35,10 @@ static int	load_textures(t_map *map, t_win *win, char **images)
 		return (1);
 	if (load_texture(map->textures->right_hand, images[7], win->mlx_ptr) == 1)
 		return (1);
-	ft_tabfree(images);
+	i = 0;
+	while (i < 8)
+		free(images[i++]);
+	free(images);
 	return (0);
 }
 
