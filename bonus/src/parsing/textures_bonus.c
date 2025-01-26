@@ -95,7 +95,7 @@ int	fill_rgb_texture(t_rgb *items, char *value)
 	tmp = ft_split(value, " ,\n");
 	if (!tmp || !tmp[1] || !tmp[2] || !tmp[3])
 	{
-		ft_tabfree(tmp);	
+		ft_tabfree(tmp);
 		return (1);
 	}
 	converted = malloc(5 * sizeof(int));

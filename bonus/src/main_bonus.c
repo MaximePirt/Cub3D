@@ -19,7 +19,7 @@
  */
 static int	load_textures(t_map *map, t_win *win, char **images)
 {
-  	int	i;
+	int	i;
 
 	if (load_texture(map->textures->wall_north, images[0], win->mlx_ptr) == 1)
 		return (1);
@@ -46,7 +46,7 @@ static int	load_textures(t_map *map, t_win *win, char **images)
 
 static int	init_game(int argc, char **argv, t_map **map, char ***images)
 {
-  	int	i;
+	int	i;
 
 	*map = NULL;
 	if (argc != 2)

@@ -27,8 +27,8 @@ void	*ft_free_rays(t_ray *rays)
 
 void	free_images(char **images)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (i < 6)
 		free(images[i++]);
