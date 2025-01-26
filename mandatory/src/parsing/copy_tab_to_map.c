@@ -55,8 +55,8 @@ static int	is_a_player(t_parse_map *to_copy, t_map *map, int i, int j)
 		|| to_copy->blocks[j] == 'E' || to_copy->blocks[j] == 'W')
 	{
 		map->blocks[i][j].type = FLOOR;
-		map->player.x = i + 0.5;
-		map->player.y = j + 0.5;
+		map->player.x = j + 0.5;
+		map->player.y = i + 0.5;
 		if (to_copy->blocks[j] == 'N')
 			map->player.dir = NORTH;
 		else if (to_copy->blocks[j] == 'E')
