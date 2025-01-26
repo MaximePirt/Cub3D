@@ -79,7 +79,7 @@ static void	process_ray(t_win *win, t_map *map, t_ray *ray, int ray_index)
 	if (corrected_distance < 0.1)
 		corrected_distance = 0.1;
 	calc.height = (int)(SCREEN_HEIGHT / corrected_distance);
-	calc.width = fmax(1, SCREEN_WIDTH / RAYS_COUNT);
+    calc.width = fmax(1, SCREEN_WIDTH / RAYS_COUNT);
 	calc.pos = ft_vector2(ray_index * calc.width, (SCREEN_HEIGHT - calc.height)
 			/ 2);
 	process_loop(texture, ray, win, calc);

@@ -19,6 +19,8 @@
  */
 static int	load_textures(t_map *map, t_win *win, char **images)
 {
+  	int	i;
+
 	if (load_texture(map->textures->wall_north, images[0], win->mlx_ptr) == 1)
 		return (1);
 	if (load_texture(map->textures->wall_south, images[1], win->mlx_ptr) == 1)
