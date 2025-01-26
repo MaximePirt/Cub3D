@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 04:12:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/24 00:40:23 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/26 20:40:10 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,33 +60,17 @@ int	load_texture(t_image *image, char *path, void *mlx_ptr)
 	return (0);
 }
 
-int	str_is_charset(char *str, char *charset)
+static void	data_rgb_sending(t_rgb *items, int *converted)
 {
-	int	i;
-	int	j;
-	int	valide;
-
-	i = 0;
-	while (str[i])
-	{
-		j = 0;
-		valide = 0;
-		while (charset[j])
-		{
-			if (str[i] == charset[j])
-				valide = 1;
-			j++;
-		}
-		if (!valide)
-			return (1);
-		i++;
-	}
-	return (0);
+	items->r = converted[1];
+	items->g = converted[2];
+	items->b = converted[3];
+	free(converted);
 }
 
 int	error_in_rgb(char **tmp, int i, int **converted, char *value)
 {
-	if (str_is_charset(tmp[i], "0123456789,") || ft_str_count_char(value,
+	if (ft_str_is_charset(tmp[i], "0123456789,") || ft_str_count_char(value,
 			',') != 2 || ft_count_words(value, "\n") != 1)
 	{
 		ft_fprintf(STDERR_FILENO, "Error: Check your RGB settings\n");
@@ -110,18 +94,24 @@ int	fill_rgb_texture(t_rgb *items, char *value)
 	i = 1;
 	tmp = ft_split(value, " ,\n");
 	if (!tmp || !tmp[1] || !tmp[2] || !tmp[3])
+	{
+		ft_tabfree(tmp);	
 		return (1);
+	}
 	converted = malloc(5 * sizeof(int));
 	while (tmp[i])
 	{
 		if (error_in_rgb(tmp, i, &converted, value))
+		{
+			ft_tabfree(tmp);
+			free(converted);
 			return (1);
+		}
 		i++;
 	}
 	items->r = converted[1];
 	items->g = converted[2];
 	items->b = converted[3];
 	ft_tabfree(tmp);
-	free(converted);
 	return (0);
 }

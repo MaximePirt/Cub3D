@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 04:12:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/12/01 06:13:17 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/26 20:40:14 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,14 @@ int	error_in_rgb(char **tmp, int i, int **converted, char *value)
 	return (0);
 }
 
+static void	data_rgb_sending(t_rgb *items, int *converted)
+{
+	items->r = converted[1];
+	items->g = converted[2];
+	items->b = converted[3];
+	free(converted);
+}
+
 int	fill_rgb_texture(t_rgb *items, char *value)
 {
 	char	**tmp;
@@ -110,18 +118,22 @@ int	fill_rgb_texture(t_rgb *items, char *value)
 	i = 1;
 	tmp = ft_split(value, " ,\n");
 	if (!tmp || !tmp[1] || !tmp[2] || !tmp[3])
+	{
+		ft_tabfree(tmp);
 		return (1);
+	}
 	converted = malloc(5 * sizeof(int));
 	while (tmp[i])
 	{
 		if (error_in_rgb(tmp, i, &converted, value))
+		{
+			ft_tabfree(tmp);
+			free(converted);
 			return (1);
+		}
 		i++;
 	}
-	items->r = converted[1];
-	items->g = converted[2];
-	items->b = converted[3];
+	data_rgb_sending(items, converted);
 	ft_tabfree(tmp);
-	free(converted);
 	return (0);
 }
