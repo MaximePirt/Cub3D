@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 04:12:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/26 20:40:10 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/26 20:44:59 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,7 @@ int	fill_rgb_texture(t_rgb *items, char *value)
 		}
 		i++;
 	}
-	items->r = converted[1];
-	items->g = converted[2];
-	items->b = converted[3];
+	data_rgb_sending(items, converted);
 	ft_tabfree(tmp);
 	return (0);
 }
