@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:01:13 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/26 17:41:46 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/27 00:24:24 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	find_map_start(t_parse_map **parse_map)
 {
 	while (*parse_map)
 	{
-		if (ft_strncmp((*parse_map)->blocks, "111", 3) == 0)
+		if (ft_strchr((*parse_map)->blocks, '1') == 0)
 			break ;
 		*parse_map = (*parse_map)->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:37:19 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/26 19:04:53 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/27 00:23:29 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
  */
 static int	is_wall_floor(t_parse_map *to_copy, t_map *map, int i, int j)
 {
+	if (i < 0 || i >= map->size_y || j < 0 || j >= map->size_x)
+        return (0);
 	map->blocks[i][j].status = 0;
 	if (to_copy->blocks[j] == '1')
 	{
@@ -106,14 +108,14 @@ int	blocks_loop(t_parse_map *to_copy, t_map **map, int i, int *player_nb)
 	{
 		if (is_wall_floor(to_copy, (*map), i, j))
 			continue ;
-		if (is_a_player(to_copy, (*map), i, j))
+		else if (is_a_player(to_copy, (*map), i, j))
 		{
 			(*player_nb)++;
 			continue ;
 		}
-		if (to_copy->blocks[j] == '\n')
+		else if (to_copy->blocks[j] == '\n')
 			break ;
-		if (to_copy->blocks[j])
+		else if (to_copy->blocks[j])
 		{
 			ft_fprintf(STDERR_FILENO,
 				"Error: invalid character in map : [%c]\n", to_copy->blocks[j]);
