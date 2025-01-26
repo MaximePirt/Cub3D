@@ -42,9 +42,9 @@ static int	load_textures(t_map *map, t_win *win, char **images)
 
 static int	init_game(int argc, char **argv, t_map **map, char ***images)
 {
-  	int	i;
+	int	i;
 
-  	*map = NULL;
+	*map = NULL;
 	if (argc != 2)
 	{
 		ft_fprintf(STDERR_FILENO, "Error: please provide a map file\n");
@@ -60,9 +60,9 @@ static int	init_game(int argc, char **argv, t_map **map, char ***images)
 	if (check_map(map, argv[1], images) == 1)
 	{
 		i = 0;
-        while (i < 6)
+		while (i < 6)
 			free((*images)[i++]);
-        free(*images);
+		free(*images);
 		ft_fprintf(STDERR_FILENO, "Error: invalid map\n");
 		return (1);
 	}

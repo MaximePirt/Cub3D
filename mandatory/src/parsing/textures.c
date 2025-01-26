@@ -60,33 +60,9 @@ int	load_texture(t_image *image, char *path, void *mlx_ptr)
 	return (0);
 }
 
-int	str_is_charset(char *str, char *charset)
-{
-	int	i;
-	int	j;
-	int	valide;
-
-	i = 0;
-	while (str[i])
-	{
-		j = 0;
-		valide = 0;
-		while (charset[j])
-		{
-			if (str[i] == charset[j])
-				valide = 1;
-			j++;
-		}
-		if (!valide)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 int	error_in_rgb(char **tmp, int i, int **converted, char *value)
 {
-	if (str_is_charset(tmp[i], "0123456789,") || ft_str_count_char(value,
+	if (ft_str_is_charset(tmp[i], "0123456789,") || ft_str_count_char(value,
 			',') != 2 || ft_count_words(value, "\n") != 1)
 	{
 		ft_fprintf(STDERR_FILENO, "Error: Check your RGB settings\n");

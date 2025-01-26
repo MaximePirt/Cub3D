@@ -85,7 +85,7 @@ void	find_map_start(t_parse_map **parse_map)
 	}
 }
 
-static int first_read(int fd, char **line)
+static int	first_read(int fd, char **line)
 {
 	*line = get_next_line(fd);
 	if (*line == NULL)
