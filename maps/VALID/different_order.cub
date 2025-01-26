@@ -1,11 +1,11 @@
-EA ./textures/wall3.jpg
+EA ./textures/wall3.xpm
 
-SO ./textures/wall1.jpg
+SO ./textures/wall1.xpm
 
-WE ./textures/wall2.jpg
+WE ./textures/wall2.xpm
 F 220,100,0
 C 225,30,0
-NO ./textures/wall0.jpg
+NO ./textures/wall0.xpm
 
 
 11111

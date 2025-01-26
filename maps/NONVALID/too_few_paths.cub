@@ -1,6 +1,6 @@
-NO ./textures/wall0.jpg
-SO ./textures/wall1.jpg
-WE ./textures/wall2.jpg
+NO ./textures/wall0.xpm
+SO ./textures/wall1.xpm
+WE ./textures/wall2.xpm
 
 F 220,100,0
 C 225,30,0
