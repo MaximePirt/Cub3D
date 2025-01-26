@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:37:19 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/24 00:40:13 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/27 00:49:15 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
  */
 int	is_wall_floor_door(t_parse_map *to_copy, t_map *map, int i, int j)
 {
+	if (i < 0 || i >= map->size_y || j < 0 || j >= map->size_x)
+        return (0);
 	map->blocks[i][j].status = 0;
 	if (to_copy->blocks[j] == 'D')
 	{

@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 04:12:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/26 20:44:59 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/27 00:56:59 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,6 @@ int	load_texture(t_image *image, char *path, void *mlx_ptr)
 	return (0);
 }
 
-static void	data_rgb_sending(t_rgb *items, int *converted)
-{
-	items->r = converted[1];
-	items->g = converted[2];
-	items->b = converted[3];
-	free(converted);
-}
-
 int	error_in_rgb(char **tmp, int i, int **converted, char *value)
 {
 	if (ft_str_is_charset(tmp[i], "0123456789,") || ft_str_count_char(value,
@@ -83,6 +75,14 @@ int	error_in_rgb(char **tmp, int i, int **converted, char *value)
 		return (1);
 	}
 	return (0);
+}
+
+static void	data_rgb_sending(t_rgb *items, int *converted)
+{
+	items->r = converted[1];
+	items->g = converted[2];
+	items->b = converted[3];
+	free(converted);
 }
 
 int	fill_rgb_texture(t_rgb *items, char *value)

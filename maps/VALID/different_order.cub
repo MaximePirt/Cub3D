@@ -6,7 +6,8 @@ WE ./textures/wall2.xpm
 F 220,100,0
 C 225,30,0
 NO ./textures/wall0.xpm
-
+DOOR ./mapsnous/textures/door.xpm
+RIGHT_HAND ./mapsnous/textures/right_hand.xpm
 
 11111
 10001
