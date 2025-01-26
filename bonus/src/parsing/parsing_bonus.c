@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:01:13 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/24 00:40:21 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/26 17:42:20 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,17 @@ void	find_map_start(t_parse_map **parse_map)
 	}
 }
 
+static int first_read(int fd, char **line)
+{
+	*line = get_next_line(fd);
+	if (*line == NULL)
+	{
+		close(fd);
+		return (1);
+	}
+	return (0);
+}
+
 /**
  * @brief Fill parse map with gnl
  * @param filename the map used to fill the parse map
@@ -100,8 +111,7 @@ t_parse_map	*fill_map(char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		return (NULL);
-	line = get_next_line(fd);
-	if (line == NULL)
+	if (first_read(fd, &line))
 		return (NULL);
 	parse_map = parse_map_new(line);
 	tmp = parse_map;

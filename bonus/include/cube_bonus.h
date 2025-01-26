@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 02:47:24 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/25 02:47:47 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/26 18:59:18 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void		free_parse_map(t_parse_map *map);
 void		*ft_free_rays(t_ray *rays);
 void		*ft_free_map(t_block **blocks, int size_y);
 void		ft_free_textures(t_win *win, t_textures *textures);
+void		free_images(char **images);
 
 // Game loop
 

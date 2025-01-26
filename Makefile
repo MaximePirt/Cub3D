@@ -111,7 +111,7 @@ LIBFT_DIR		= libft
 
 MINILIBX_DIR	= minilibx
 
-CFLAGS			= -O2 -I $(HEAD) -MMD -MP
+CFLAGS			= -I $(HEAD) -MMD -MP
 
 CFLAGS += -g -Wall -Wextra -Werror
 

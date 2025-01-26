@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:40:32 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/25 02:53:50 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/26 18:59:36 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	main(int argc, char **argv)
 		ft_free_error(map, win);
 	if (load_textures(map, win, images))
 	{
-		ft_tabfree(images);
+		free_images(images);
 		ft_free_error(map, win);
 	}
 	map->minimap->image = ft_init_image(win->mlx_ptr, MINIMAP_RENDER_DISTANCE
