@@ -82,10 +82,6 @@ void		draw_rectangle(t_win *win, t_vector2 pos, t_vector2 width_eight,
 void		paste_image_on_screen(t_win *win, t_image *image, t_vector2 pos);
 void		ft_fill_image(t_image *img, int color);
 
-// Minimap
-
-void		draw_minimap(t_map *map);
-
 // Vectors
 t_vector2	ft_vector2(double x, double y);
 t_line		ft_line(t_vector2 start, t_vector2 end, int color, int width);

@@ -77,8 +77,6 @@ static int	ft_free_error(t_map *map, t_win *win)
 		ft_free_rays(map->rays);
 		if (win)
 			ft_free_textures(win, map->textures);
-		free(map->minimap->image);
-		free(map->minimap);
 		free(map);
 	}
 	if (win)
@@ -116,13 +114,6 @@ int	main(int argc, char **argv)
 	{
 		free_images(images);
 		ft_free_error(map, win);
-	}
-	map->minimap->image = ft_init_image(win->mlx_ptr, MINIMAP_RENDER_DISTANCE
-			* map->minimap->zoom, MINIMAP_RENDER_DISTANCE * map->minimap->zoom);
-	if (map->minimap->image == NULL)
-	{
-		ft_fprintf(STDERR_FILENO, "Error: failed to init minimap\n");
-		return (1);
 	}
 	params = (t_key_params *)malloc(sizeof(t_key_params));
 	if (params == NULL)
