@@ -1,10 +1,10 @@
-NO ./mapsnous/textures/wall.xpm
-SO ./mapsnous/textures/wall_2.xpm
-WE ./mapsnous/textures/wall_3.xpm
-EA ./mapsnous/textures/wall_4.xpm
+NO ./maps/textures/wall.xpm
+SO ./maps/textures/wall.xpm
+WE			./maps/textures/wall.xpm
+EA			./maps/text ures/wall.xpm
 
-DOOR ./mapsnous/textures/door.xpm
-RIGHT_HAND ./mapsnous/textures/right_hand.xpm
+DOOR ./maps/textures/door.xpm
+RIGHT_HAND ./maps/textures/right_hand.xpm
 
 F 220,100,0
 C 225,30,0

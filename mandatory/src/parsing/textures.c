@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 04:12:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/26 20:40:14 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/27 02:53:37 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	load_texture(t_image *image, char *path, void *mlx_ptr)
 	char	**tmp;
 	int		fd;
 
-	tmp = ft_split(path, " \n");
+	tmp = ft_split(path, " \n\t");
 	if (!tmp || !tmp[1])
 		return (1);
 	image->path = ft_strdup(tmp[1]);

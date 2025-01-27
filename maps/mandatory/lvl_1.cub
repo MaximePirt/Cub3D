@@ -1,7 +1,7 @@
-NO ./mapsnous/textures/wall.xpm
-SO ./mapsnous/textures/wall.xpm
-WE ./mapsnous/textures/wall.xpm
-EA ./mapsnous/textures/wall.xpm
+NO ./maps/textures/wall.xpm
+SO ./maps/textures/wall.xpm
+WE			./maps/textures/wall.xpm
+EA		 	./maps/te	xtures/wall.xpm
 
 F 220,100,0
 C 225,30,0
