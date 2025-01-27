@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 04:12:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/26 19:00:02 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/27 00:59:58 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	free_images(char **images)
 	int	i;
 
 	i = 0;
-	while (i < 6)
+	while (i < 8)
 		free(images[i++]);
 	free(images);
 	return ;
