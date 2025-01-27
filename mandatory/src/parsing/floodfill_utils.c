@@ -61,7 +61,6 @@ void	restore_map(t_map *map)
 		}
 		i++;
 	}
-	return ;
 }
 
 /**
