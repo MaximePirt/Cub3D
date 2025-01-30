@@ -22,7 +22,7 @@ NAME_BONUS				= cube2D_bonus # A little tribute to nitpicky graders :)
 SRCS					= main.c
 
 SRCS_PARSING            = parsing.c copy_tab_to_map.c lst_parsing$(DIRSEP)lst_pars_lib.c \
-							floodfill.c floodfill_utils.c check_first_lines.c textures.c
+							floodfill.c floodfill_utils.c check_first_lines.c textures.c clean_zero.c
 
 SRC_MEMORY				= memory_alloc.c memory_free.c window_alloc.c textures_alloc.c image_alloc.c ray_alloc.c ray_free.c
 
@@ -41,7 +41,8 @@ SRC_RENDERING			= rendering.c vectors.c drawer$(DIRSEP)brushs.c \
 SRCS_BONUS				= main_bonus.c
 
 SRCS_PARSING_BONUS		= parsing_bonus.c copy_tab_to_map_bonus.c lst_parsing$(DIRSEP)lst_pars_lib_bonus.c \
-							floodfill_bonus.c floodfill_utils_bonus.c check_first_lines_bonus.c textures_bonus.c
+							floodfill_bonus.c floodfill_utils_bonus.c check_first_lines_bonus.c textures_bonus.c \
+							clean_zero_bonus.c
 
 SRC_MEMORY_BONUS		= memory_alloc_bonus.c memory_free_bonus.c window_alloc_bonus.c textures_alloc_bonus.c \
 							image_alloc_bonus.c ray_alloc_bonus.c ray_free_bonus.c

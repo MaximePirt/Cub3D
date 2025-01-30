@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 04:12:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/27 02:56:54 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/30 17:48:54 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,16 @@ int	load_texture(t_image *image, char *path, void *mlx_ptr)
 
 int	error_in_rgb(char **tmp, int i, int **converted, char *value)
 {
+	noptozero(tmp[i]);
 	if (ft_str_is_charset(tmp[i], "0123456789,") || ft_str_count_char(value,
 			',') != 2 || ft_count_words(value, "\n") != 1)
 	{
 		ft_fprintf(STDERR_FILENO, "Error: Check your RGB settings\n");
+		return (1);
+	}
+	if (ft_strlen(tmp[i]) > 3)
+	{
+		ft_fprintf(STDERR_FILENO, "Error: invalid color value\n");
 		return (1);
 	}
 	(*converted)[i] = ft_atoi(tmp[i]);

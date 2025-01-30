@@ -3,7 +3,7 @@ SO ./maps/textures/wall_2.xpm
 WE ./maps/textures/wall_3.xpm
 EA ./maps/textures/wall_4.xpm
 
-F 100,100,100
+F 00000000290,100,100
 C 0,128,255
 
 111111

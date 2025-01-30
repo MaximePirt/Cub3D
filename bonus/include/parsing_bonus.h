@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 02:46:52 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/25 02:47:52 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/30 17:49:15 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int			checking_firsts_map_lines(t_parse_map **to_copy, char ***images);
 
 ///////////////////////copy_tab_to_map/////////////////////////
 int			copy_tab_to_map(t_parse_map *to_copy, t_map *map, char ***images);
+char		*noptozero(char *tmp);
 
 /////////////////////////lst_parsing/////////////////////////
 t_parse_map	*parsemaplast(t_parse_map *lst);

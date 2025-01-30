@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 04:12:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/25 02:50:59 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/30 18:00:29 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,12 @@ static void	process_ray(t_win *win, t_map *map, t_ray *ray, int ray_index)
 			/ 2);
 	process_loop(texture, ray, win, calc);
 	draw_rectangle(win, ft_vector2(calc.pos.x, 0), ft_vector2(calc.width,
-			calc.pos.y), map->textures->ceiling.r << 16 | map->textures->ceiling.g << 8 | map->textures->ceiling.b);
+			calc.pos.y), map->textures->ceiling.r << 16 \
+			| map->textures->ceiling.g << 8 | map->textures->ceiling.b);
 	draw_rectangle(win, ft_vector2(calc.pos.x, calc.pos.y + calc.height),
 		ft_vector2(calc.width, SCREEN_HEIGHT - (calc.pos.y + calc.height)),
-		map->textures->floor.g << 16 | map->textures->floor.g << 8 | map->textures->floor.b);
+		map->textures->floor.g << 16 | map->textures->floor.g << 8 \
+		| map->textures->floor.b);
 }
 
 static void	render_game(t_win *win, t_map *map)
