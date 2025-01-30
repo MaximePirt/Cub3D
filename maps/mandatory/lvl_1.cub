@@ -1,10 +1,10 @@
 NO ./maps/textures/wall.xpm
-SO ./maps/textures/wall.xpm
-WE			./maps/textures/wall.xpm
-EA		 	 	
+SO ./maps/textures/wall_2.xpm
+WE ./maps/textures/wall_3.xpm
+EA ./maps/textures/wall_4.xpm
 
-F 220,100,0
-C 225,30,0
+F 100,100,100
+C 0,128,255
 
 111111
 100101

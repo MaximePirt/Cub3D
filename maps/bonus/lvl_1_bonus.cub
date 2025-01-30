@@ -4,8 +4,8 @@ WE ./maps/texturezoijfd.xpm
 DOOR ./maps/textures/door.xpm
 RIGHT_HAND ./maps/textures/right_hand.xpm
 
-F 220,100,0
-C 225,30,0
+F 100,100,100
+C 0,128,255
 
 111111
 100101
