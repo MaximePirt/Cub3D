@@ -1,0 +1,19 @@
+NO ./maps/textures/wall.xpm
+SO ./maps/textures/wall_2.xpm
+WE ./maps/textures/wall_3.xpm
+EA ./maps/textures/wall_4.xpm
+
+DOOR ./maps/textures/door.xpm
+RIGHT_HAND ./maps/textures/right_hand.xpm
+
+F 100,100,100
+C 0,128,255
+
+111111111
+100001001
+1001D1001
+100100001
+1000N0001
+100000001
+100000001
+111111111

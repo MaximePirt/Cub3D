@@ -13,9 +13,9 @@
 #ifndef CUBE_H
 # define CUBE_H
 
-# include "../../libft/include/colors.h"
-# include "../../libft/include/libft.h"
-# include "../../minilibx/mlx.h"
+# include "../libft/include/libft.h"
+# include "../libft/include/colors.h"
+# include "../minilibx/mlx.h"
 # include "parsing.h"
 # include "player.h"
 # include "struct.h"

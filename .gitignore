@@ -2,7 +2,7 @@
 *.DS_Store
 
 # compilation
-cube3d
+cube3D
 obj/
 
 # IDE
