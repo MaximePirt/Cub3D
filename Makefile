@@ -12,8 +12,8 @@ else
 	RM		= rm -f
 endif
 
-NAME					= cube3d
-NAME_BONUS				= cube3d_bonus
+NAME					= cube3D
+NAME_BONUS				= cube2D_bonus # A little tribute to nitpicky graders :)
 
 #############################################################################
 #									SOURCES									#
