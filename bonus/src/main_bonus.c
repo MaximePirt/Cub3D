@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:40:32 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/25 02:53:50 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/27 00:59:03 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
  */
 static int	load_textures(t_map *map, t_win *win, char **images)
 {
+	int	i;
+
 	if (load_texture(map->textures->wall_north, images[0], win->mlx_ptr) == 1)
 		return (1);
 	if (load_texture(map->textures->wall_south, images[1], win->mlx_ptr) == 1)
@@ -35,13 +37,16 @@ static int	load_textures(t_map *map, t_win *win, char **images)
 		return (1);
 	if (load_texture(map->textures->right_hand, images[7], win->mlx_ptr) == 1)
 		return (1);
-	ft_tabfree(images);
+	i = 0;
+	while (i < 8)
+		free(images[i++]);
+	free(images);
 	return (0);
 }
 
 static int	init_game(int argc, char **argv, t_map **map, char ***images)
 {
-  	int	i;
+	int	i;
 
 	*map = NULL;
 	if (argc != 2)
@@ -113,7 +118,7 @@ int	main(int argc, char **argv)
 		ft_free_error(map, win);
 	if (load_textures(map, win, images))
 	{
-		ft_tabfree(images);
+		free_images(images);
 		ft_free_error(map, win);
 	}
 	map->minimap->image = ft_init_image(win->mlx_ptr, MINIMAP_RENDER_DISTANCE

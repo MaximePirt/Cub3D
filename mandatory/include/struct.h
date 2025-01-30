@@ -118,12 +118,6 @@ typedef struct s_calcul_process
 	t_vector2			pos;
 }						t_calcul_process;
 
-typedef struct s_minimap
-{
-	int					zoom;
-	t_image				*image;
-}						t_minimap;
-
 typedef struct s_map
 {
 	t_block				**blocks;
@@ -132,7 +126,6 @@ typedef struct s_map
 	int					size_x;
 	int					size_y;
 	t_ray				*rays;
-	t_minimap			*minimap;
 	int					mouse_lock;
 }						t_map;
 

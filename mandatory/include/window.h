@@ -17,10 +17,8 @@
 
 # define SCREEN_WIDTH 1000
 # define SCREEN_HEIGHT 1000
-# define MINIMAP_RENDER_DISTANCE 8
 # define RAYS_COUNT 1000
 # define FOV 60
-# define ANGLE (FOV / RAYS_COUNT)
 
 # define KEY_ESC 65307
 # define KEY_W 119

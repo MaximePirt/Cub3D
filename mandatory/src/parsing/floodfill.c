@@ -35,7 +35,6 @@ static void	manage_stack(t_stack *stack, int x, int y, int *pos)
 	(*pos)++;
 	stack[*pos].x = x;
 	stack[*pos].y = y + 1;
-	return ;
 }
 
 /**

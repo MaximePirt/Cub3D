@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:40:32 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/25 21:16:20 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/26 18:59:40 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
  */
 static int	load_textures(t_map *map, t_win *win, char **images)
 {
+	int	i;
+
 	if (load_texture(map->textures->wall_north, images[0], win->mlx_ptr) == 1)
 		return (1);
 	if (load_texture(map->textures->wall_south, images[1], win->mlx_ptr) == 1)
@@ -31,15 +33,18 @@ static int	load_textures(t_map *map, t_win *win, char **images)
 		return (1);
 	if (fill_rgb_texture(&map->textures->ceiling, images[5]) == 1)
 		return (1);
-	ft_tabfree(images);
+	i = 0;
+	while (i < 6)
+		free(images[i++]);
+	free(images);
 	return (0);
 }
 
 static int	init_game(int argc, char **argv, t_map **map, char ***images)
 {
-  	int	i;
+	int	i;
 
-  	*map = NULL;
+	*map = NULL;
 	if (argc != 2)
 	{
 		ft_fprintf(STDERR_FILENO, "Error: please provide a map file\n");
@@ -55,9 +60,9 @@ static int	init_game(int argc, char **argv, t_map **map, char ***images)
 	if (check_map(map, argv[1], images) == 1)
 	{
 		i = 0;
-        while (i < 6)
+		while (i < 6)
 			free((*images)[i++]);
-        free(*images);
+		free(*images);
 		ft_fprintf(STDERR_FILENO, "Error: invalid map\n");
 		return (1);
 	}
@@ -72,8 +77,6 @@ static int	ft_free_error(t_map *map, t_win *win)
 		ft_free_rays(map->rays);
 		if (win)
 			ft_free_textures(win, map->textures);
-		free(map->minimap->image);
-		free(map->minimap);
 		free(map);
 	}
 	if (win)
@@ -109,15 +112,8 @@ int	main(int argc, char **argv)
 		ft_free_error(map, win);
 	if (load_textures(map, win, images))
 	{
-		ft_tabfree(images);
+		free_images(images);
 		ft_free_error(map, win);
-	}
-	map->minimap->image = ft_init_image(win->mlx_ptr, MINIMAP_RENDER_DISTANCE
-			* map->minimap->zoom, MINIMAP_RENDER_DISTANCE * map->minimap->zoom);
-	if (map->minimap->image == NULL)
-	{
-		ft_fprintf(STDERR_FILENO, "Error: failed to init minimap\n");
-		return (1);
 	}
 	params = (t_key_params *)malloc(sizeof(t_key_params));
 	if (params == NULL)

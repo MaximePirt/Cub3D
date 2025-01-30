@@ -1,7 +1,7 @@
 NO ./maps/textures/wall.xpm
-SO ./maps/textures/wall_2.xpm
-WE ./maps/textures/wall_3.xpm
-EA ./maps/textures/wall_4.xpm
+SO ./maps/textures/wall.xpm
+WE              ./maps/textures/wall.xpm
+EA			./maps/textures/wall.xpm
 
 DOOR ./maps/textures/door.xpm
 RIGHT_HAND ./maps/textures/right_hand.xpm

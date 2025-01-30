@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:37:19 by mpierrot          #+#    #+#             */
-/*   Updated: 2025/01/24 00:40:13 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/27 00:49:15 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
  */
 int	is_wall_floor_door(t_parse_map *to_copy, t_map *map, int i, int j)
 {
+	if (i < 0 || i >= map->size_y || j < 0 || j >= map->size_x)
+		return (0);
 	map->blocks[i][j].status = 0;
 	if (to_copy->blocks[j] == 'D')
 	{
@@ -61,8 +63,8 @@ int	is_a_player(t_parse_map *to_copy, t_map *map, int i, int j)
 		|| to_copy->blocks[j] == 'E' || to_copy->blocks[j] == 'W')
 	{
 		map->blocks[i][j].type = FLOOR;
-		map->player.x = i + 0.5;
-		map->player.y = j + 0.5;
+		map->player.x = j + 0.5;
+		map->player.y = i + 0.5;
 		if (to_copy->blocks[j] == 'N')
 			map->player.dir = NORTH;
 		else if (to_copy->blocks[j] == 'E')

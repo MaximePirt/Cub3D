@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:01:13 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/12/01 02:46:18 by mpierrot         ###   ########.fr       */
+/*   Updated: 2025/01/27 00:24:24 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,21 @@ void	find_map_start(t_parse_map **parse_map)
 {
 	while (*parse_map)
 	{
-		if (ft_strncmp((*parse_map)->blocks, "111", 3) == 0)
+		if (ft_strchr((*parse_map)->blocks, '1') == 0)
 			break ;
 		*parse_map = (*parse_map)->next;
 	}
+}
+
+static int	first_read(int fd, char **line)
+{
+	*line = get_next_line(fd);
+	if (*line == NULL)
+	{
+		close(fd);
+		return (1);
+	}
+	return (0);
 }
 
 /**
@@ -100,8 +111,7 @@ t_parse_map	*fill_map(char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		return (NULL);
-	line = get_next_line(fd);
-	if (line == NULL)
+	if (first_read(fd, &line))
 		return (NULL);
 	parse_map = parse_map_new(line);
 	tmp = parse_map;
